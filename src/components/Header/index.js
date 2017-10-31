@@ -6,7 +6,15 @@ class Header extends Component {
     render() {
         return (
             <div className="c-header">
-                我是header
+                <div className="c-header--left">
+                    左侧
+                </div>
+                <div className="c-header--center">
+                    中间
+                </div>
+                <div className="c-header--right">
+                    右侧
+                </div>
             </div>
         );
     }
