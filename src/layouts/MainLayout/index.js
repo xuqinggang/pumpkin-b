@@ -1,7 +1,7 @@
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
 
-import { Component} from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 
@@ -11,6 +11,7 @@ class MainLayout extends Component {
     // }
 
     render() {
+        const { children } = this.props;
         return (
             <div className="l-main">
                 <Header />

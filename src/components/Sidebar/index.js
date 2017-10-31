@@ -1,13 +1,14 @@
-import { Component} from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 
 class Sidebar extends Component {
-    constructor(props) {
-        super(props);
-    }
-
+    // constructor(props) {
+        // super(props);
+    // }
+//
     render() {
+        const { children } = this.props;
         return (
             <div className="c-sidebar">
                 我是sidebar

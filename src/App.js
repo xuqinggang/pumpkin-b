@@ -1,4 +1,5 @@
 import IndexPage from 'pages/IndexPage';
+import './less/global.less';
 
 function App() {
     return (

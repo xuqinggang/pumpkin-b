@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import MainLayout from 'layouts/MainLayout';
 
-function IndexPage({ ...props }) {
+function IndexPage() {
     return (
         <MainLayout>
             <div className="">

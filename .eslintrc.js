@@ -16,6 +16,7 @@ module.exports = {
         'react/no-array-index-key': 'off',
         'react/react-in-jsx-scope': 'off',
         'jsx-a11y/label-has-for': 'off',
+        "jsx-a11y/href-no-hash": "off",
     },
     settings: {
         'import/resolver': {
