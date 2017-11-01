@@ -10,9 +10,5 @@ export const optionListType = PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string,
 }));
 
-export const dimensionType = PropTypes.shape({
-    left: valueType,
-    top: valueType,
-    width: valueType,
-    height: valueType,
-});
+// 组件尺寸
+export const uiSizeType = PropTypes.oneOf(['tiny', 'normal', 'small', 'large', 'huge']);
