@@ -1,0 +1,49 @@
+.c-radio {
+    display: block;
+    height: 14px;
+    line-height: 14px;
+    user-select: none;
+    cursor: pointer;
+
+    span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    &--indicator {
+        width: 13px;
+        height: 13px;
+        border-radius: 7px;
+        border: 1px solid #e0dfe7;
+        margin-right: 9px;
+    }
+
+    &__checked {
+        .c-radio--indicator {
+            border-color: #f38d39;
+
+            &::before {
+                display: block;
+                content: ' ';
+                width: 7px;
+                height: 7px;
+                border-radius: 7px;
+                background-color: #f38d39;
+                margin: 3px;
+            }
+        }
+    }
+}
+
+.c-radio-group {
+    &__layout-horizontal {
+        .c-radio {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    }
+
+    &__layout-vertical {
+        display: block;
+    }
+}
