@@ -125,9 +125,12 @@ class SearchSelect extends BaseComponent {
         const clsPrefix = 'c-search-select';
         const { placeholder, options, search } = this.props;
         const { select, expand } = this.state;
+        const cls = classNames(clsPrefix, {
+            [this.props.className]: true,
+        });
         return (
             <div
-                className={clsPrefix}
+                className={cls}
                 role="button"
                 tabIndex={0}
                 ref={this.storeRef('wrp')}
@@ -177,6 +180,7 @@ SearchSelect.defaultProps = {
     options: [],
     onSearch: null,
     onChange: null,
+    className: '',
 };
 
 SearchSelect.propTypes = {
@@ -189,6 +193,7 @@ SearchSelect.propTypes = {
     options: optionListType,
     onSearch: PropTypes.func,
     onChange: PropTypes.func,
+    className: PropTypes.string,
 };
 
 export default SearchSelect;
