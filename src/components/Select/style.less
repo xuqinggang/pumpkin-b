@@ -1,0 +1,28 @@
+.c-select {
+    cursor: pointer;
+    position: relative;
+
+    &__disabled {
+        color: #888;
+    }
+
+    &--selected {
+        width: 100%;
+        border: 1px solid #e0dfe7;
+        border-radius: 3px;
+        line-height: 32px;
+    }
+
+    &--popover {
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        top: 40px;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+
+        &__hide {
+            display: none;
+        }
+    }
+}
