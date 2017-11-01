@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Input from '../Input/index';
 import BaseComponent from '../BaseComponent/index';
-import Options from './Options';
-import { valueType, optionListType } from './type';
+import Options from '../Options/index';
+import { valueType, optionListType } from '../../base/types';
 import './style.less';
 
 const setSelect = (select, options) => {
@@ -46,7 +47,7 @@ class SearchSelect extends BaseComponent {
     }
     handleBlur(e) {
         if (e.relatedTarget && this.wrp.contains(e.relatedTarget)) {
-            this.input.focus();
+            this.input.toFocus();
             e.preventDefault();
             return;
         }
@@ -122,7 +123,7 @@ class SearchSelect extends BaseComponent {
     }
     render() {
         const clsPrefix = 'c-search-select';
-        const { placeholder, options } = this.props;
+        const { placeholder, options, search } = this.props;
         const { select, expand } = this.state;
         return (
             <div
@@ -132,15 +133,15 @@ class SearchSelect extends BaseComponent {
                 ref={this.storeRef('wrp')}
                 onFocus={this.handleFocus}
                 onBlur={this.handleBlur}
+                onKeyDown={this.handleKeyDown}
             >
-                <input
+                <Input
                     className={`${clsPrefix}--input`}
-                    type="text"
                     placeholder={placeholder}
-                    onChange={this.handleInputChange}
                     ref={this.storeRef('input')}
-                    onKeyDown={this.handleKeyDown}
+                    onChange={this.handleInputChange}
                     onClick={this.handleInputClick}
+                    value={search.text}
                 />
                 <div
                     className={
