@@ -1,0 +1,31 @@
+.c-input {
+    font-size: 16px;
+    line-height: 32px;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid rgba(224, 223, 231, 1);
+    -webkit-appearance: none;
+
+    &:focus {
+        border-color: rgba(104, 174, 255, 1);
+        box-shadow: 0 0 3px rgba(104, 174, 255, 1);
+    }
+
+    &__error {
+        border-color: rgba(240, 65, 52, 1);
+
+        &:focus {
+            box-shadow: 0 0 3px rgba(240, 65, 52, 1);
+        }
+    }
+
+    &__disabled {
+        color: #d9d9d9;
+        border-color: #e0dfe7;
+        background-color: #f4f4f4;
+    }
+}
