@@ -1,0 +1,40 @@
+.c-form {
+    &-item {
+        display: block;
+        font-size: 14px;
+
+        &__primary {
+            > label {
+                margin-right: 28px;
+            }
+        }
+
+        &__minor {
+            > label {
+                margin-right: 16px;
+            }
+        }
+
+        > label {
+            color: #333;
+            font-size: 14px;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: right;
+        }
+
+        &--cell {
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        &--error {
+            font-size: 12px;
+            line-height: 20px;
+            color: #fa390b;
+            position: absolute;
+            white-space: nowrap;
+        }
+    }
+}
