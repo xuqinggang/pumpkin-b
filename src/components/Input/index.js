@@ -51,6 +51,7 @@ class Input extends BaseComponent {
 
         const clsPrefix = 'c-input';
         const cls = classNames(clsPrefix, {
+            [this.props.className]: true,
             [`${clsPrefix}__disabled`]: disabled,
             [`${clsPrefix}__error`]: error,
             [`${clsPrefix}__${size}`]: true,
@@ -84,6 +85,7 @@ Input.defaultProps = {
     onBlur: null,
     onChange: null,
     onKeyPress: null,
+    className: '',
 };
 
 Input.propTypes = {
@@ -97,6 +99,7 @@ Input.propTypes = {
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onKeyPress: PropTypes.func,
+    className: PropTypes.string,
 };
 
 export default Input;
