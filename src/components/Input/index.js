@@ -10,7 +10,7 @@ class Input extends BaseComponent {
         this.state = {
             value: props.value,
         };
-        this.autoBind('handleChange', 'handleKeyPress', 'handleBlur', 'toFocus');
+        this.autoBind('handleChange', 'handleKeyPress', 'handleBlur', 'toFocus', 'handleClick');
     }
 
     toFocus() {
@@ -39,6 +39,13 @@ class Input extends BaseComponent {
             this.props.onKeyPress(event);
         }
     }
+
+    handleClick(event) {
+        if (this.props.onClick) {
+            this.props.onClick(event);
+        }
+    }
+
     render() {
         const {
             type,
@@ -68,6 +75,7 @@ class Input extends BaseComponent {
                 onBlur={this.handleBlur}
                 onChange={this.handleChange}
                 onKeyDown={this.handleKeyPress}
+                onClick={this.handleClick}
                 ref={(input) => { this.textInput = input; }}
             />
         );
@@ -85,6 +93,7 @@ Input.defaultProps = {
     onBlur: null,
     onChange: null,
     onKeyPress: null,
+    onClick: null,
     className: '',
 };
 
@@ -99,6 +108,7 @@ Input.propTypes = {
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onKeyPress: PropTypes.func,
+    onClick: PropTypes.func,
     className: PropTypes.string,
 };
 
