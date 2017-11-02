@@ -1,0 +1,30 @@
+.c-upload-image {
+    position: relative;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    background: #fcfcfc;
+    border: 1px dashed #e0dfe7;
+    border-radius: 4px;
+    transition: background 0.2s;
+    text-align: center;
+    cursor: pointer;
+
+    &__error {
+        border: 1px solid #f04134;
+    }
+
+    &--note {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        vertical-align: middle;
+
+        &::after {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+    }
+}
