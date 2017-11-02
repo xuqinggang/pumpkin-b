@@ -75,6 +75,7 @@ class Select extends BaseComponent {
     render() {
         const clsPrefix = 'c-select';
         const cls = classNames(clsPrefix, {
+            [this.props.className]: true,
             [`${clsPrefix}__disabled`]: this.props.disabled,
         });
 
@@ -120,6 +121,7 @@ Select.defaultProps = {
     disabled: false,
     options: [],
     onChange: null,
+    className: '',
 };
 
 Select.propTypes = {
@@ -129,6 +131,7 @@ Select.propTypes = {
     disabled: PropTypes.bool,
     options: optionListType,
     onChange: PropTypes.func,
+    className: PropTypes.string,
 };
 
 export default Select;
