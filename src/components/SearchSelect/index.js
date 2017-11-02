@@ -56,8 +56,8 @@ class SearchSelect extends BaseComponent {
         });
     }
     handleOptionsClick(item) {
-        if (this.props.onChange) {
-            this.props.onChange(item);
+        if (this.props.onSelect) {
+            this.props.onSelect(item);
         }
         this.setState({
             expand: false,
@@ -110,8 +110,8 @@ class SearchSelect extends BaseComponent {
             break;
         case 13:
             // enter
-            if (this.props.onChange) {
-                this.props.onChange(options[curIndex]);
+            if (this.props.onSelect) {
+                this.props.onSelect(options[curIndex]);
             }
             this.setState({
                 expand: false,
@@ -171,7 +171,7 @@ class SearchSelect extends BaseComponent {
 }
 
 SearchSelect.defaultProps = {
-    placeholder: '请选择',
+    placeholder: '',
     search: {
         value: null,
         text: '',
@@ -179,7 +179,7 @@ SearchSelect.defaultProps = {
     name: '',
     options: [],
     onSearch: null,
-    onChange: null,
+    onSelect: null,
     className: '',
 };
 
@@ -192,7 +192,7 @@ SearchSelect.propTypes = {
     }),
     options: optionListType,
     onSearch: PropTypes.func,
-    onChange: PropTypes.func,
+    onSelect: PropTypes.func,
     className: PropTypes.string,
 };
 
