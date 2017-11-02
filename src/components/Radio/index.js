@@ -60,6 +60,7 @@ class RadioGroup extends BaseComponent {
         this.state = {
             value: props.value,
         };
+        this.autoBind('handleClick');
     }
 
     handleClick({ value }) {
