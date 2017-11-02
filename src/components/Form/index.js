@@ -8,6 +8,8 @@ class FormItem extends BaseComponent {
     render() {
         const clsPrefix = 'c-form-item';
         const cls = classNames(clsPrefix, {
+            [this.props.className]: true,
+            [`${clsPrefix}__${this.props.layout}`]: true,
             [`${clsPrefix}__${this.props.labelType}`]: true,
         });
         return (
@@ -34,16 +36,20 @@ FormItem.propTypes = {
         isError: PropTypes.bool,
         message: PropTypes.string,
     }),
+    layout: PropTypes.oneOf(['top', 'middle']),
+    className: PropTypes.string,
 };
 
 FormItem.defaultProps = {
     children: null,
     label: '',
-    labelType: 'minor',
+    labelType: 'primary',
     error: {
         isError: false,
         message: '',
     },
+    layout: 'middle',
+    className: '',
 };
 
 class Form extends BaseComponent {
@@ -71,7 +77,6 @@ Form.defaultProps = {
 };
 
 export {
-    Form,
     FormItem,
 };
 
