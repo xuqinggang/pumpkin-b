@@ -158,7 +158,7 @@ class HouseUpload extends BaseComponent {
                                 <Input className={clsInput} />
                             </FormItem>
                         </div>
-                        <KeeperImage />
+                        <KeeperImage error />
                     </FormItem>
                     <div style={{ width: '100%', height: '100%', textAlign: 'center' }}>
                         <UploadButton>下一步</UploadButton>
