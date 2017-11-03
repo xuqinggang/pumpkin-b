@@ -24,7 +24,7 @@ class Input extends BaseComponent {
     }
     handleBlur() {
         if (this.props.onBlur) {
-            this.props.onBlur();
+            this.props.onBlur({ name: this.props.name });
         }
     }
     handleChange(event) {
@@ -98,7 +98,7 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
-    type: PropTypes.oneOf(['text', 'password']),
+    type: PropTypes.oneOf(['text', 'password', 'number']),
     size: PropTypes.oneOf(['normal', 'large']),
     disabled: PropTypes.bool,
     error: PropTypes.bool,
