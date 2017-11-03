@@ -11,6 +11,8 @@
     display: inline-block;
     overflow: hidden;
     position: relative;
+    user-select: none;
+    cursor: default;
 
     &-normal {
         text-align: center;
@@ -40,8 +42,6 @@
         }
 
         &:hover {
-            border-color: rgba(51, 51, 51, 0.65);
-
             .c-tag-normal--overlay {
                 height: 100%;
             }
@@ -61,6 +61,7 @@
 
     &-add {
         color: #f38d39;
+        cursor: text;
 
         &__active {
             border-color: #fa390b;
