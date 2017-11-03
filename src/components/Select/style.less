@@ -1,0 +1,33 @@
+.c-select {
+    cursor: pointer;
+    position: relative;
+
+    &__disabled {
+        color: #888;
+    }
+
+    &--selected {
+        color: #333;
+        font-size: 14px;
+        width: 176px;
+        border: 1px solid #e0dfe7;
+        border-radius: 3px;
+        line-height: 32px;
+        padding: 0 8px;
+        box-sizing: border-box;
+    }
+
+    &--popover {
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        top: 40px;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        background-color: #fff;
+
+        &__hide {
+            display: none;
+        }
+    }
+}

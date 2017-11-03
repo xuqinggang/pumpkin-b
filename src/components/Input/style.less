@@ -1,0 +1,31 @@
+.c-input {
+    font-size: 14px;
+    line-height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    width: 176px;
+    border-radius: 3px;
+    border: 1px solid rgba(224, 223, 231, 1);
+    -webkit-appearance: none;
+    display: inline-block;
+
+    &:focus {
+        border-color: #fa390b;
+    }
+
+    &__error {
+        border-color: rgba(240, 65, 52, 1);
+
+        &:focus {
+            box-shadow: 0 0 3px rgba(240, 65, 52, 1);
+        }
+    }
+
+    &__disabled {
+        color: #d9d9d9;
+        border-color: #e0dfe7;
+        background-color: #f4f4f4;
+    }
+}

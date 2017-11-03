@@ -1,0 +1,63 @@
+.c-form {
+    &__horizontal {
+        > .c-form-item {
+            display: inline-block;
+        }
+    }
+
+    &__vertical {
+        > .c-form-item {
+            display: block;
+        }
+    }
+
+    &-item {
+        font-size: 14px;
+
+        &__primary {
+            > label {
+                margin-right: 28px;
+            }
+        }
+
+        &__minor {
+            > label {
+                margin-right: 16px;
+            }
+        }
+
+        &__top {
+            > label {
+                vertical-align: top;
+            }
+        }
+
+        &__middle {
+            > label {
+                vertical-align: middle;
+            }
+        }
+
+        > label {
+            color: #333;
+            font-size: 14px;
+            display: inline-block;
+            text-align: right;
+        }
+
+        &--cell {
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        &--error {
+            font-size: 12px;
+            line-height: 20px;
+            color: #fa390b;
+            position: absolute;
+            white-space: nowrap;
+        }
+    }
+}

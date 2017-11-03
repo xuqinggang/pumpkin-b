@@ -1,15 +1,6 @@
-const initialState = {
-    name: 'mikasa',
-};
+import { combineReducers } from 'redux';
+import HouseUpload from './pages/HouseUpload/reducers';
 
-export default (state = initialState, action) => {
-    switch (action.type) {
-    case 'TEST_DATA':
-        return {
-            ...state,
-            name: action.data.name,
-        };
-    default:
-        return state;
-    }
-};
+export default combineReducers({
+    HouseUpload,
+});
