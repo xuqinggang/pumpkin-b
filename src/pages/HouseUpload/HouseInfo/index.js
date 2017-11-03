@@ -5,20 +5,18 @@ import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
 import Select from 'components/Select/index';
 import Input from 'components/Input/index';
-import Textarea from 'components/Textarea/index';
 import Tag, { TagAdd, TagPlaceholder } from 'components/Tag/index';
 import UploadButton from '../Coms/UploadButton/index';
 import UploadHeader from '../Coms/UploadHeader/index';
 import NoteWord from '../Coms/NoteWord/index';
-import KeeperImage from '../Coms/KeeperImage/index';
+import HouseIntro from '../Coms/HouseIntro/index';
+import PriceInput from '../Coms/PriceInput/index';
 import './style.less';
 
 class HouseUpload extends BaseComponent {
     render() {
         const clsPrefix = 'c-house-info';
         const clsItem = `${clsPrefix}--item`;
-        const clsSubItem = `${clsPrefix}--sub-item`;
-        const clsInput = `${clsPrefix}--input`;
         const clsSelect = `${clsPrefix}--select`;
 
         return (
@@ -29,9 +27,7 @@ class HouseUpload extends BaseComponent {
                         label="房间面积"
                         className={clsItem}
                     >
-                        <Input
-                            className={clsInput}
-                        />
+                        <Input />
                         <NoteWord>平米</NoteWord>
                     </FormItem>
                     <FormItem
@@ -39,7 +35,7 @@ class HouseUpload extends BaseComponent {
                         className={clsItem}
                     >
                         <Select
-                            className={`${clsInput} ${clsSelect}`}
+                            className={clsSelect}
                             value={2}
                             options={[{
                                 value: 0,
@@ -80,38 +76,10 @@ class HouseUpload extends BaseComponent {
                         layout="top"
                     >
                         <div>
-                            <FormItem
+                            <PriceInput
                                 label="月付价"
-                                labelType="minor"
-                                className={clsSubItem}
-                            >
-                                <Input />
-                                <NoteWord>元／月</NoteWord>
-                            </FormItem>
-                            <FormItem
-                                label="季付价"
-                                labelType="minor"
-                                className={clsSubItem}
-                            >
-                                <Input />
-                                <NoteWord>元／月</NoteWord>
-                            </FormItem>
-                            <FormItem
-                                label="半年价"
-                                labelType="minor"
-                                className={clsSubItem}
-                            >
-                                <Input />
-                                <NoteWord>元／月</NoteWord>
-                            </FormItem>
-                            <FormItem
-                                label="整年价"
-                                labelType="minor"
-                                className={clsSubItem}
-                            >
-                                <Input />
-                                <NoteWord>元／月</NoteWord>
-                            </FormItem>
+                                name="month"
+                            />
                         </div>
 
                     </FormItem>
@@ -142,30 +110,7 @@ class HouseUpload extends BaseComponent {
                         label="房源介绍"
                         className={clsItem}
                     >
-                        <Textarea />
-                    </FormItem>
-                    <FormItem
-                        label="管家信息"
-                        className={`${clsItem} ${clsPrefix}--keeper-info`}
-                        layout="top"
-                    >
-                        <div>
-                            <FormItem
-                                label="姓名"
-                                labelType="minor"
-                                className={clsSubItem}
-                            >
-                                <Input className={clsInput} />
-                            </FormItem>
-                            <FormItem
-                                label="电话"
-                                labelType="minor"
-                                className={clsSubItem}
-                            >
-                                <Input className={clsInput} />
-                            </FormItem>
-                        </div>
-                        <KeeperImage error />
+                        <HouseIntro />
                     </FormItem>
                     <div style={{ width: '100%', height: '100%', textAlign: 'center' }}>
                         <UploadButton>下一步</UploadButton>
