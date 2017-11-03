@@ -54,10 +54,12 @@ FormItem.defaultProps = {
 
 class Form extends BaseComponent {
     render() {
+        const clsPrefix = 'c-form';
         return (
             <div className={
-                classNames('c-form', {
+                classNames(clsPrefix, {
                     [this.props.className]: true,
+                    [`${clsPrefix}__${this.props.layout}`]: true,
                 })}
             >
                 {this.props.children}
@@ -69,11 +71,13 @@ class Form extends BaseComponent {
 Form.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
+    layout: PropTypes.oneOf(['horizontal', 'vertical']),
 };
 
 Form.defaultProps = {
     children: null,
     className: '',
+    layout: 'vertical',
 };
 
 export {

@@ -1,6 +1,17 @@
 .c-form {
+    &__horizontal {
+        > .c-form-item {
+            display: inline-block;
+        }
+    }
+
+    &__vertical {
+        > .c-form-item {
+            display: block;
+        }
+    }
+
     &-item {
-        display: block;
         font-size: 14px;
 
         &__primary {
