@@ -46,6 +46,7 @@ class TextArea extends BaseComponent {
         const cls = classNames('c-textarea', {
             error,
             [this.props.size]: true,
+            [this.props.className]: true,
         });
 
         return (
@@ -61,7 +62,7 @@ class TextArea extends BaseComponent {
 }
 
 TextArea.defaultProps = {
-    maxLength: 0,
+    className: '',
     placeholder: '',
     value: '',
     name: '',
@@ -72,6 +73,7 @@ TextArea.defaultProps = {
 };
 
 TextArea.propTypes = {
+    className: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string,
     name: PropTypes.string,
