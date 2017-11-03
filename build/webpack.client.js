@@ -57,7 +57,7 @@ module.exports = {
         ...basePlugins(context),
         new HtmlWebpackPlugin({
             filename: 'indexTemplate.html',
-            template: '!!raw-loader!src/index.html',
+            template: 'src/index.html',
             hash: false,
             inject: true,
             minify: false,

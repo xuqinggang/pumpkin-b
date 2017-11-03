@@ -4,19 +4,25 @@ const Koa = require('koa');
 const compress = require('koa-compress');
 const logger = require('koa-logger');
 const KoaStatic = require('koa-static');
-const render = require('koa-ejs');
+// const render = require('koa-ejs');
+const views = require('koa-views');
 const conf = require('./conf');
 const router = require('../dist/server');
 
 const server = new Koa();
 
-render(server, {
-    root: path.join(__dirname, 'views'),
-    layout: false,
-    viewExt: 'html',
-    cache: false,
-    debug: false
-});
+server.use(views(__dirname + '/views', {
+  map: {
+    html: 'handlebars',
+  }
+}));
+// render(server, {
+    // root: path.join(__dirname, 'views'),
+    // layout: false,
+    // viewExt: 'html',
+    // cache: false,
+    // debug: false
+// });
 
 server.use(compress());
 server.use(logger());
