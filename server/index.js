@@ -1,18 +1,29 @@
+const http = require('http');
+const path = require('path');
 const Koa = require('koa');
-const KoaStatic = require('koa-static');
 const compress = require('koa-compress');
 const logger = require('koa-logger');
-const router = require('./router');
+const KoaStatic = require('koa-static');
+const render = require('koa-ejs');
 const conf = require('./conf');
+const router = require('../dist/server');
 
-const app = new Koa();
+const server = new Koa();
 
-app.use(logger());
-app.use(KoaStatic(conf.staticPath));
-app.use(compress());
-app.use(router.routes());
+render(server, {
+    root: path.join(__dirname, 'views'),
+    layout: false,
+    viewExt: 'html',
+    cache: false,
+    debug: false
+});
 
-app.listen(conf.port, (err) => {
+server.use(compress());
+server.use(logger());
+server.use(KoaStatic('public'));
+server.use(router.routes());
+
+server.listen(conf.port, (err) => {
     if (err) {
         console.log('error: ', err);
         return;

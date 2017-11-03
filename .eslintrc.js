@@ -16,12 +16,13 @@ module.exports = {
         'react/no-array-index-key': 'off',
         'react/react-in-jsx-scope': 'off',
         'jsx-a11y/label-has-for': 'off',
-        "jsx-a11y/href-no-hash": "off",
+        'jsx-a11y/href-no-hash': "off",
+        'no-underscore-dangle': ['error', { 'allow': ['__INITIAL_STATE__'] }]
     },
     settings: {
         'import/resolver': {
             webpack:{
-                config: 'build/webpack.config.js',
+                config: 'build/webpack.client.js',
             },
         },
     },

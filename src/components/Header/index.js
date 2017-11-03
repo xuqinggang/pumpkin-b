@@ -1,13 +1,15 @@
-import { Component } from 'react';
-// import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import './style.less';
 
 class Header extends Component {
     render() {
+        console.log('render');
         return (
             <div className="c-header">
                 <div className="c-header--left">
-                    左侧
+                    {this.props.name}
                 </div>
                 <div className="c-header--center">
                     中间
@@ -20,11 +22,13 @@ class Header extends Component {
     }
 }
 
-// Header.defaultProps = {
-    // children: PropTypes.node,
-// };
-//
-// Header.propTypes = {
-    // children: PropTypes.node,
-// };
-export default Header;
+Header.defaultProps = {
+    name: 'saber',
+};
+
+Header.propTypes = {
+    name: PropTypes.string,
+};
+export default connect(
+    state => ({ name: state.name }),
+)(Header);

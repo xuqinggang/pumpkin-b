@@ -1,62 +1,9 @@
-const path = require('path');
-const resolve = dir => path.resolve(__dirname, '..', dir);
-const baseConfig = require('../config');
-const basePlugins = require('./webpackConfig/basePlugins.js');
-const baseRules = require('./webpackConfig/baseRules.js');
-const env = process.env;
+const clientConfig = require('./webpack.client.js');
+const serverConfig = require('./webpack.server.js');
 
-env.NODE_ENV = env.NODE_ENV || 'dev';
+const webpackConfig = [
+    clientConfig,
+    serverConfig,
+];
 
-const context = {
-    env,
-    pathPrefix: baseConfig.prod.pathPrefix,
-    rootDir: resolve('./'),
-}
-
-module.exports = {
-    entry: {
-        app: resolve('src/index.js'),
-        vendors: [
-            'react',
-            'redux',
-            'react-dom',
-            'react-redux',
-            'react-router',
-            'prop-types',
-        ]
-    },
-
-    output: {
-        publicPath: baseConfig.prod.publicPath,
-        path: resolve(baseConfig.prod.distPath),
-        filename: '[name].[chunkhash:8].js',
-    },
-
-    resolve: {
-        extensions: ['.js', '.jsx', '.json'],
-        alias: {
-            src: resolve('src'),
-            conf: resolve('src/conf'),
-            components: resolve('src/components'),
-            layouts: resolve('src/layouts'),
-            pages: resolve('src/pages'),
-        },
-    },
-
-    module: {
-        rules: [
-            ...baseRules(context),
-        ],
-
-    },
-
-    plugins: [
-        ...basePlugins(context),
-    ],
-
-    devServer: {
-        port: baseConfig.dev.port,
-        host: baseConfig.dev.host,
-        proxy: baseConfig.dev.proxy,
-    },
-}
+module.exports = webpackConfig;

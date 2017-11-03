@@ -1,8 +1,8 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
-
-import { Component } from 'react';
-import PropTypes from 'prop-types';
 import './style.less';
 
 class MainLayout extends Component {

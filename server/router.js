@@ -1,14 +1,22 @@
-const Router = require('koa-router');
+import Router from 'koa-router';
+import React, { Component } from 'react';
+import { renderToString } from 'react-dom/server';
+import { RouterContext, match, cteateRoutes } from 'react-router';
+import StaticRouter from 'react-router-dom/StaticRouter';
+import { matchRoutes, renderRoutes } from 'react-router-config';
+
+import routes from '../src/routes';
+
 const router = new Router();
 
-router.get('/hello', (ctx, next) => {
-    ctx.body = 'Hello KuiaZhan';
+router.get('*', (ctx, next) => {
+    const context = {};
+    const content = renderToString(
+        <StaticRouter location={ctx.request.url} context={context}>
+            {renderRoutes(routes)}
+        </StaticRouter>
+    );
+    ctx.body = content;
 });
-
-
-router.get('/test', (ctx, next) => {
-    ctx.body = 'Hello KuiaZhan Test';
-});
-
 
 module.exports = router;

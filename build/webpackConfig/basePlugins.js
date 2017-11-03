@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const StyleLintFormatter = require('stylelint-formatter-pretty');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
@@ -25,21 +24,13 @@ module.exports = (context) => {
             name: ['vendors', 'manifest'],
             minChunks: Infinity,
         }),
-
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: 'src/index.html',
-            hash: false,
-            inject: true,
-        }),
-
     ];
 
-    if (context.env.NODE_ENV === 'production') {
-        plugins.unshift(new webpack.optimize.UglifyJsPlugin({
-            compress: true,
-        }));
-    }
+    // if (context.env.NODE_ENV === 'production') {
+        // plugins.unshift(new webpack.optimize.UglifyJsPlugin({
+            // compress: true,
+        // }));
+    // }
 
     return plugins;
 };

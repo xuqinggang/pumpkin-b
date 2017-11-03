@@ -9,4 +9,9 @@ module.exports = {
         publicPath: '/',
         distPath: './dist',
     },
+    client: {
+        pathPrefix: '/',
+        publicPath: '/',
+        distPath: './public',
+    },
 }

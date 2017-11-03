@@ -3,13 +3,6 @@ const eslintFriendlyFormatter = require('eslint-friendly-formatter');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (context) => {
-    const includePaths = [
-        path.resolve(context.rootDir, './src/'),
-        path.resolve(context.rootDir, './node_modules/kui'),
-        path.resolve(context.rootDir, './node_modules/kz-frame'),
-        path.resolve(context.rootDir, './node_modules/kz-ds'),
-    ];
-
     return [
         //css && less rules
         {
@@ -36,22 +29,14 @@ module.exports = (context) => {
             test: /\.js$/,
             loader: 'eslint-loader',
             enforce: 'pre',
-            include: includePaths,
             options: {
                 formatter: eslintFriendlyFormatter,
             },
         },
         {
             test: /\.js$/,
-            include: includePaths,
-            loaders: [
-                {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['stage-2', 'react', 'es2015'],
-                    },
-                },
-            ],
+            exclude: /\/node_modules\//,
+            loader: 'babel-loader',
         },
         //assets rules
         {
