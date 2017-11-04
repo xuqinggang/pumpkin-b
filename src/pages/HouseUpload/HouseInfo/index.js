@@ -10,6 +10,7 @@ import UploadButton from '../Coms/UploadButton/index';
 import UploadHeader from '../Coms/UploadHeader/index';
 import NoteWord from '../Coms/NoteWord/index';
 import HouseIntro from '../Coms/HouseIntro/index';
+import HouseTag from '../Coms/HouseTag/index';
 import PriceInput from '../Coms/PriceInput/index';
 import './style.less';
 
@@ -75,37 +76,27 @@ class HouseUpload extends BaseComponent {
                         className={clsItem}
                         layout="top"
                     >
-                        <div>
+                        <div style={{ marginBottom: '-30px' }}>
                             <PriceInput
                                 label="月付价"
                                 name="month"
                             />
+                            <PriceInput
+                                label="季付价"
+                                name="season"
+                            />
+                            <PriceInput
+                                label="半年价"
+                                name="halfYear"
+                            />
+                            <PriceInput
+                                label="年付价"
+                                name="year"
+                            />
                         </div>
 
                     </FormItem>
-                    <FormItem
-                        label="房源标签"
-                        className={clsItem}
-                    >
-                        <div>
-                            <div>
-                                <TagPlaceholder active />
-                                <TagPlaceholder />
-                                <TagPlaceholder />
-                                <TagPlaceholder />
-                            </div>
-                            <div>
-                                <Tag>首次出租</Tag>
-                                <Tag>集体供暖</Tag>
-                                <Tag>独立供暖</Tag>
-                                <Tag>有电梯</Tag>
-                                <Tag>独立阳台</Tag>
-                                <Tag>独立卫生间</Tag>
-                                <TagAdd />
-                            </div>
-                        </div>
-
-                    </FormItem>
+                    <HouseTag />
                     <FormItem
                         label="房源介绍"
                         className={clsItem}
