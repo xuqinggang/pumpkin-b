@@ -5,16 +5,16 @@ import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
 import Select from 'components/Select/index';
 import Input from 'components/Input/index';
-import Tag, { TagAdd, TagPlaceholder } from 'components/Tag/index';
-import UploadButton from '../Coms/UploadButton/index';
-import UploadHeader from '../Coms/UploadHeader/index';
 import NoteWord from '../Coms/NoteWord/index';
 import HouseIntro from '../Coms/HouseIntro/index';
-import HouseTag from '../Coms/HouseTag/index';
+import HouseTag from '../Coms/RoomTag/index';
 import PriceInput from '../Coms/PriceInput/index';
 import './style.less';
 
-class HouseUpload extends BaseComponent {
+class SingleRoomInfo extends BaseComponent {
+    getChildContext() {
+        return { index: this.props.index };
+    }
     render() {
         const clsPrefix = 'c-house-info';
         const clsItem = `${clsPrefix}--item`;
@@ -22,7 +22,6 @@ class HouseUpload extends BaseComponent {
 
         return (
             <div className={clsPrefix}>
-                <UploadHeader>房间信息</UploadHeader>
                 <Form>
                     <FormItem
                         label="房间面积"
@@ -96,31 +95,29 @@ class HouseUpload extends BaseComponent {
                         </div>
 
                     </FormItem>
-                    <HouseTag />
+                    <HouseTag index={this.props.index} />
                     <FormItem
                         label="房源介绍"
                         className={clsItem}
                     >
                         <HouseIntro />
                     </FormItem>
-                    <div style={{ width: '100%', height: '100%', textAlign: 'center' }}>
-                        <UploadButton>下一步</UploadButton>
-                    </div>
                 </Form>
-                <Tag status="active" erasable>自定义</Tag>
-                <TagAdd />
-                <TagPlaceholder active />
             </div>
         );
     }
 }
 
-HouseUpload.propTypes = {
-    children: PropTypes.node,
+SingleRoomInfo.propTypes = {
+    index: 0,
 };
 
-HouseUpload.defaultProps = {
-    children: null,
+SingleRoomInfo.defaultProps = {
+    index: PropTypes.number,
 };
 
-export default HouseUpload;
+SingleRoomInfo.childContextTypes = {
+    index: PropTypes.number,
+};
+
+export default SingleRoomInfo;
