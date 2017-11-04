@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import { FormItem } from 'components/Form/index';
 import Tag, { TagPlaceholder, TagAdd } from 'components/Tag/index';
-import { activeTags, delActiveTags, addTags } from '../../HouseInfo/actions';
+import { activeTags, delActiveTags, addTags } from '../../RoomInfo/actions';
 
 const creatNDimArray = (num, value) => {
     const arr = [];
@@ -13,19 +13,19 @@ const creatNDimArray = (num, value) => {
     return arr;
 };
 
-class HouseTag extends BaseComponent {
+class RoomTag extends BaseComponent {
     constructor(props) {
         super(props);
         this.autoBind('handleTagClick', 'handleRemoveActiveTags', 'handleAddTags');
     }
     handleTagClick({ value }) {
-        this.props.dispatch(activeTags(value));
+        this.props.dispatch(activeTags(this.props.index, { value }));
     }
     handleRemoveActiveTags({ value }) {
-        this.props.dispatch(delActiveTags(value));
+        this.props.dispatch(delActiveTags(this.props.index, { value }));
     }
     handleAddTags({ value }) {
-        this.props.dispatch(addTags(value));
+        this.props.dispatch(addTags(this.props.index, { value }));
     }
     render() {
         const emptyTags = creatNDimArray(this.props.maxActive - this.props.activeTags.length, null);
@@ -79,13 +79,12 @@ class HouseTag extends BaseComponent {
 }
 
 export default connect(
-    (state) => {
-        const houseTag = state.houseUpload.houseInfo.houseTag;
+    (state, props) => {
+        const roomTag = state.houseUpload.roomInfo[props.index].roomTag;
         return {
-            tags: houseTag.tags,
-            activeTags: houseTag.active,
-            maxActive: houseTag.maxActive,
+            tags: roomTag.tags,
+            activeTags: roomTag.active,
+            maxActive: roomTag.maxActive,
         };
     },
-
-)(HouseTag);
+)(RoomTag);

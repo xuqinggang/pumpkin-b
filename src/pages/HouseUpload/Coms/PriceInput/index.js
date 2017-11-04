@@ -5,7 +5,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
 import Input from 'components/Input/index';
 import NoteWord from '../NoteWord/index';
-import { changeHousePrice } from '../../HouseInfo/actions';
+import { changeRoomPrice } from '../../RoomInfo/actions';
 
 class PriceInput extends BaseComponent {
     constructor(props) {
@@ -45,7 +45,10 @@ class PriceInput extends BaseComponent {
         this.setState({
             values: val,
         });
-        this.props.dispatch(changeHousePrice(this.props.name, val));
+        this.props.dispatch(changeRoomPrice(this.context.index, {
+            priceType: this.props.name,
+            values: val,
+        }));
     }
     render() {
         const { values } = this.state;
@@ -92,6 +95,10 @@ PriceInput.defaultProps = {
 PriceInput.propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
+};
+
+PriceInput.contextTypes = {
+    index: PropTypes.number,
 };
 
 export default connect()(PriceInput);
