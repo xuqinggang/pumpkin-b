@@ -13,7 +13,7 @@ class FormItem extends BaseComponent {
             [`${clsPrefix}__${this.props.labelType}`]: true,
         });
         return (
-            <div className={cls}>
+            <div className={cls} style={this.props.style}>
                 {this.props.label ? (<label>{this.props.label}</label>) : null }
                 <div className={`${clsPrefix}--cell`}>
                     {this.props.children}
@@ -38,6 +38,7 @@ FormItem.propTypes = {
     }),
     layout: PropTypes.oneOf(['top', 'middle']),
     className: PropTypes.string,
+    style: PropTypes.shape({}),
 };
 
 FormItem.defaultProps = {
@@ -50,6 +51,7 @@ FormItem.defaultProps = {
     },
     layout: 'middle',
     className: '',
+    style: {},
 };
 
 class Form extends BaseComponent {
