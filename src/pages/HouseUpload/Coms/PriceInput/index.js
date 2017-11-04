@@ -69,6 +69,7 @@ class PriceInput extends BaseComponent {
                 <FormItem
                     label="押金"
                     labelType="minor"
+                    style={!this.state.expand ? { display: 'none' } : null}
                 >
                     <Input
                         name={this.names[1]}
