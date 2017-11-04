@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import HouseInfoReducers from './HouseInfo/reducers';
+import HouseInfoReducers from './RoomInfo/reducers';
 
 export default combineReducers({
     ...HouseInfoReducers,

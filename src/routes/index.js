@@ -1,7 +1,7 @@
 import App from '../App';
 import IndexPage from '../pages/IndexPage';
 import ListPage from '../pages/ListPage';
-import HouseUploadPage from '../pages/HouseUpload/HouseInfo/index';
+import HouseUploadPage from '../pages/HouseUpload/RoomInfo/index';
 import NotFound from '../pages/NotFound';
 
 const routes = [
