@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
+import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import Textarea from 'components/Textarea/index';
 import PropTypes from 'prop-types';
+import { changeRoomBrief } from '../../actions';
 import './style.less';
 
 const validValue = (value) => {
@@ -9,23 +12,23 @@ const validValue = (value) => {
     return value.substr(0, maxLength);
 };
 
-class HouseIntro extends BaseComponent {
+class RoomBrief extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            value: validValue(props.value),
+            value: props.brief,
         };
         this.autoBind('handleChange');
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
-            value: validValue(nextProps.value),
+            value: nextProps.brief,
         });
     }
     handleChange({ value }) {
         const val = validValue(value);
         this.setState({ value: val });
-        this.props.onChange({ value: val, name: this.props.name });
+        this.props.dispatch(changeRoomBrief(this.props.index, { value: val }));
     }
     render() {
         const clsPrefix = 'c-house-intro';
@@ -43,18 +46,21 @@ class HouseIntro extends BaseComponent {
     }
 }
 
-HouseIntro.propTypes = {
+RoomBrief.propTypes = {
     name: PropTypes.string,
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    error: PropTypes.bool,
 };
 
-HouseIntro.defaultProps = {
+RoomBrief.defaultProps = {
     name: '',
-    value: '',
-    onChange: () => {},
-    error: false,
 };
 
-export default HouseIntro;
+export default ConnectContextToProps(connect(
+    (state, props) => {
+        const brief = state.houseUpload.roomInfo[props.index].brief;
+        return {
+            brief,
+        };
+    },
+)(RoomBrief), {
+    index: PropTypes.number,
+});
