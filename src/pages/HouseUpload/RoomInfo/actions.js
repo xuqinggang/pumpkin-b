@@ -1,7 +1,7 @@
 export const changeRoomPrice = (index, { priceType, values }) => ({
+    index,
     priceType,
     values,
-    roomNo: index,
     type: 'house-upload.room-info.changePrice',
 });
 
@@ -25,4 +25,10 @@ export const addTags = (index, { value }) => ({
 
 export const addRoomInfo = () => ({
     type: 'house-upload.room-info.addRoomInfo',
+});
+
+export const changeRoomBrief = (index, { value }) => ({
+    index,
+    value,
+    type: 'house-upload.room-info.changeRoomBrief',
 });

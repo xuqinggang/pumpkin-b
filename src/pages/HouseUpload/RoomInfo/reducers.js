@@ -4,12 +4,25 @@ const singleRoomState = {
             price: '',
             deposit: '',
         },
+        season: {
+            price: '',
+            deposit: '',
+        },
+        halfYear: {
+            price: '',
+            deposit: '',
+        },
+        year: {
+            price: '',
+            deposit: '',
+        },
     },
     roomTag: {
         tags: ['首次出租', '集体供暖', '独立供暖', '有电梯', '独立阳台', '独立卫生间', '随时入住', '免押金', '免费保洁', '只能门锁', '支持月付', '可短租'],
         active: [],
         maxActive: 4,
     },
+    brief: '',
 };
 
 const initialState = [singleRoomState];
@@ -65,6 +78,12 @@ const singleRoomInfo = (state, action) => {
             },
         };
     }
+    case 'house-upload.room-info.changeRoomBrief': {
+        return {
+            ...state,
+            brief: action.value,
+        };
+    }
     default:
         return state;
     }
@@ -78,7 +97,8 @@ const roomInfo = (state = initialState, action) => {
     case 'house-upload.room-info.changePrice':
     case 'house-upload.room-info.activeTags':
     case 'house-upload.room-info.delActiveTags':
-    case 'house-upload.room-info.addTags': {
+    case 'house-upload.room-info.addTags':
+    case 'house-upload.room-info.changeRoomBrief': {
         const newState = [].concat(state);
         newState.splice(action.index, 1, singleRoomInfo(state[action.index], action));
         return newState;

@@ -6,9 +6,9 @@ import Form, { FormItem } from 'components/Form/index';
 import Select from 'components/Select/index';
 import Input from 'components/Input/index';
 import NoteWord from '../Coms/NoteWord/index';
-import HouseIntro from '../Coms/HouseIntro/index';
-import HouseTag from '../Coms/RoomTag/index';
-import PriceInput from '../Coms/PriceInput/index';
+import RoomBrief from './Coms/RoomBrief/index';
+import RoomTag from './Coms/RoomTag/index';
+import PriceInput from './Coms/PriceInput/index';
 import './style.less';
 
 class SingleRoomInfo extends BaseComponent {
@@ -95,12 +95,12 @@ class SingleRoomInfo extends BaseComponent {
                         </div>
 
                     </FormItem>
-                    <HouseTag index={this.props.index} />
+                    <RoomTag />
                     <FormItem
                         label="房源介绍"
                         className={clsItem}
                     >
-                        <HouseIntro />
+                        <RoomBrief />
                     </FormItem>
                 </Form>
             </div>
@@ -109,7 +109,7 @@ class SingleRoomInfo extends BaseComponent {
 }
 
 SingleRoomInfo.propTypes = {
-    index: 0,
+    index: PropTypes.number.isRequired,
 };
 
 SingleRoomInfo.defaultProps = {

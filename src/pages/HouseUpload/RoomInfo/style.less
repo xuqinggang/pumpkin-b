@@ -1,7 +1,23 @@
 .c-house-info {
-    &--sub-item {
-        display: block;
-        margin-right: 22px;
-        margin-bottom: 30px;
+    &--single-room {
+        &--fold {
+            display: none;
+        }
+
+        &--expand {
+            max-height: 1000px;
+            transition: all 0.3s;
+        }
+
+        &__fold {
+            .c-house-info--single-room--fold {
+                display: block;
+            }
+
+            .c-house-info--single-room--expand {
+                max-height: 0;
+                transform: scale(1, 0);
+            }
+        }
     }
 }
