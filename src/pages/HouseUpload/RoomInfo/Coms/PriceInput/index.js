@@ -3,34 +3,52 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
+import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import Input from 'components/Input/index';
-import NoteWord from '../NoteWord/index';
-import { changeRoomPrice } from '../../RoomInfo/actions';
+import NoteWord from '../../../Coms/NoteWord/index';
+import { changeRoomPrice } from '../../actions';
+
+const defaultValues = (names) => {
+    const values = {};
+    names.forEach((item) => {
+        values[item] = '';
+    });
+    return values;
+};
 
 class PriceInput extends BaseComponent {
     constructor(props) {
         super(props);
         this.names = ['price', 'deposit'];
+        const values = props.values || defaultValues(this.names);
         this.state = {
-            values: {
-                [this.names[0]]: '',
-                [this.names[1]]: '',
-            },
+            values,
             expand: false,
         };
         this.autoBind('handleChange', 'handleBlur');
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            values: nextProps.values,
+        });
     }
     handleBlur({ name }) {
         switch (name) {
         case this.names[0]: {
             if (this.state.values[name] && !this.state.expand) {
+                const val = {
+                    ...this.state.values,
+                    [this.names[1]]: this.state.values[name],
+                };
                 this.setState({
                     expand: true,
-                    values: {
-                        ...this.state.values,
-                        [this.names[1]]: this.state.values[name],
-                    },
+                    values: val,
                 });
+
+                this.props.dispatch(changeRoomPrice(this.props.index, {
+                    priceType: this.props.name,
+                    values: val,
+                }));
             }
             break;
         }
@@ -45,7 +63,7 @@ class PriceInput extends BaseComponent {
         this.setState({
             values: val,
         });
-        this.props.dispatch(changeRoomPrice(this.context.index, {
+        this.props.dispatch(changeRoomPrice(this.props.index, {
             priceType: this.props.name,
             values: val,
         }));
@@ -97,8 +115,13 @@ PriceInput.propTypes = {
     label: PropTypes.string,
 };
 
-PriceInput.contextTypes = {
+export default ConnectContextToProps(connect(
+    (state, props) => {
+        const values = state.houseUpload.roomInfo[props.index].priceInfo[props.name];
+        return {
+            values,
+        };
+    },
+)(PriceInput), {
     index: PropTypes.number,
-};
-
-export default connect()(PriceInput);
+});
