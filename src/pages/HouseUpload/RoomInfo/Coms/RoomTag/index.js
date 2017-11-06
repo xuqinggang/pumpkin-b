@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import { FormItem } from 'components/Form/index';
+import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import Tag, { TagPlaceholder, TagAdd } from 'components/Tag/index';
-import { activeTags, delActiveTags, addTags } from '../../RoomInfo/actions';
+import { activeTags, delActiveTags, addTags } from '../../actions';
 
 const creatNDimArray = (num, value) => {
     const arr = [];
@@ -78,7 +80,7 @@ class RoomTag extends BaseComponent {
     }
 }
 
-export default connect(
+export default ConnectContextToProps(connect(
     (state, props) => {
         const roomTag = state.houseUpload.roomInfo[props.index].roomTag;
         return {
@@ -87,4 +89,6 @@ export default connect(
             maxActive: roomTag.maxActive,
         };
     },
-)(RoomTag);
+)(RoomTag), {
+    index: PropTypes.number,
+});
