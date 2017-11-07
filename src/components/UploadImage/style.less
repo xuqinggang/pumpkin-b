@@ -1,8 +1,8 @@
 .c-upload-image {
     position: relative;
     box-sizing: border-box;
-    height: 100%;
-    width: 100%;
+    height: 128px;
+    width: 220px;
     background: #fcfcfc;
     border: 1px dashed #e0dfe7;
     border-radius: 4px;
@@ -12,6 +12,10 @@
 
     &__error {
         border: 1px solid #f04134;
+
+        .c-upload-image--note {
+            color: #f04134;
+        }
     }
 
     &--note {
