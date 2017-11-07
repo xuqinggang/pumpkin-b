@@ -35,9 +35,15 @@ class SearchSelect extends BaseComponent {
             select: setSelect(nextProps.search, nextProps.options),
         });
     }
-    handleInputChange(e) {
-        if (this.props.onSearch) {
-            this.props.onSearch(e.target.value);
+    handleInputChange({ value }) {
+        if (this.props.onChange) {
+            this.props.onChange({
+                name: this.props.name,
+                search: {
+                    value: null,
+                    text: value,
+                },
+            });
         }
     }
     handleFocus() {
@@ -56,8 +62,11 @@ class SearchSelect extends BaseComponent {
         });
     }
     handleOptionsClick(item) {
-        if (this.props.onSelect) {
-            this.props.onSelect(item);
+        if (this.props.onChange) {
+            this.props.onChange({
+                name: this.props.name,
+                search: item,
+            });
         }
         this.setState({
             expand: false,
@@ -110,8 +119,11 @@ class SearchSelect extends BaseComponent {
             break;
         case 13:
             // enter
-            if (this.props.onSelect) {
-                this.props.onSelect(options[curIndex]);
+            if (this.props.onChange) {
+                this.props.onChange({
+                    name: this.props.name,
+                    search: options[curIndex],
+                });
             }
             this.setState({
                 expand: false,
@@ -178,8 +190,7 @@ SearchSelect.defaultProps = {
     },
     name: '',
     options: [],
-    onSearch: null,
-    onSelect: null,
+    onChange: null,
     className: '',
 };
 
@@ -191,8 +202,7 @@ SearchSelect.propTypes = {
         text: PropTypes.string,
     }),
     options: optionListType,
-    onSearch: PropTypes.func,
-    onSelect: PropTypes.func,
+    onChange: PropTypes.func,
     className: PropTypes.string,
 };
 
