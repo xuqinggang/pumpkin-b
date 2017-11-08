@@ -46,6 +46,7 @@ class HouseType extends BaseComponent {
                         name="saloon"
                         value={saloon}
                         className={`${clsPrefix}--select`}
+                        onChange={this.handleSelectChange}
                         options={[{
                             value: 0,
                             text: '0厅',
@@ -60,6 +61,7 @@ class HouseType extends BaseComponent {
                     <Select
                         name="toilet"
                         value={toilet}
+                        onChange={this.handleSelectChange}
                         className={`${clsPrefix}--select`}
                         options={[{
                             value: 0,
