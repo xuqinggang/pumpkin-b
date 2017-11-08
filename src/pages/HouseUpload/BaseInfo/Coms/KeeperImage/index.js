@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import UploadImage from 'components/UploadImage/index';
 import './style.less';
@@ -13,7 +14,7 @@ class KeeperImage extends BaseComponent {
         };
         this.autoBind('handleSelect');
     }
-    handleSelect({ name, file}) {
+    handleSelect({ name, file }) {
 
     }
     render() {
@@ -24,7 +25,7 @@ class KeeperImage extends BaseComponent {
         return (
             <div className={cls}>
                 <UploadImage
-                    picUrl={this.state.picUrl}
+                    picUrl={this.props.imgUrl}
                     onSelect={this.handleSelect}
                 >
                     <i />
@@ -36,4 +37,8 @@ class KeeperImage extends BaseComponent {
     }
 }
 
-export default KeeperImage;
+export default connect(
+    state => ({
+        imgUrl: state.houseUpload.baseInfo.keeperInfo.imgUrl,
+    }),
+)(KeeperImage);
