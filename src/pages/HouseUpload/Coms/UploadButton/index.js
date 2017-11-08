@@ -16,9 +16,11 @@ class UploadButton extends BaseComponent {
     }
     handleNext() {
         if (this.props.curPage === this.props.totalPage) {
+            // 校验
             // 提交
         } else {
             // 校验
+
             // 更改redux state
             this.props.dispatch(nextStep(this.props.curPage));
             // 下一步
@@ -46,8 +48,9 @@ class UploadButton extends BaseComponent {
                 }
                 <Button
                     size="large"
-                    className={`${clsPrefix}--button`}
+                    className={`${clsPrefix}--button ${clsPrefix}--button-last`}
                     onClick={this.handleNext}
+                    type="confirm"
                 >
                     {`${curPage === totalPage ? '提交' : '下一步'}`}
                 </Button>
