@@ -13,6 +13,16 @@ const initialState = {
         curFloor: 1,
         totalFloor: 1,
     },
+    houseAddress: {
+        buildNo: null,
+        unitNo: null,
+        houseNo: null,
+    },
+    keeperInfo: {
+        name: '',
+        phone: '',
+        imgUrl: '',
+    },
 };
 
 const baseInfo = (state = initialState, action) => {
@@ -47,6 +57,24 @@ const baseInfo = (state = initialState, action) => {
             houseFloor: {
                 ...state.houseFloor,
                 [action.name]: action.number,
+            },
+        };
+    }
+    case 'house-upload.base-info.setHouseAddress': {
+        return {
+            ...state,
+            houseAddress: {
+                ...state.houseAddress,
+                [action.name]: action.value,
+            },
+        };
+    }
+    case 'house-upload.base-info.setKeeperInfo': {
+        return {
+            ...state,
+            keeperInfo: {
+                ...state.keeperInfo,
+                [action.name]: action.value,
             },
         };
     }

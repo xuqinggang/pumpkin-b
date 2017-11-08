@@ -21,3 +21,14 @@ export const setHouseFloor = ({ name, number }) => ({
     type: 'house-upload.base-info.setHouseFloor',
 });
 
+export const setHouseAddress = ({ name, value }) => ({
+    name,
+    value,
+    type: 'house-upload.base-info.setHouseAddress',
+});
+
+export const setKeeperInfo = ({ name, value }) => ({
+    name,
+    value,
+    type: 'house-upload.base-info.setKeeperInfo',
+});
