@@ -12,8 +12,7 @@ class HouseFloor extends BaseComponent {
         this.autoBind('handleChange');
     }
     handleChange({ name, value }) {
-        const number = parseFloat(value);
-        this.props.dispatch(setHouseFloor({ name, number }));
+        this.props.dispatch(setHouseFloor({ name, value }));
     }
     render() {
         const clsPrefix = 'c-house-floor';
