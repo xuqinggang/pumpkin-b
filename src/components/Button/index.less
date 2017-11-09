@@ -2,13 +2,18 @@
     display: inline-block;
     font-size: 14px;
     width: auto;
-    padding: 0 15px;
-    line-height: 28px;
+    padding: 0 28px;
+    line-height: 30px;
     border-radius: 4px;
-    color: #fff;
-    background-color: #f38d39;
+    color: #f38d39;
+    background-color: transparent;
     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-    border: none;
+    border: 1px solid #f38d39;
+
+    &__confirm {
+        color: #fff;
+        background-color: #f38d39;
+    }
 
     &:active {
         transform: scale(0.95);
