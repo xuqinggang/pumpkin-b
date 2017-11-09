@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
-import { addRoomInfo } from '../../actions';
 import './style.less';
 
 class AddRoomButton extends BaseComponent {
@@ -12,8 +10,6 @@ class AddRoomButton extends BaseComponent {
     }
 
     handleClick() {
-        this.props.dispatch(addRoomInfo());
-
         if (this.props.onClick) {
             this.props.onClick();
         }
@@ -42,4 +38,4 @@ AddRoomButton.propTypes = {
     onClick: PropTypes.func,
 };
 
-export default connect()(AddRoomButton);
+export default AddRoomButton;
