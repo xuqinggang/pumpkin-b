@@ -18,7 +18,7 @@ class FormItem extends BaseComponent {
                 <div className={`${clsPrefix}--cell`}>
                     {this.props.children}
                     {
-                        this.props.error.isError ?
+                        this.props.error.error ?
                         (<div className={`${clsPrefix}--error`}>{this.props.error.message}</div>)
                         : null
                     }
@@ -33,7 +33,7 @@ FormItem.propTypes = {
     label: PropTypes.string,
     labelType: PropTypes.oneOf(['primary', 'minor']),
     error: PropTypes.shape({
-        isError: PropTypes.bool,
+        error: PropTypes.bool,
         message: PropTypes.string,
     }),
     layout: PropTypes.oneOf(['top', 'middle']),
@@ -46,7 +46,7 @@ FormItem.defaultProps = {
     label: '',
     labelType: 'primary',
     error: {
-        isError: false,
+        error: false,
         message: '',
     },
     layout: 'middle',
