@@ -46,8 +46,7 @@ class HouseAddress extends BaseComponent {
     }
     handleBlur({ name, value }) {
         const error = validateBaseInfo.houseAddress({
-            buildNo: this.props.buildNo,
-            houseNo: this.props.houseNo,
+            ...this.props.houseAddress,
             [name]: value,
         });
         this.setState({
@@ -62,7 +61,6 @@ class HouseAddress extends BaseComponent {
         const clsPrefix = 'c-house-address';
         const { buildNo, unitNo, houseNo } = this.props.houseAddress;
         const { error } = this.state;
-        console.log(error)
         return (
             <FormItem
                 label="房源地址"
