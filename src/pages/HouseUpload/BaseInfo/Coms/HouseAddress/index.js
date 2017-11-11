@@ -36,8 +36,11 @@ class HouseAddress extends BaseComponent {
         this.setState({
             error: {
                 ...this.state.error,
-                [name]: {
-                    error: false,
+                sub: {
+                    ...this.state.error.sub,
+                    [name]: {
+                        error: false,
+                    },
                 },
             },
         });
