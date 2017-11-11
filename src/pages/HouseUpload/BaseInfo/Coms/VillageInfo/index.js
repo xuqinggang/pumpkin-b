@@ -4,13 +4,15 @@ import BaseComponent from 'components/BaseComponent/index';
 import { FormItem } from 'components/Form/index';
 import SearchSelect from 'components/SearchSelect/index';
 import { setVillageInfo } from '../../actions';
+import { validateBaseInfo } from '../../../Coms/ValidateData';
+import { hideValidateError } from '../../../actions';
 
 class VillageInfo extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
             error: {
-                isError: false,
+                error: false,
                 message: '',
             },
             options: [
@@ -28,10 +30,18 @@ class VillageInfo extends BaseComponent {
                 },
             ],
         };
-        this.autoBind('handleSelect', 'handleSearch');
+        this.autoBind('handleSelect', 'handleSearch', 'handleBlur');
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            error: {
+                ...nextProps.error,
+            },
+        });
     }
     handleSearch({ search }) {
         this.props.dispatch(setVillageInfo(search));
+        this.props.dispatch(hideValidateError({ pageType: 'baseInfo' }));
         this.setState({
             options: [
                 {
@@ -41,18 +51,27 @@ class VillageInfo extends BaseComponent {
             ],
         });
     }
+    handleBlur({ search }) {
+        const error = validateBaseInfo.village(search);
+        this.setState({
+            error: {
+                ...error,
+            },
+        });
+    }
     render() {
         const clsPrefix = 'c-village-info';
         return (
             <FormItem
                 label="选择小区"
                 className={clsPrefix}
-                error={{ isError: this.state.error.isError, message: '小区名称不得为空   or   系统暂无该小区，请仔细核对名称或联系客服' }}
+                error={this.state.error}
             >
                 <SearchSelect
                     search={this.props.search}
                     onChange={this.handleSearch}
                     options={this.state.options}
+                    onBlur={this.handleBlur}
                 />
             </FormItem>
         );
@@ -60,7 +79,18 @@ class VillageInfo extends BaseComponent {
 }
 
 export default connect(
-    state => ({
-        search: state.houseUpload.baseInfo.village,
-    }),
+    (state) => {
+        let error = {
+            error: false,
+            message: '',
+        };
+        const baseInfoError = state.houseUpload.validateError.baseInfo;
+        if (baseInfoError && baseInfoError.type === 'village') {
+            error = baseInfoError;
+        }
+        return {
+            error,
+            search: state.houseUpload.baseInfo.village,
+        };
+    },
 )(VillageInfo);
