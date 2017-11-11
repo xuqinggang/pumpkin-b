@@ -3,71 +3,123 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
+import ConfirmDialog from 'components/ConfirmDialog/index';
 import UploadHeader from '../Coms/UploadHeader/index';
 import SingleRoomInfo from './SingleRoomInfo';
 import AddRoomButton from './Coms/AddRoomButton/index';
 import RoomHeader from './Coms/RoomHeader/index';
 import RoomFold from './Coms/RoomFold/index';
+import { delRoomInfo, addRoomInfo } from './actions';
 import './style.less';
-
-const creatNDimArray = (num, value) => {
-    const arr = [];
-    for (let i = 0; i < num; i += 1) {
-        arr.push(value);
-    }
-    return arr;
-};
-
-const notSingleNum = (num) => {
-    if (num >= 0 && num <= 9) {
-        return `0${num}`;
-    }
-    return `${num}`;
-};
 
 class HouseUpload extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            editing: 0,
+            editingRoomKey: 0,
+            dialogHide: true,
         };
-        this.autoBind('handleAddRoom');
+        this.autoBind(
+            'handleAddRoom',
+            'handleEdit',
+            'handleDialogConfirm',
+            'handleDialogCancel',
+            'handleDel',
+        );
+    }
+    componentWillReceiveProps(nextProps) {
+        let { editingRoomKey } = this.state;
+        if (nextProps.roomKeys.length === 1) {
+            editingRoomKey = nextProps.roomKeys[0];
+        }
+        // 房间增加
+        if (nextProps.roomKeys.length > this.props.roomKeys.length) {
+            editingRoomKey = nextProps.roomKeys[nextProps.roomKeys.length - 1];
+        }
+
+        this.setState({
+            editingRoomKey,
+        });
     }
     handleAddRoom() {
+        this.props.dispatch(addRoomInfo());
+    }
+    handleEdit(roomIndex) {
         this.setState({
-            editing: this.props.roomNum,
+            editingRoomKey: this.props.roomKeys[roomIndex],
+        });
+    }
+    delAnimation(roomIndex) {
+
+    }
+    handleDel(roomIndex) {
+        this.setState({
+            dialogHide: false,
+        });
+        this.handleDialogConfirm = () => {
+            this.setState({
+                dialogHide: true,
+            });
+            this.props.dispatch(delRoomInfo(roomIndex));
+        };
+    }
+    handleDialogCancel() {
+        this.setState({
+            dialogHide: true,
         });
     }
     render() {
         const clsPrefix = 'c-house-info';
         const clsSingleRoom = `${clsPrefix}--single-room`;
+        const { rentalType } = this.props;
+        const isEntireRent = rentalType === 0;
 
         return (
             <div className={clsPrefix}>
-                <UploadHeader>房间信息</UploadHeader>
+                <UploadHeader>{this.props.title}</UploadHeader>
 
                 {
-                    creatNDimArray(this.props.roomNum, null).map((item, index) => (
+                    this.props.roomKeys.map((key, index) => (
                         <div
                             className={classNames(clsSingleRoom, {
-                                [`${clsSingleRoom}__fold`]: this.state.editing !== index,
+                                [`${clsSingleRoom}__fold`]: this.state.editingRoomKey !== key,
                             })}
-                            key={index}
+                            key={key}
                         >
                             <div className={`${clsSingleRoom}--expand`}>
-                                <RoomHeader>{`卧室 ${notSingleNum(index + 1)}`}</RoomHeader>
+                                {
+                                    isEntireRent ? null :
+                                    <RoomHeader
+                                        index={index}
+                                        onDel={this.handleDel}
+                                    />
+                                }
                                 <SingleRoomInfo index={index} />
                             </div>
                             <div className={`${clsSingleRoom}--fold`}>
-                                <RoomFold index={index} />
+                                <RoomFold
+                                    index={index}
+                                    onEdit={this.handleEdit}
+                                    onDel={this.handleDel}
+                                />
                             </div>
                         </div>
 
                     ))
                 }
-                <AddRoomButton
-                    onClick={this.handleAddRoom}
-                />
+                {
+                    isEntireRent ? null :
+                    <AddRoomButton
+                        onClick={this.handleAddRoom}
+                    />
+                }
+                <ConfirmDialog
+                    hide={this.state.dialogHide}
+                    onConfirm={this.handleDialogConfirm}
+                    onCancel={this.handleDialogCancel}
+                >
+                    确定要删除此房间吗？
+                </ConfirmDialog>
             </div>
         );
     }
@@ -83,9 +135,11 @@ HouseUpload.defaultProps = {
 
 export default connect(
     (state) => {
-        const roomNum = state.houseUpload.roomInfo.length;
+        const roomKeys = state.houseUpload.roomInfo.map(item => (item.key));
+        const rentalType = state.houseUpload.commonInfo.rentalType;
         return {
-            roomNum,
+            roomKeys,
+            rentalType,
         };
     },
 )(HouseUpload);
