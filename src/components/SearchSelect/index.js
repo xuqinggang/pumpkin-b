@@ -60,6 +60,9 @@ class SearchSelect extends BaseComponent {
         this.setState({
             expand: false,
         });
+        if (this.props.onBlur) {
+            this.props.onBlur({ search: this.props.search });
+        }
     }
     handleOptionsClick(item) {
         if (this.props.onChange) {
@@ -192,6 +195,7 @@ SearchSelect.defaultProps = {
     options: [],
     onChange: null,
     className: '',
+    onBlur: null,
 };
 
 SearchSelect.propTypes = {
@@ -204,6 +208,7 @@ SearchSelect.propTypes = {
     options: optionListType,
     onChange: PropTypes.func,
     className: PropTypes.string,
+    onBlur: PropTypes.func,
 };
 
 export default SearchSelect;
