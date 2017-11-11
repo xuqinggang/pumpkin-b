@@ -33,11 +33,13 @@ class VillageInfo extends BaseComponent {
         this.autoBind('handleSelect', 'handleSearch', 'handleBlur');
     }
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            error: {
-                ...nextProps.error,
-            },
-        });
+        if (nextProps.error.error) {
+            this.setState({
+                error: {
+                    ...nextProps.error,
+                },
+            });
+        }
     }
     handleSearch({ search }) {
         this.props.dispatch(setVillageInfo(search));
