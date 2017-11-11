@@ -1,22 +1,32 @@
 .c-house-info {
     &--single-room {
+        margin-bottom: 32px;
+
         &--fold {
-            display: none;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: opacity 0.5s;
+            transition-delay: 0.2s;
         }
 
         &--expand {
+            opacity: 1;
             max-height: 1000px;
             transition: all 0.3s;
         }
 
         &__fold {
             .c-house-info--single-room--fold {
-                display: block;
+                opacity: 1;
+                height: auto;
+                overflow: auto;
             }
 
             .c-house-info--single-room--expand {
+                opacity: 0;
                 max-height: 0;
-                transform: scale(1, 0);
+                overflow: hidden;
             }
         }
     }
