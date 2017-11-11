@@ -1,22 +1,22 @@
 const initialState = {
-    rentalType: 0,
+    rentalType: null,
     houseType: {
-        room: 0,
+        room: 1,
         saloon: 0,
         toilet: 0,
     },
     village: {
-        value: null,
+        value: '',
         text: '',
     },
     houseFloor: {
-        curFloor: 1,
-        totalFloor: 1,
+        curFloor: '',
+        totalFloor: '',
     },
     houseAddress: {
-        buildNo: null,
-        unitNo: null,
-        houseNo: null,
+        buildNo: '',
+        unitNo: '',
+        houseNo: '',
     },
     keeperInfo: {
         name: '',
@@ -38,7 +38,7 @@ const baseInfo = (state = initialState, action) => {
             ...state,
             houseType: {
                 ...state.houseType,
-                [action.roomType]: action.number,
+                [action.roomType]: action.value,
             },
         };
     }
@@ -56,7 +56,7 @@ const baseInfo = (state = initialState, action) => {
             ...state,
             houseFloor: {
                 ...state.houseFloor,
-                [action.name]: action.number,
+                [action.name]: action.value,
             },
         };
     }

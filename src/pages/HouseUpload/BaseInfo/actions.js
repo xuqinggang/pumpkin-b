@@ -3,9 +3,9 @@ export const switchRentalType = value => ({
     type: 'house-upload.base-info.switchRentalType',
 });
 
-export const setHouseType = (roomType, number) => ({
+export const setHouseType = (roomType, value) => ({
     roomType,
-    number,
+    value,
     type: 'house-upload.base-info.setHouseType',
 });
 
@@ -15,9 +15,9 @@ export const setVillageInfo = ({ value, text }) => ({
     type: 'house-upload.base-info.setVillageInfo',
 });
 
-export const setHouseFloor = ({ name, number }) => ({
+export const setHouseFloor = ({ name, value }) => ({
     name,
-    number,
+    value,
     type: 'house-upload.base-info.setHouseFloor',
 });
 
