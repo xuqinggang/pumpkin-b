@@ -4,19 +4,65 @@ import BaseComponent from 'components/BaseComponent/index';
 import Input from 'components/Input/index';
 import { FormItem } from 'components/Form/index';
 import NoteWord from '../../../Coms/NoteWord/index';
-import { setHouseFloor } from '../../actions';
+import { setHouseAddress } from '../../actions';
+import { validateBaseInfo, itemError } from '../../../Coms/ValidateData';
+import { hideValidateError } from '../../../actions';
 
 class HouseAddress extends BaseComponent {
     constructor(props) {
         super(props);
-        this.autoBind('handleChange');
+        this.state = {
+            error: {
+                error: false,
+                message: '',
+                sub: {
+                    buildNo: itemError({ type: 'buildNo' }),
+                    houseNo: itemError({ type: 'houseNo' }),
+                },
+            },
+        };
+        this.autoBind('handleChange', 'handleBlur');
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.error.error) {
+            this.setState({
+                error: {
+                    ...nextProps.error,
+                },
+            });
+        }
     }
     handleChange({ name, value }) {
-        this.props.dispatch(setHouseFloor({ name, value }));
+        this.setState({
+            error: {
+                ...this.state.error,
+                [name]: {
+                    error: false,
+                },
+            },
+        });
+        this.props.dispatch(setHouseAddress({ name, value }));
+        this.props.dispatch(hideValidateError('baseInfo'));
+    }
+    handleBlur({ name, value }) {
+        const error = validateBaseInfo.houseAddress({
+            buildNo: this.props.buildNo,
+            houseNo: this.props.houseNo,
+            [name]: value,
+        });
+        this.setState({
+            error,
+        });
+        // 非法string 置空
+        if (error.sub[name].error) {
+            this.props.dispatch(setHouseAddress({ name, value: '' }));
+        }
     }
     render() {
         const clsPrefix = 'c-house-address';
         const { buildNo, unitNo, houseNo } = this.props.houseAddress;
+        const { error } = this.state;
+        console.log(error)
         return (
             <FormItem
                 label="房源地址"
@@ -27,19 +73,22 @@ class HouseAddress extends BaseComponent {
                         name="buildNo"
                         value={buildNo}
                         onChange={this.handleChange}
+                        onBlur={this.handleBlur}
+                        error={error.sub.buildNo.error}
 
                     />
                     <NoteWord>栋</NoteWord>
                     <Input
                         name="unitNo"
                         value={unitNo}
-                        onChange={this.handleChange}
                     />
                     <NoteWord>单元</NoteWord>
                     <Input
                         name="houseNo"
                         value={houseNo}
                         onChange={this.handleChange}
+                        onBlur={this.handleBlur}
+                        error={error.sub.houseNo.error}
                     />
                     <NoteWord>号</NoteWord>
                 </div>
@@ -49,7 +98,22 @@ class HouseAddress extends BaseComponent {
 }
 
 export default connect(
-    state => ({
-        houseAddress: state.houseUpload.baseInfo.houseAddress,
-    }),
+    (state) => {
+        let error = {
+            error: false,
+            message: '',
+            sub: {
+                buildNo: itemError({ type: 'buildNo' }),
+                houseNo: itemError({ type: 'houseNo' }),
+            },
+        };
+        const baseInfoError = state.houseUpload.validateError.baseInfo;
+        if (baseInfoError && baseInfoError.type === 'houseAddress') {
+            error = baseInfoError;
+        }
+        return {
+            error,
+            houseAddress: state.houseUpload.baseInfo.houseAddress,
+        };
+    },
 )(HouseAddress);
