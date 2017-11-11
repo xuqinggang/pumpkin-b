@@ -5,55 +5,66 @@ import Input from 'components/Input/index';
 import { FormItem } from 'components/Form/index';
 import NoteWord from '../../../Coms/NoteWord/index';
 import { setHouseFloor } from '../../actions';
+import { hideValidateError } from '../../../actions';
+import { validateBaseInfo, itemError } from '../../../Coms/ValidateData';
 
 class HouseFloor extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
             error: {
-                curFloor: {
-                    error: false,
-                },
-                totalFloor: {
-                    error: false,
+                error: false,
+                message: '',
+                sub: {
+                    curFloor: itemError({ type: 'curFloor' }),
+                    totalFloor: itemError({ type: 'totalFloor' }),
                 },
             },
         };
         this.autoBind('handleChange', 'handleBlur');
     }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.error.error) {
+            this.setState({
+                error: {
+                    ...nextProps.error,
+                },
+            });
+        }
+    }
     handleChange({ name, value }) {
         this.setState({
             error: {
                 ...this.state.error,
-                [name]: {
-                    error: false,
+                sub: {
+                    ...this.state.error.sub,
+                    [name]: {
+                        error: false,
+                    },
                 },
             },
         });
-
         this.props.dispatch(setHouseFloor({ name, value }));
+        this.props.dispatch(hideValidateError('baseInfo'));
     }
     handleBlur({ name, value }) {
-        let processValue = value;
-        if (isNaN(Number(value))) {
-            processValue = '';
+        const error = validateBaseInfo.houseFloor({
+            ...this.props.houseFloor,
+            [name]: value,
+        });
+        this.setState({
+            error,
+        });
+        // 非法string 置空
+        if (error.sub[name].error) {
+            this.props.dispatch(setHouseFloor({ name, value: '' }));
         }
-        if (!processValue) {
-            this.setState({
-                error: {
-                    ...this.state.error,
-                    [name]: {
-                        error: true,
-                    },
-                },
-            });
-        }
-        this.props.dispatch(setHouseFloor({ name, value: processValue }));
     }
     render() {
         const clsPrefix = 'c-house-floor';
         const { curFloor, totalFloor } = this.props.houseFloor;
         const { error } = this.state;
+        console.log(error);
         return (
             <FormItem
                 label="房源楼层"
@@ -66,7 +77,7 @@ class HouseFloor extends BaseComponent {
                         value={curFloor}
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
-                        error={error.curFloor.error}
+                        error={error.sub.curFloor.error}
                     />
                     <NoteWord>层／共</NoteWord>
                     <Input
@@ -74,7 +85,7 @@ class HouseFloor extends BaseComponent {
                         value={totalFloor}
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
-                        error={error.totalFloor.error}
+                        error={error.sub.totalFloor.error}
                     />
                     <NoteWord>层</NoteWord>
                 </div>
@@ -84,7 +95,22 @@ class HouseFloor extends BaseComponent {
 }
 
 export default connect(
-    state => ({
-        houseFloor: state.houseUpload.baseInfo.houseFloor,
-    }),
+    (state) => {
+        let error = {
+            error: false,
+            message: '',
+            sub: {
+                curFloor: itemError({ type: 'curFloor' }),
+                totalFloor: itemError({ type: 'totalFloor' }),
+            },
+        };
+        const baseInfoError = state.houseUpload.validateError.baseInfo;
+        if (baseInfoError && baseInfoError.type === 'houseFloor') {
+            error = baseInfoError;
+        }
+        return {
+            error,
+            houseFloor: state.houseUpload.baseInfo.houseFloor,
+        };
+    },
 )(HouseFloor);
