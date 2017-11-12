@@ -45,7 +45,7 @@ class PriceInput extends BaseComponent {
                     values: val,
                 });
 
-                this.props.dispatch(changeRoomPrice(this.props.index, {
+                this.props.dispatch(changeRoomPrice(this.props.roomId, {
                     priceType: this.props.name,
                     values: val,
                 }));
@@ -63,7 +63,7 @@ class PriceInput extends BaseComponent {
         this.setState({
             values: val,
         });
-        this.props.dispatch(changeRoomPrice(this.props.index, {
+        this.props.dispatch(changeRoomPrice(this.props.roomId, {
             priceType: this.props.name,
             values: val,
         }));
@@ -117,11 +117,14 @@ PriceInput.propTypes = {
 
 export default ConnectContextToProps(connect(
     (state, props) => {
-        const values = state.houseUpload.roomInfo[props.index].priceInfo[props.name];
+        const roomInfo = state.houseUpload.roomInfo;
+        const roomIds = roomInfo.map(item => (item.roomId));
+
+        const values = roomInfo[roomIds.indexOf(props.roomId)].priceInfo[props.name];
         return {
             values,
         };
     },
 )(PriceInput), {
-    index: PropTypes.number,
+    roomId: PropTypes.number,
 });
