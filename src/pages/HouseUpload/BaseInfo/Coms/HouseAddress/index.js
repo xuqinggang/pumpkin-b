@@ -45,15 +45,25 @@ class HouseAddress extends BaseComponent {
             },
         });
         this.props.dispatch(setHouseAddress({ name, value }));
-        this.props.dispatch(hideValidateError('baseInfo'));
+        this.props.dispatch(hideValidateError({ pageType: 'baseInfo' }));
     }
     handleBlur({ name, value }) {
         const error = validateBaseInfo.houseAddress({
             ...this.props.houseAddress,
             [name]: value,
         });
+        // 只修改对应表单数据error
         this.setState({
-            error,
+            error: {
+                ...this.state.error,
+                error: error.error,
+                sub: {
+                    ...this.state.error.sub,
+                    [name]: {
+                        ...error.sub[name],
+                    },
+                },
+            },
         });
         // 非法string 置空
         if (error.sub[name].error) {

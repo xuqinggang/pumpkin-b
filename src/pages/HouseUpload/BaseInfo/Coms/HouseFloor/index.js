@@ -45,15 +45,25 @@ class HouseFloor extends BaseComponent {
             },
         });
         this.props.dispatch(setHouseFloor({ name, value }));
-        this.props.dispatch(hideValidateError('baseInfo'));
+        this.props.dispatch(hideValidateError({ pageType: 'baseInfo' }));
     }
     handleBlur({ name, value }) {
         const error = validateBaseInfo.houseFloor({
             ...this.props.houseFloor,
             [name]: value,
         });
+        // 只修改对应表单数据error
         this.setState({
-            error,
+            error: {
+                ...this.state.error,
+                error: error.error,
+                sub: {
+                    ...this.state.error.sub,
+                    [name]: {
+                        ...error.sub[name],
+                    },
+                },
+            },
         });
         // 非法string 置空
         if (error.sub[name].error) {
@@ -64,7 +74,6 @@ class HouseFloor extends BaseComponent {
         const clsPrefix = 'c-house-floor';
         const { curFloor, totalFloor } = this.props.houseFloor;
         const { error } = this.state;
-        console.log(error);
         return (
             <FormItem
                 label="房源楼层"
