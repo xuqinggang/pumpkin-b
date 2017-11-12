@@ -47,7 +47,6 @@ class KeeperInfo extends BaseComponent {
         });
         this.props.dispatch(setKeeperInfo({ name, value }));
         this.props.dispatch(hideValidateError({ pageType: 'baseInfo' }));
-
     }
     handleBlur({ name, value }) {
         const error = validateBaseInfo.keeperInfo({
@@ -69,7 +68,6 @@ class KeeperInfo extends BaseComponent {
         });
     }
     render() {
-        debugger
         const clsPrefix = 'c-keeper-info';
         const {
             name,
@@ -77,7 +75,6 @@ class KeeperInfo extends BaseComponent {
             imgUrl,
         } = this.props.keeperInfo;
         const { error } = this.state;
-        console.log(error);
         return (
             <FormItem
                 label="管家信息"
