@@ -30,7 +30,7 @@ class TextArea extends BaseComponent {
 
     handleBlur(event) {
         if (this.props.onBlur) {
-            this.props.onChange({ value: event.target.value, name: this.props.name });
+            this.props.onBlur({ value: event.target.value, name: this.props.name });
         }
     }
 
@@ -49,10 +49,12 @@ class TextArea extends BaseComponent {
         } = this.state;
         const error = this.props.error;
 
-        const cls = classNames('c-textarea', {
+        const clsPrefix = 'c-textarea';
+        const cls = classNames(clsPrefix, {
             error,
-            [this.props.size]: true,
+            [`${clsPrefix}__${this.props.size}`]: true,
             [this.props.className]: true,
+            [`${clsPrefix}__error`]: this.props.error,
         });
 
         return (
