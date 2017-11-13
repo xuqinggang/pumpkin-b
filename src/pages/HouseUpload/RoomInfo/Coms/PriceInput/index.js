@@ -7,6 +7,8 @@ import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import Input from 'components/Input/index';
 import NoteWord from '../../../Coms/NoteWord/index';
 import { changeRoomPrice } from '../../actions';
+import { hideValidateError } from '../../../actions';
+import { validateRoomInfo } from '../../../Coms/ValidateData';
 
 const defaultValues = (names) => {
     const values = {};
@@ -24,18 +26,69 @@ class PriceInput extends BaseComponent {
         this.state = {
             values,
             expand: false,
+            error: {
+                error: false,
+                message: '',
+                sub: {
+                    price: {
+                        error: false,
+                        message: '',
+                    },
+                    deposit: {
+                        error: false,
+                        message: '',
+                    },
+                },
+            },
         };
         this.autoBind('handleChange', 'handleBlur');
     }
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            values: nextProps.values,
-        });
+        if (nextProps.values !== this.props.values) {
+            this.setState({
+                values: nextProps.values,
+            });
+        }
+        if (nextProps.error.error !== this.props.error.error && nextProps.error.error) {
+            this.setState({
+                error: nextProps.error,
+            });
+        }
     }
-    handleBlur({ name }) {
+    handleBlur({ name, value }) {
+        // 错误校验
+        const error = validateRoomInfo.priceInfo({
+            ...this.state.values,
+            [name]: value,
+        }, { priceType: this.props.name });
+        // 只修改对应表单数据error
+        this.setState({
+            error: {
+                ...this.state.error,
+                error: error.error,
+                sub: {
+                    ...this.state.error.sub,
+                    [name]: {
+                        ...error.sub[name],
+                    },
+                },
+            },
+        });
+        // 非法string 置空
+        if (error.sub[name].error) {
+            this.props.dispatch(changeRoomPrice(this.props.roomId, {
+                priceType: this.props.name,
+                values: {
+                    ...this.state.values,
+                    [name]: '',
+                },
+            }));
+            return;
+        }
+
         switch (name) {
         case this.names[0]: {
-            if (this.state.values[name] && !this.state.expand) {
+            if (!this.state.expand) {
                 const val = {
                     ...this.state.values,
                     [this.names[1]]: this.state.values[name],
@@ -43,6 +96,15 @@ class PriceInput extends BaseComponent {
                 this.setState({
                     expand: true,
                     values: val,
+                    error: {
+                        ...this.state.error,
+                        sub: {
+                            ...this.state.error.sub,
+                            [this.names[1]]: {
+                                error: false,
+                            },
+                        },
+                    },
                 });
 
                 this.props.dispatch(changeRoomPrice(this.props.roomId, {
@@ -60,13 +122,25 @@ class PriceInput extends BaseComponent {
             ...this.state.values,
             [name]: value,
         };
+
         this.setState({
             values: val,
+            error: {
+                ...this.state.error,
+                sub: {
+                    ...this.state.error.sub,
+                    [name]: {
+                        error: false,
+                    },
+                },
+            },
         });
+
         this.props.dispatch(changeRoomPrice(this.props.roomId, {
             priceType: this.props.name,
             values: val,
         }));
+        this.props.dispatch(hideValidateError({ pageType: 'roomInfo' }));
     }
     render() {
         const { values } = this.state;
@@ -77,11 +151,11 @@ class PriceInput extends BaseComponent {
                 <FormItem
                     label={this.props.label}
                     labelType="minor"
+                    error={this.props.name === 'season' ? this.state.error.sub[this.names[0]] : { error: false }}
                 >
                     <Input
                         name={this.names[0]}
                         value={values[this.names[0]]}
-                        type="number"
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
                     />
@@ -91,12 +165,13 @@ class PriceInput extends BaseComponent {
                     label="押金"
                     labelType="minor"
                     style={!this.state.expand ? { display: 'none' } : null}
+                    error={this.props.name === 'season' ? this.state.error.sub[this.names[1]] : { error: false }}
                 >
                     <Input
                         name={this.names[1]}
                         value={values[this.names[1]]}
-                        type="number"
                         onChange={this.handleChange}
+                        onBlur={this.handleBlur}
                     />
                     <NoteWord>元／月</NoteWord>
                 </FormItem>
@@ -120,8 +195,30 @@ export default ConnectContextToProps(connect(
         const roomInfo = state.houseUpload.roomInfo;
         const roomIds = roomInfo.map(item => (item.roomId));
 
+        let error = {
+            error: false,
+            sub: {
+                price: {
+                    error: false,
+                    message: '',
+                },
+                deposit: {
+                    error: false,
+                    message: '',
+                },
+            },
+        };
+        const roomInfoError = state.houseUpload.validateError.roomInfo;
+        if (roomInfoError &&
+            roomInfoError.roomId === props.roomId &&
+            roomInfoError.type === 'priceInfo' &&
+            roomInfoError.sub[props.name]) {
+            error = roomInfoError.sub[props.name];
+        }
+
         const values = roomInfo[roomIds.indexOf(props.roomId)].priceInfo[props.name];
         return {
+            error,
             values,
         };
     },
