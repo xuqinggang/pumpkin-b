@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import PropTypes from 'prop-types';
-import { nextStep } from '../../actions';
+import { nextStep, showValidateError } from '../../actions';
+import { switchRoomExpand } from '../../RoomInfo/actions';
+import validateData from '../ValidateData/index';
 import './style.less';
 
 class UploadButton extends BaseComponent {
@@ -15,17 +17,45 @@ class UploadButton extends BaseComponent {
         this.props.onPrev();
     }
     handleNext() {
-        if (this.props.curPage === this.props.totalPage) {
-            // 校验
-            // 提交
-        } else {
-            // 校验
+        const pageType = this.props.pageType;
+        const data = this.props.data;
 
+        switch (pageType) {
+        case 'baseInfo': {
+            // 校验
+            const error = validateData({ type: pageType }, data[pageType]);
+            if (error.error) {
+                this.props.dispatch(showValidateError({ pageType, error }));
+                return;
+            }
             // 更改redux state
-            this.props.dispatch(nextStep(this.props.curPage));
+            this.props.dispatch(nextStep(this.props.pageType));
             // 下一步
-            this.props.onNext();
+            break;
         }
+        case 'roomInfo': {
+            const roomInfo = data[pageType];
+            for (let i = 0; i < roomInfo.length; i += 1) {
+                // 校验
+                const curRoomInfo = data[pageType][i];
+                const error = validateData({ type: pageType }, curRoomInfo);
+                if (error.error) {
+                    this.props.dispatch(showValidateError({
+                        pageType,
+                        error: {
+                            ...error,
+                            roomId: curRoomInfo.roomId,
+                        },
+                    }));
+                    this.props.dispatch(switchRoomExpand(curRoomInfo.roomId));
+                    return;
+                }
+            }
+            break;
+        }
+        default:
+        }
+        this.props.onNext();
     }
     render() {
         const clsPrefix = 'c-upload-button';
@@ -64,6 +94,7 @@ UploadButton.propTypes = {
     curPage: PropTypes.number,
     onPrev: PropTypes.func,
     onNext: PropTypes.func,
+    pageType: PropTypes.string,
 };
 
 UploadButton.defaultProps = {
@@ -71,6 +102,14 @@ UploadButton.defaultProps = {
     curPage: 1,
     onPrev: () => {},
     onNext: () => {},
+    pageType: '',
 };
 
-export default connect()(UploadButton);
+export default connect(
+    (state) => {
+        const data = state.houseUpload;
+        return {
+            data,
+        };
+    },
+)(UploadButton);
