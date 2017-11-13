@@ -1,34 +1,13 @@
-const singleRoomState = {
-    priceInfo: {
-        month: {
-            price: '',
-            deposit: '',
-        },
-        season: {
-            price: '',
-            deposit: '',
-        },
-        halfYear: {
-            price: '',
-            deposit: '',
-        },
-        year: {
-            price: '',
-            deposit: '',
-        },
-    },
-    roomTag: {
-        tags: ['首次出租', '集体供暖', '独立供暖', '有电梯', '独立阳台', '独立卫生间', '随时入住', '免押金', '免费保洁', '只能门锁', '支持月付', '可短租'],
-        active: [],
-        maxActive: 4,
-    },
-    brief: '',
-};
-
-const initialState = [singleRoomState];
+import initData from '../Coms/InitData/index';
 
 const singleRoomInfo = (state, action) => {
     switch (action.type) {
+    case 'house-upload.room-info.setRoomArea': {
+        return {
+            ...state,
+            roomArea: action.value,
+        };
+    }
     case 'house-upload.room-info.changePrice': {
         const priceType = action.priceType;
         const values = action.values;
@@ -89,18 +68,37 @@ const singleRoomInfo = (state, action) => {
     }
 };
 
-const roomInfo = (state = initialState, action) => {
+const roomInfo = (state = [], action) => {
     switch (action.type) {
     case 'house-upload.room-info.addRoomInfo': {
-        return state.concat(singleRoomState);
+        return state.map(item => ({
+            ...item,
+            expand: false,
+        })).concat(initData('roomInfo', { expand: true }));
     }
+    case 'house-upload.room-info.delRoomInfo': {
+        const newState = [].concat(state);
+        const roomIds = state.map(item => (item.roomId));
+        const roomIndex = roomIds.indexOf(action.roomId);
+        newState.splice(roomIndex, 1);
+        return newState;
+    }
+    case 'house-upload.room-info.switchRoomExpand': {
+        return state.map(item => ({
+            ...item,
+            expand: action.roomId === item.roomId,
+        }));
+    }
+    case 'house-upload.room-info.setRoomArea':
     case 'house-upload.room-info.changePrice':
     case 'house-upload.room-info.activeTags':
     case 'house-upload.room-info.delActiveTags':
     case 'house-upload.room-info.addTags':
     case 'house-upload.room-info.changeRoomBrief': {
         const newState = [].concat(state);
-        newState.splice(action.index, 1, singleRoomInfo(state[action.index], action));
+        const roomIds = state.map(item => (item.roomId));
+        const roomIndex = roomIds.indexOf(action.roomId);
+        newState.splice(roomIndex, 1, singleRoomInfo(state[roomIndex], action));
         return newState;
     }
     default:

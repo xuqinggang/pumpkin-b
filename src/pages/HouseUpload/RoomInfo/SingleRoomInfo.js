@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
 import Select from 'components/Select/index';
-import Input from 'components/Input/index';
-import NoteWord from '../Coms/NoteWord/index';
+import RoomArea from './Coms/RoomArea/index';
 import RoomBrief from './Coms/RoomBrief/index';
 import RoomTag from './Coms/RoomTag/index';
 import PriceInput from './Coms/PriceInput/index';
@@ -13,7 +12,7 @@ import './style.less';
 
 class SingleRoomInfo extends BaseComponent {
     getChildContext() {
-        return { index: this.props.index };
+        return { roomId: this.props.roomId };
     }
     render() {
         const clsPrefix = 'c-house-info';
@@ -22,14 +21,8 @@ class SingleRoomInfo extends BaseComponent {
 
         return (
             <div className={clsPrefix}>
+                <RoomArea />
                 <Form>
-                    <FormItem
-                        label="房间面积"
-                        className={clsItem}
-                    >
-                        <Input />
-                        <NoteWord>平米</NoteWord>
-                    </FormItem>
                     <FormItem
                         label="房源朝向"
                         className={clsItem}
@@ -109,15 +102,15 @@ class SingleRoomInfo extends BaseComponent {
 }
 
 SingleRoomInfo.propTypes = {
-    index: PropTypes.number.isRequired,
+    roomId: PropTypes.number.isRequired,
 };
 
 SingleRoomInfo.defaultProps = {
-    index: PropTypes.number,
+    roomId: PropTypes.number,
 };
 
 SingleRoomInfo.childContextTypes = {
-    index: PropTypes.number,
+    roomId: PropTypes.number,
 };
 
 export default SingleRoomInfo;

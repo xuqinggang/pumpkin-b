@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import Tag, { TagPlaceholder } from 'components/Tag/index';
+import { switchRoomExpand } from '../../actions';
 import './style.less';
 
 const switchReturn = (value, returnValue) => {
@@ -31,15 +32,22 @@ class RoomFold extends BaseComponent {
         super(props);
         this.priceType = ['month', 'season', 'halfYear', 'year'];
         this.priceNames = ['月付价', '季付价', '半年价', '年付价'];
+        this.autoBind('handleEditClick', 'handleDelClick');
+    }
+    handleEditClick() {
+        this.props.dispatch(switchRoomExpand(this.props.roomId));
+        this.props.onEdit(this.props.roomId);
+    }
+    handleDelClick() {
+        this.props.onDel(this.props.roomId);
     }
     render() {
         const clsPrefix = 'c-room-fold';
         return (
             <div className={clsPrefix}>
                 <div className={`${clsPrefix}--base`}>
-                    <div className={`${clsPrefix}--base-title`}>{`卧室${notSingleNum(this.props.index + 1)}`}</div>
+                    <div className={`${clsPrefix}--base-title`}>{`卧室${notSingleNum(this.props.roomIndex + 1)}`}</div>
                     <div className={`${clsPrefix}--base-info`}><span>16平米</span> | <span>南北</span></div>
-                    <Button>编辑</Button>
                 </div>
                 <div className={`${clsPrefix}--price`}>
                     {this.priceType.map((item, index) => (
@@ -68,25 +76,48 @@ class RoomFold extends BaseComponent {
                         ))
                     }
                 </div>
+                <div className={`${clsPrefix}--operate`}>
+                    <Button type="confirm" onClick={this.handleEditClick}>编辑</Button>
+                    {
+                        this.props.roomNum <= 1 ? null :
+                        <Button
+                            className={`${clsPrefix}--operate-btn`}
+                            onClick={this.handleDelClick}
+                        >删除</Button>
+                    }
+                </div>
             </div>
         );
     }
 }
 
 RoomFold.propTypes = {
-    index: PropTypes.number.isRequired,
+    roomId: PropTypes.number.isRequired,
+    onEdit: PropTypes.func,
+    onDel: PropTypes.func,
+};
+
+RoomFold.defaultProps = {
+    onEdit: () => {},
+    onDel: () => {},
 };
 
 export default connect(
     (state, props) => {
+        const roomInfo = state.houseUpload.roomInfo;
+        const roomIds = roomInfo.map(item => (item.roomId));
+        const roomIndex = roomIds.indexOf(props.roomId);
         const {
             priceInfo,
             roomTag,
             brief,
-        } = state.houseUpload.roomInfo[props.index];
+        } = roomInfo[roomIndex];
+        const roomNum = roomIds.length;
         return {
             priceInfo,
             brief,
+            roomNum,
+            roomIndex,
             tags: roomTag.active,
         };
     },

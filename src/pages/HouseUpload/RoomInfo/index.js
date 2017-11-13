@@ -10,57 +10,41 @@ import AddRoomButton from './Coms/AddRoomButton/index';
 import RoomHeader from './Coms/RoomHeader/index';
 import RoomFold from './Coms/RoomFold/index';
 import { delRoomInfo, addRoomInfo } from './actions';
+
 import './style.less';
 
 class HouseUpload extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            editingRoomKey: 0,
+            delRoomId: -1,
             dialogHide: true,
         };
         this.autoBind(
             'handleAddRoom',
-            'handleEdit',
             'handleDialogConfirm',
             'handleDialogCancel',
             'handleDel',
         );
     }
-    componentWillReceiveProps(nextProps) {
-        let { editingRoomKey } = this.state;
-        if (nextProps.roomKeys.length === 1) {
-            editingRoomKey = nextProps.roomKeys[0];
-        }
-        // 房间增加
-        if (nextProps.roomKeys.length > this.props.roomKeys.length) {
-            editingRoomKey = nextProps.roomKeys[nextProps.roomKeys.length - 1];
-        }
-
-        this.setState({
-            editingRoomKey,
-        });
-    }
     handleAddRoom() {
         this.props.dispatch(addRoomInfo());
     }
-    handleEdit(roomIndex) {
-        this.setState({
-            editingRoomKey: this.props.roomKeys[roomIndex],
-        });
-    }
-    delAnimation(roomIndex) {
-
-    }
-    handleDel(roomIndex) {
+    handleDel(roomId) {
         this.setState({
             dialogHide: false,
         });
         this.handleDialogConfirm = () => {
             this.setState({
                 dialogHide: true,
+                delRoomId: roomId,
             });
-            this.props.dispatch(delRoomInfo(roomIndex));
+            window.setTimeout(() => {
+                this.setState({
+                    delRoomId: -1,
+                });
+                this.props.dispatch(delRoomInfo(roomId));
+            }, 500);
         };
     }
     handleDialogCancel() {
@@ -77,34 +61,33 @@ class HouseUpload extends BaseComponent {
         return (
             <div className={clsPrefix}>
                 <UploadHeader>{this.props.title}</UploadHeader>
-
                 {
-                    this.props.roomKeys.map((key, index) => (
+                    this.props.roomIds.map(roomId => (
                         <div
                             className={classNames(clsSingleRoom, {
-                                [`${clsSingleRoom}__fold`]: this.state.editingRoomKey !== key,
+                                [`${clsSingleRoom}__fold`]: this.props.expandRoomId !== roomId,
                             })}
-                            key={key}
+                            key={roomId}
                         >
                             <div className={`${clsSingleRoom}--expand`}>
                                 {
                                     isEntireRent ? null :
                                     <RoomHeader
-                                        index={index}
+                                        roomId={roomId}
                                         onDel={this.handleDel}
                                     />
                                 }
-                                <SingleRoomInfo index={index} />
+                                <SingleRoomInfo roomId={roomId} />
                             </div>
-                            <div className={`${clsSingleRoom}--fold`}>
+                            <div
+                                className={`${clsSingleRoom}--fold ${this.state.delRoomId === roomId ? `${clsSingleRoom}--fold__del` : ''}`}
+                            >
                                 <RoomFold
-                                    index={index}
-                                    onEdit={this.handleEdit}
+                                    roomId={roomId}
                                     onDel={this.handleDel}
                                 />
                             </div>
                         </div>
-
                     ))
                 }
                 {
@@ -135,10 +118,28 @@ HouseUpload.defaultProps = {
 
 export default connect(
     (state) => {
-        const roomKeys = state.houseUpload.roomInfo.map(item => (item.key));
+        let error = {
+            error: false,
+        };
+        const roomInfoError = state.houseUpload.validateError.roomInfo;
+        if (roomInfoError) {
+            error = roomInfoError;
+        }
+        const roomInfo = state.houseUpload.roomInfo;
+        const roomIds = roomInfo.map(item => (item.roomId));
+        let expandRoomId = -1;
+        roomInfo.some((item) => {
+            if (item.expand) {
+                expandRoomId = item.roomId;
+                return true;
+            }
+            return false;
+        });
         const rentalType = state.houseUpload.commonInfo.rentalType;
         return {
-            roomKeys,
+            error,
+            roomIds,
+            expandRoomId,
             rentalType,
         };
     },
