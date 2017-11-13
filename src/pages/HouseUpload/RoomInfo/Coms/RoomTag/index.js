@@ -21,13 +21,13 @@ class RoomTag extends BaseComponent {
         this.autoBind('handleTagClick', 'handleRemoveActiveTags', 'handleAddTags');
     }
     handleTagClick({ value }) {
-        this.props.dispatch(activeTags(this.props.index, { value }));
+        this.props.dispatch(activeTags(this.props.roomId, { value }));
     }
     handleRemoveActiveTags({ value }) {
-        this.props.dispatch(delActiveTags(this.props.index, { value }));
+        this.props.dispatch(delActiveTags(this.props.roomId, { value }));
     }
     handleAddTags({ value }) {
-        this.props.dispatch(addTags(this.props.index, { value }));
+        this.props.dispatch(addTags(this.props.roomId, { value }));
     }
     render() {
         const emptyTags = creatNDimArray(this.props.maxActive - this.props.activeTags.length, null);
@@ -51,7 +51,7 @@ class RoomTag extends BaseComponent {
                         }
                         {
                             emptyTags.map((item, index) => {
-                                if (index === 0) {
+                                if (this.props.activeTags.length === 0 && index === 0) {
                                     return (
                                         <TagPlaceholder active key={index} />
                                     );
@@ -82,7 +82,9 @@ class RoomTag extends BaseComponent {
 
 export default ConnectContextToProps(connect(
     (state, props) => {
-        const roomTag = state.houseUpload.roomInfo[props.index].roomTag;
+        const roomInfo = state.houseUpload.roomInfo;
+        const roomIds = roomInfo.map(item => (item.roomId));
+        const roomTag = roomInfo[roomIds.indexOf(props.roomId)].roomTag;
         return {
             tags: roomTag.tags,
             activeTags: roomTag.active,
@@ -90,5 +92,5 @@ export default ConnectContextToProps(connect(
         };
     },
 )(RoomTag), {
-    index: PropTypes.number,
+    roomId: PropTypes.number,
 });
