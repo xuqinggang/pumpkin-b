@@ -1,15 +1,19 @@
-const creat2DimArr = (num) => {
+const creatChamberArr = (num) => {
     const arr = [];
     for (let i = 0; i < num; i += 1) {
-        arr.push([]);
+        arr.push({ picUrls: [], deploys: [] });
     }
     return arr;
 };
 
-const initState = (type, extra) => {
+const initData = (type, extra) => {
     switch (type) {
-    case 'room-info': {
+    case 'roomInfo': {
+        const roomId = new Date().getTime();
         const singleRoomState = {
+            roomId,
+            expand: extra ? extra.expand : false, // 默认
+            roomArea: '',
             priceInfo: {
                 month: {
                     price: '',
@@ -37,7 +41,7 @@ const initState = (type, extra) => {
         };
         return [singleRoomState];
     }
-    case 'house-pics': {
+    case 'chamberInfo': {
         const {
             roomNum = 1,
             saloonNum = 1,
@@ -46,14 +50,18 @@ const initState = (type, extra) => {
         } = extra || {};
 
         return {
-            rooms: creat2DimArr(roomNum),
-            saloons: creat2DimArr(saloonNum),
-            toilets: creat2DimArr(toiletNum),
-            kitchens: creat2DimArr(kitchenNum),
+            rooms: creatChamberArr(roomNum),
+            saloons: creatChamberArr(saloonNum),
+            toilets: creatChamberArr(toiletNum),
+            kitchens: creatChamberArr(kitchenNum),
         };
     }
     default:
     }
 };
 
-export default initState;
+export {
+    creatChamberArr,
+};
+
+export default initData;
