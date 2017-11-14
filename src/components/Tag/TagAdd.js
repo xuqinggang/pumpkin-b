@@ -11,7 +11,7 @@ class TagAdd extends BaseComponent {
             value: '',
             editing: false,
         };
-        this.autoBind('handleClick', 'handleBlur', 'handleKeyDown');
+        this.autoBind('handleClick', 'handleBlur', 'handleKeyDown', 'handleChange');
     }
     handleClick() {
         this.setState({
@@ -20,6 +20,7 @@ class TagAdd extends BaseComponent {
         this.input.toFocus();
     }
     handleAdd() {
+        if (!this.state.value) return;
         this.props.onAdd({
             name: this.props.name,
             value: this.state.value,
@@ -27,6 +28,11 @@ class TagAdd extends BaseComponent {
         this.setState({
             value: '',
             editing: false,
+        });
+    }
+    handleChange({ value }) {
+        this.setState({
+            value,
         });
     }
     handleBlur() {
@@ -51,6 +57,7 @@ class TagAdd extends BaseComponent {
                     onBlur={this.handleBlur}
                     onKeyDown={this.handleKeyDown}
                     className={`${clsPrefix}--input`}
+                    onChange={this.handleChange}
                 />
                 <div
                     role="presentation"

@@ -6,6 +6,7 @@ import { valueType } from '../../base/types';
 const Tag = ({ name, value, erasable, status, onClick, children, className }) => {
     const handleClick = (e) => {
         e.stopPropagation();
+        if (status === 'disabled') return;
         onClick({
             name,
             value,

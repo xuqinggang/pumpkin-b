@@ -12,7 +12,7 @@ class TextArea extends BaseComponent {
         this.state = {
             value: props.value,
         };
-        this.autoBind('handleChange', 'handleKeyPress');
+        this.autoBind('handleChange', 'handleKeyPress', 'handleBlur');
     }
 
     componentWillReceiveProps(nextProps) {
@@ -25,6 +25,12 @@ class TextArea extends BaseComponent {
         this.setState({ value: event.target.value });
         if (this.props.onChange) {
             this.props.onChange({ value: event.target.value, name: this.props.name });
+        }
+    }
+
+    handleBlur(event) {
+        if (this.props.onBlur) {
+            this.props.onBlur({ value: event.target.value, name: this.props.name });
         }
     }
 
@@ -43,10 +49,12 @@ class TextArea extends BaseComponent {
         } = this.state;
         const error = this.props.error;
 
-        const cls = classNames('c-textarea', {
+        const clsPrefix = 'c-textarea';
+        const cls = classNames(clsPrefix, {
             error,
-            [this.props.size]: true,
+            [`${clsPrefix}__${this.props.size}`]: true,
             [this.props.className]: true,
+            [`${clsPrefix}__error`]: this.props.error,
         });
 
         return (
@@ -56,6 +64,7 @@ class TextArea extends BaseComponent {
                 value={value}
                 onChange={this.handleChange}
                 onKeyDown={this.handleKeyPress}
+                onBlur={this.handleBlur}
             />
         );
     }
@@ -67,6 +76,7 @@ TextArea.defaultProps = {
     value: '',
     name: '',
     onChange: null,
+    onBlur: null,
     onKeyPress: null,
     error: false,
     size: 'normal',
@@ -78,6 +88,7 @@ TextArea.propTypes = {
     value: PropTypes.string,
     name: PropTypes.string,
     onChange: PropTypes.func,
+    onBlur: PropTypes.func,
     onKeyPress: PropTypes.func,
     error: PropTypes.bool,
     size: uiSizeType,

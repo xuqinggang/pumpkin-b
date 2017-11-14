@@ -43,6 +43,7 @@ module.exports = {
             layouts: resolve('src/layouts'),
             pages: resolve('src/pages'),
             routes: resolve('src/routes'),
+            base: resolve('src/base'),
         },
     },
 
@@ -57,7 +58,7 @@ module.exports = {
         ...basePlugins(context),
         new HtmlWebpackPlugin({
             filename: 'indexTemplate.html',
-            template: '!!raw-loader!src/index.html',
+            template: 'src/index.html',
             hash: false,
             inject: true,
             minify: false,

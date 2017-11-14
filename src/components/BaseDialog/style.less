@@ -1,0 +1,27 @@
+.c-base-dialog {
+    text-align: center;
+    white-space: nowrap;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    .c-base-dialog--container {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: start;
+        white-space: normal;
+        padding: 20px;
+
+        &__bottom {
+            vertical-align: bottom;
+        }
+
+        &__top {
+            vertical-align: top;
+        }
+    }
+}

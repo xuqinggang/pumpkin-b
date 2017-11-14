@@ -1,6 +1,7 @@
 import App from '../App';
-import IndexPage from '../pages/IndexPage';
 import ListPage from '../pages/ListPage';
+import MainLayout from '../layouts/MainLayout';
+import HouseUploadPage from '../pages/HouseUpload/index';
 import NotFound from '../pages/NotFound';
 
 const routes = [
@@ -10,12 +11,17 @@ const routes = [
             {
                 path: '/',
                 exact: true,
-                component: IndexPage,
+                component: MainLayout('ss'),
             },
             {
                 path: '/list',
                 exact: true,
                 component: ListPage,
+            },
+            {
+                path: '/house-upload',
+                exact: true,
+                component: MainLayout(HouseUploadPage),
             },
             {
                 path: '*',
