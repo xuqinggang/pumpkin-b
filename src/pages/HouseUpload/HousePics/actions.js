@@ -2,11 +2,11 @@ export const uploadPics = (name, coords, picUrl) => ({
     name,
     coords,
     picUrl,
-    type: 'house-upload.house-pics.uploadPics',
+    type: 'house-upload.chamber-info.uploadPics',
 });
 
 export const removePics = (name, coords) => ({
     name,
     coords,
-    type: 'house-upload.house-pics.removePics',
+    type: 'house-upload.chamber-info.removePics',
 });
