@@ -7,6 +7,7 @@ import StepButton from './Coms/StepButton/index';
 import BaseInfo from './BaseInfo/index';
 import HousePics from './HousePics/index';
 import RoomInfo from './RoomInfo/index';
+import HouseDeploy from './HouseDeploy/index';
 import './style.less';
 
 class HouseUpload extends BaseComponent {
@@ -27,7 +28,11 @@ class HouseUpload extends BaseComponent {
             }, {
                 type: 'housePics',
                 component: HousePics,
-                describe: '房源信息',
+                describe: '房源照片',
+            }, {
+                type: 'houseDeploy',
+                component: HouseDeploy,
+                describe: '房源配置',
             },
         ];
 

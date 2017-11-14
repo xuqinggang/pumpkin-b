@@ -1,14 +1,39 @@
 import { combineReducers } from 'redux';
 import reduceReducers from 'reduce-reducers';
 import RoomInfoReducers from './RoomInfo/reducers';
-import HousePicsReducers from './HousePics/reducers';
+import ChamberInfoReducers from './Reducers/ChamberInfo';
 import BaseInfoReducers from './BaseInfo/reducers';
-import initState from './Coms/InitState/index';
+import initData, { creatChamberArr } from './Coms/InitData/index';
 
-// export default combineReducers({
-//     ...RoomInfoReducers,
-//     ...HousePicsReducers,
-// });
+const cropChamberArrWithRoomIds = (arr, { roomIds, number }) => {
+    if (roomIds !== undefined) {
+        return roomIds.map((roomId) => {
+            let roomItem = {
+                roomId,
+                ...creatChamberArr(1)[0],
+            };
+            arr.some((item) => {
+                if (item.roomId === roomId) {
+                    roomItem = item;
+                    return true;
+                }
+                return false;
+            });
+            return roomItem;
+        });
+    }
+    if (number !== undefined) {
+        let newArr = [].concat(arr);
+        if (arr.length > number) {
+            newArr.splice(number);
+        }
+        if (arr.length < number) {
+            newArr = newArr.concat(creatChamberArr(number - arr.length));
+        }
+        return newArr;
+    }
+};
+
 const commonInfo = (
     state = {
         rentalType: null,
@@ -29,7 +54,7 @@ const validateError = (
 export default reduceReducers(
     combineReducers({
         ...RoomInfoReducers,
-        ...HousePicsReducers,
+        ...ChamberInfoReducers,
         ...BaseInfoReducers,
         commonInfo,
         validateError,
@@ -41,9 +66,9 @@ export default reduceReducers(
             return state;
         }
         case 'house-upload.nextStep':
-            switch (action.curPage) {
-            case 1: {
-                // 当 切换出租类型 或 户型变化 时，初始化之后页面的数据)
+            switch (action.pageType) {
+            case 'baseInfo': {
+                // 当 出租类型变化 或 户型变化 时，初始化之后页面的数据
                 const rentalType = state.baseInfo.rentalType;
                 const {
                     room,
@@ -51,6 +76,7 @@ export default reduceReducers(
                     toilet,
                 } = state.baseInfo.houseType;
                 const lastHouseType = state.commonInfo.houseType;
+
                 if (state.commonInfo.rentalType === rentalType &&
                     lastHouseType.room === room &&
                     lastHouseType.saloon === saloon &&
@@ -66,37 +92,59 @@ export default reduceReducers(
                             ...state.baseInfo.houseType,
                         },
                     },
-                    roomInfo: initState('room-info'),
+                    roomInfo: initData('roomInfo', { expand: true }),
+                    chamberInfo: initData('chamberInfo'),
                 };
             }
-            case 2: {
+            case 'roomInfo': {
                 const {
                     room,
                     saloon,
                     toilet,
-                } = state.baseInfo.houseType;
+                } = state.commonInfo.houseType;
 
-                let newHousePics = state.housePics;
+                let newChamberInfo = state.chamberInfo;
                 if (state.commonInfo.rentalType === 0) {
                     // 整租
-                    newHousePics = initState('house-pics', {
-                        roomNum: room,
-                        saloonNum: saloon,
-                        toiletNum: toilet,
-                    });
+                    newChamberInfo = {
+                        ...state.chamberInfo,
+                        rooms: cropChamberArrWithRoomIds(
+                            state.chamberInfo.rooms,
+                            { number: room },
+                        ),
+                        saloons: cropChamberArrWithRoomIds(
+                            state.chamberInfo.saloons,
+                            { number: saloon },
+                        ),
+                        toilets: cropChamberArrWithRoomIds(
+                            state.chamberInfo.toilets,
+                            { number: toilet },
+                        ),
+                    };
                 }
                 if (state.commonInfo.rentalType === 1) {
                     // 合租
-                    newHousePics = initState('house-pics', {
-                        roomNum: state.roomInfo.length,
-                        saloonNum: saloon,
-                        toiletNum: toilet,
-                    });
+                    const roomIds = state.roomInfo.map(item => (item.roomId));
+                    newChamberInfo = {
+                        ...state.chamberInfo,
+                        rooms: cropChamberArrWithRoomIds(
+                            state.chamberInfo.rooms,
+                            { roomIds },
+                        ),
+                        saloons: cropChamberArrWithRoomIds(
+                            state.chamberInfo.saloons,
+                            { number: saloon },
+                        ),
+                        toilets: cropChamberArrWithRoomIds(
+                            state.chamberInfo.toilets,
+                            { number: toilet },
+                        ),
+                    };
                 }
 
                 return {
                     ...state,
-                    housePics: newHousePics,
+                    chamberInfo: newChamberInfo,
                 };
             }
             default:
