@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import BaseComponent from '../BaseComponent/index';
+import { errorType } from '../../base/types';
 import './style.less';
 
 class FormItem extends BaseComponent {
@@ -32,10 +33,7 @@ FormItem.propTypes = {
     children: PropTypes.node,
     label: PropTypes.string,
     labelType: PropTypes.oneOf(['primary', 'minor']),
-    error: PropTypes.shape({
-        error: PropTypes.bool,
-        message: PropTypes.string,
-    }),
+    error: errorType,
     layout: PropTypes.oneOf(['top', 'middle']),
     className: PropTypes.string,
     style: PropTypes.shape({}),
@@ -65,6 +63,11 @@ class Form extends BaseComponent {
                 })}
             >
                 {this.props.children}
+                {
+                    this.props.error.error ?
+                        (<div className={`${clsPrefix}--error`}>{this.props.error.message}</div>)
+                        : null
+                }
             </div>
         );
     }
@@ -73,12 +76,17 @@ class Form extends BaseComponent {
 Form.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
+    error: errorType,
     layout: PropTypes.oneOf(['horizontal', 'vertical']),
 };
 
 Form.defaultProps = {
     children: null,
     className: '',
+    error: {
+        error: false,
+        message: '',
+    },
     layout: 'vertical',
 };
 
