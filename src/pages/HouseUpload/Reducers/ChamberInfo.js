@@ -1,8 +1,9 @@
 import initData from '../Coms/InitData/index';
 
-const housePics = (state = initData('housePics'), action) => {
+// 负责页面HouseDeploy 和 HousePics 的数据管理
+const chamberInfo = (state = initData('chamberInfo'), action) => {
     switch (action.type) {
-    case 'house-upload.house-pics.uploadPics': {
+    case 'house-upload.chamber-info.uploadPics': {
         const name = action.name;
         const coords = action.coords;
         const picUrl = action.picUrl;
@@ -21,7 +22,7 @@ const housePics = (state = initData('housePics'), action) => {
             [name]: list,
         };
     }
-    case 'house-upload.house-pics.removePics': {
+    case 'house-upload.chamber-info.removePics': {
         const {
             name,
             coords,
@@ -47,5 +48,5 @@ const housePics = (state = initData('housePics'), action) => {
 };
 
 export default {
-    housePics,
+    chamberInfo,
 };
