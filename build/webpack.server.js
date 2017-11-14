@@ -39,6 +39,7 @@ module.exports = {
             layouts: resolve('src/layouts'),
             pages: resolve('src/pages'),
             routes: resolve('src/routes'),
+            base: resolve('src/base'),
         },
     },
 

@@ -1,22 +1,18 @@
 @import '../../less/mixins.less';
 
 .c-header {
-    .clear;
-
-    background: #fff;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-    display: flex;
+    position: fixed;
+    top: 0;
+    background: transparent;
     height: 60px;
+    width: 100%;
 
-    &--left {
-        width: 200px;
-    }
-
-    &--center {
-        flex: 1;
-    }
-
-    &--right {
-        width: 200px;
+    &--login {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        margin-right: 60px;
+        line-height: 60px;
     }
 }

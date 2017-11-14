@@ -1,4 +1,6 @@
 .c-form {
+    position: relative;
+
     &__horizontal {
         > .c-form-item {
             display: inline-block;
@@ -13,10 +15,15 @@
 
     &-item {
         font-size: 14px;
+        margin-bottom: 30px;
 
         &__primary {
             > label {
                 margin-right: 28px;
+            }
+
+            .c-form-item--cell {
+                width: 732px;
             }
         }
 
@@ -24,6 +31,13 @@
             > label {
                 margin-right: 16px;
             }
+
+            .c-form-item--cell {
+                width: auto;
+            }
+
+            margin-right: 22px;
+            margin-bottom: 30px;
         }
 
         &__top {
@@ -43,15 +57,16 @@
             font-size: 14px;
             display: inline-block;
             text-align: right;
+            line-height: 32px;
         }
 
         &--cell {
             display: inline-block;
             vertical-align: middle;
             position: relative;
-            white-space: nowrap;
         }
 
+        .c-form--error,
         &--error {
             font-size: 12px;
             line-height: 20px;

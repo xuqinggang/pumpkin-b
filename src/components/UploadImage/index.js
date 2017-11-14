@@ -19,11 +19,11 @@ class UploadImage extends BaseComponent {
     }
 
     handleFileChange() {
-        const { name, files } = this.inputFile;
+        const { files } = this.inputFile;
         if (files.length === 0) {
             return;
         }
-        this.props.onSelect(name, files[0]);
+        this.props.onSelect(this.props.name, files[0]);
         this.inputFile.value = null;
     }
 
@@ -49,7 +49,7 @@ class UploadImage extends BaseComponent {
                     ref={this.storeRef('inputFile')}
                     name="apic"
                     accept="image/x-png,image/gif,image/jpeg"
-                    multiple="multiple"
+                    multiple
                     onChange={this.handleFileChange}
                 />
                 {
@@ -65,6 +65,7 @@ class UploadImage extends BaseComponent {
 }
 
 UploadImage.defaultProps = {
+    name: '',
     picUrl: '',
     onSelect: () => {},
     error: false,
@@ -72,6 +73,7 @@ UploadImage.defaultProps = {
 };
 
 UploadImage.propTypes = {
+    name: PropTypes.string,
     picUrl: PropTypes.string,
     onSelect: PropTypes.func,
     error: PropTypes.bool,
