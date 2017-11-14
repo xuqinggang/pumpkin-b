@@ -51,6 +51,16 @@ class UploadButton extends BaseComponent {
                     return;
                 }
             }
+            // 更改redux state
+            this.props.dispatch(nextStep(this.props.pageType));
+            break;
+        }
+        case 'housePics': {
+            const error = validateData({ type: pageType }, data.chamberInfo);
+            if (error.error) {
+                this.props.dispatch(showValidateError({ pageType, error }));
+                return;
+            }
             break;
         }
         default:
@@ -82,7 +92,7 @@ class UploadButton extends BaseComponent {
                     onClick={this.handleNext}
                     type="confirm"
                 >
-                    {`${curPage === totalPage ? '提交' : '下一步'}`}
+                    {`${curPage === totalPage ? '完成上传' : '下一步'}`}
                 </Button>
             </div>
         );
