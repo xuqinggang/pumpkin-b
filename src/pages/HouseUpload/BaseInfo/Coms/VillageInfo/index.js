@@ -33,7 +33,7 @@ class VillageInfo extends BaseComponent {
         this.autoBind('handleSelect', 'handleSearch', 'handleBlur');
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.error.error) {
+        if (nextProps.error.error !== this.props.error.error && nextProps.error.error) {
             this.setState({
                 error: {
                     ...nextProps.error,
@@ -42,6 +42,12 @@ class VillageInfo extends BaseComponent {
         }
     }
     handleSearch({ search }) {
+        this.setState({
+            error: {
+                error: false,
+                message: '',
+            },
+        });
         this.props.dispatch(setVillageInfo(search));
         this.props.dispatch(hideValidateError({ pageType: 'baseInfo' }));
         this.setState({

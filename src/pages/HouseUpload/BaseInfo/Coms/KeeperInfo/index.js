@@ -25,7 +25,7 @@ class KeeperInfo extends BaseComponent {
         this.autoBind('handleChange', 'handleBlur');
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.error.error) {
+        if (nextProps.error.error !== this.props.error.error && nextProps.error.error) {
             this.setState({
                 error: {
                     ...nextProps.error,
