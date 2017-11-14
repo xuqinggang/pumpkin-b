@@ -1,13 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
 import UploadImage from 'components/UploadImage/index';
 import BaseComponent from 'components/BaseComponent/index';
 import PropTypes from 'prop-types';
-import { uploadPics, removePics } from '../../actions';
 import './style.less';
 
-class RoomImage extends BaseComponent {
+class AddImage extends BaseComponent {
     constructor(props) {
         super(props);
         this.autoBind('handleImageSelect', 'handleImageDel');
@@ -19,7 +17,7 @@ class RoomImage extends BaseComponent {
         } = this.props;
         const picUrl = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4234467682,519299782&fm=27&gp=0.jpg';
         if (this.props.forAdd) {
-            this.props.dispatch(uploadPics(name, coords, picUrl));
+            this.props.onAdd({ name, coords, value: picUrl });
         }
     }
     handleImageDel() {
@@ -27,10 +25,10 @@ class RoomImage extends BaseComponent {
             name,
             coords,
         } = this.props;
-        this.props.dispatch(removePics(name, coords));
+        this.props.onDel({ name, coords });
     }
     render() {
-        const clsPrefix = 'c-room-image';
+        const clsPrefix = 'c-add-image';
         const cls = classNames(clsPrefix, {
             [`${clsPrefix}__error`]: this.props.error,
         });
@@ -56,35 +54,24 @@ class RoomImage extends BaseComponent {
     }
 }
 
-RoomImage.propTypes = {
+AddImage.propTypes = {
     name: PropTypes.string,
+    picUrl: PropTypes.string,
     coords: PropTypes.arrayOf(PropTypes.number),
-    children: PropTypes.node,
     error: PropTypes.bool,
     forAdd: PropTypes.bool,
-
+    onAdd: PropTypes.func,
+    onDel: PropTypes.func,
 };
 
-RoomImage.defaultProps = {
+AddImage.defaultProps = {
     name: '',
+    picUrl: '',
     coords: [0, 0],
-    children: null,
     error: false,
     forAdd: false,
+    onAdd: () => {},
+    onDel: () => {},
 };
 
-export default connect(
-    (state, props) => {
-        const {
-            name,
-            coords,
-        } = props;
-        let picUrl = '';
-        if (!props.forAdd) {
-            picUrl = state.houseUpload.housePics[name][coords[0]][coords[1]];
-        }
-        return {
-            picUrl,
-        };
-    },
-)(RoomImage);
+export default AddImage;
