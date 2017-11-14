@@ -179,6 +179,37 @@ const validateRoomInfo = {
     },
 };
 
+const chamberError = (data, chamberType, dataType) => {
+    // validateType is oneOf 'picUrls' and 'deploys'
+    let error = itemError({ type: chamberType });
+    const chamberErrorMessageMap = {
+        picUrls: '请至少上传一张图片',
+        deploys: '配置不能为空',
+    };
+    data.some((item, index) => {
+        if (item[dataType].length === 0) {
+            error = {
+                ...error,
+                error: true,
+                chamberIndex: index,
+                message: chamberErrorMessageMap[dataType],
+            };
+            return true;
+        }
+        return false;
+    });
+    return error;
+};
+
+const validateChamberInfo = (dataType) => {
+    const validatePageInfo = {};
+    const chamberType = ['rooms', 'saloons', 'toilets', 'kitchens'];
+    chamberType.forEach((item) => {
+        validatePageInfo[item] = data => (chamberError(data, item, dataType));
+    });
+    return validatePageInfo;
+};
+
 const validate = {
     baseInfo: {
         fn: validateBaseInfo,
@@ -188,6 +219,14 @@ const validate = {
         fn: validateRoomInfo,
         seq: ['roomArea', 'priceInfo', 'roomTag', 'brief'],
     },
+    housePics: {
+        fn: validateChamberInfo('picUrls'),
+        seq: ['rooms', 'saloons', 'toilets', 'kitchens'],
+    },
+    houseDeploy: {
+        fn: validateChamberInfo('deploys'),
+        seq: ['rooms', 'saloons', 'toilets', 'kitchens'],
+    },
 };
 
 const validateData = (pageInfo, data) => {
@@ -196,6 +235,7 @@ const validateData = (pageInfo, data) => {
         const itemType = seq[i];
         const error = validate[pageInfo.type].fn[itemType](data[itemType]);
         if (error.error) {
+            error.pageType = pageInfo.type;
             return error;
         }
     }
