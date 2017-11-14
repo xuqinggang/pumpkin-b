@@ -22,9 +22,9 @@ class Input extends BaseComponent {
             value: nextProps.value,
         });
     }
-    handleBlur() {
+    handleBlur(event) {
         if (this.props.onBlur) {
-            this.props.onBlur({ name: this.props.name });
+            this.props.onBlur({ name: this.props.name, value: event.target.value });
         }
     }
     handleChange(event) {

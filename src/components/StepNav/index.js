@@ -17,7 +17,7 @@ const StepNavItem = ({ status, step }) => {
 };
 
 StepNavItem.propTypes = {
-    status: PropTypes.oneOf('ready', 'incomplete', 'complete'),
+    status: PropTypes.oneOf(['ready', 'incomplete', 'complete']),
     step: PropTypes.shape({
         value: PropTypes.number,
         text: PropTypes.string,
@@ -47,7 +47,7 @@ const StepNav = ({ steps, curStep }) => (
     <div className="c-step-nav">
         {
             steps.map((item, index) => (
-                <div style={{ display: 'inline-block' }}>
+                <div style={{ display: 'inline-block' }} key={index}>
                     <StepNavItem
                         status={cpItemStatus(curStep, index + 1)}
                         step={{ text: item, value: index + 1 }}

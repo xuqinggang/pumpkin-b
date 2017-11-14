@@ -49,7 +49,7 @@ class UploadImage extends BaseComponent {
                     ref={this.storeRef('inputFile')}
                     name="apic"
                     accept="image/x-png,image/gif,image/jpeg"
-                    multiple="multiple"
+                    multiple
                     onChange={this.handleFileChange}
                 />
                 {
