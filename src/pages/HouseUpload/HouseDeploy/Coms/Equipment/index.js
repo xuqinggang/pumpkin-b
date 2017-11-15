@@ -6,8 +6,14 @@ import { connectDragSource } from 'components/DnD/index';
 import './style.less';
 
 const equipmentMap = {
-    bed: {
+    BED: {
         text: '床',
+    },
+    TABLE: {
+        text: '桌子',
+    },
+    QUEENBED: {
+        text: '象棋',
     },
 };
 
@@ -30,7 +36,7 @@ class Equipment extends BaseComponent {
             <div className={cls}>
                 <div className={`${clsPrefix}--drag`}>
                     <i className={`${clsPrefix}--indicator`} />
-                    <span className={`${clsPrefix}--text`}>{equipmentMap[this.props.type].text}</span>
+                    <span className={`${clsPrefix}--text`}>{equipmentMap[this.props.value].text}</span>
                 </div>
                 {
                     this.props.onDel ?
@@ -50,11 +56,11 @@ class Equipment extends BaseComponent {
 }
 
 Equipment.defaultProps = {
-    type: 'bed',
+    value: 'BED',
     onDel: null,
 };
 Equipment.propTypes = {
-    type: PropTypes.oneOf(['bed']),
+    value: PropTypes.string,
     onDel: PropTypes.func,
 };
 
