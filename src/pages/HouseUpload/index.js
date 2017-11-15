@@ -52,6 +52,7 @@ class HouseUpload extends BaseComponent {
     }
     render() {
         const clsPrefix = 'p-house-upload';
+        const itemComponent = this.pageInfo[this.state.curPage - 1];
         return (
             <div className={clsPrefix}>
                 <PageHeader>房源上传</PageHeader>
@@ -63,18 +64,9 @@ class HouseUpload extends BaseComponent {
                     className={`${clsPrefix}--subPage`}
                 >
                     {
-                        this.pageInfo.map((item, index) => (
-                            <div
-                                key={index}
-                                style={{ display: `${index + 1 === this.state.curPage ? 'block' : 'none'}` }}
-                            >
-                                {
-                                    React.createElement(item.component, {
-                                        title: item.describe,
-                                    })
-                                }
-                            </div>
-                        ))
+                        React.createElement(itemComponent.component, {
+                            title: itemComponent.describe,
+                        })
                     }
                     <StepButton
                         curPage={this.state.curPage}
