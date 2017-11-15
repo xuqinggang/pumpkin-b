@@ -17,7 +17,7 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'jsx-a11y/label-has-for': 'off',
         'jsx-a11y/href-no-hash': "off",
-        'no-underscore-dangle': ['error', { 'allow': ['__INITIAL_STATE__'] }]
+        'no-underscore-dangle': ['error', { 'allow': ['__INITIAL_STATE__', '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] }]
     },
     settings: {
         'import/resolver': {

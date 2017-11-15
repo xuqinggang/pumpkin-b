@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const resolve = dir => path.resolve(__dirname, '..', dir);
 const baseConfig = require('../config');
 const basePlugins = require('./webpackConfig/basePlugins.js');
