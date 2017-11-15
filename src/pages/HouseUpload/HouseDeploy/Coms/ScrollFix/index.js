@@ -16,7 +16,7 @@ const getOffsetXY = (el) => {
     return { x, y };
 };
 
-class EquiContain extends BaseComponent {
+class ScrollFix extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,7 +36,7 @@ class EquiContain extends BaseComponent {
         }
     }
     componentDidMount() {
-        this.staticXY = getOffsetXY(this.equiContain);
+        this.staticXY = getOffsetXY(this.scrollFix);
         // this.staticLeft = this.equiContain.getBoundingClientRect().left;
         window.addEventListener('scroll', this.handleScroll);
     }
@@ -44,14 +44,15 @@ class EquiContain extends BaseComponent {
         window.removeEventListener('scroll', this.handleScroll);
     }
     render() {
-        const clsPrefix = 'c-equi-contain';
+        const clsPrefix = 'c-scroll-fix';
         const cls = classNames(clsPrefix, {
+            [this.props.className]: true,
             [`${clsPrefix}__${this.state.position}`]: true,
         });
         return (
             <div
                 className={cls}
-                ref={this.storeRef('equiContain')}
+                ref={this.storeRef('scrollFix')}
             >
                 {this.props.children}
             </div>
@@ -59,11 +60,13 @@ class EquiContain extends BaseComponent {
     }
 }
 
-EquiContain.defaultProps = {
+ScrollFix.defaultProps = {
+    className: '',
     children: null,
 };
-EquiContain.propTypes = {
+ScrollFix.propTypes = {
+    className: PropTypes.string,
     children: PropTypes.node,
 };
 
-export default EquiContain;
+export default ScrollFix;
