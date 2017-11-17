@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import './style.less';
 
-class ChamberHeader extends BaseComponent {
+class SubHeader extends BaseComponent {
     render() {
-        const clsPrefix = 'c-chamber-header';
+        const clsPrefix = 'c-sub-header';
         return (
             <div className={clsPrefix}>
                 <i className={`${clsPrefix}--icon`} />
@@ -15,12 +15,12 @@ class ChamberHeader extends BaseComponent {
     }
 }
 
-ChamberHeader.defaultProps = {
+SubHeader.defaultProps = {
     children: null,
 };
 
-ChamberHeader.propTypes = {
+SubHeader.propTypes = {
     children: PropTypes.node,
 };
 
-export default ChamberHeader;
+export default SubHeader;
