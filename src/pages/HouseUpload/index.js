@@ -66,18 +66,9 @@ class HouseUpload extends BaseComponent {
                         className={`${clsPrefix}--subPage`}
                     >
                         {
-                            this.pageInfo.map((item, index) => (
-                                <div
-                                    key={index}
-                                    style={{ display: `${index + 1 === this.state.curPage ? 'block' : 'none'}` }}
-                                >
-                                    {
-                                        React.createElement(item.component, {
-                                            title: item.describe,
-                                        })
-                                    }
-                                </div>
-                            ))
+                            React.createElement(itemComponent.component, {
+                                title: itemComponent.describe,
+                            })
                         }
                         <StepButton
                             curPage={this.state.curPage}
