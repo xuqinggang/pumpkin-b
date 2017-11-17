@@ -5,9 +5,9 @@
     <title></title>
 </head>
 <body>
-    <script charset="utf-8" type="text/javascript">
-        window.__INITIAL_STATE__ = <%- serverState %>;
+    <script charset="utf-8">
+        window.__INITIAL_STATE__ = {{{ serverState}}};
     </script>
-    <div id="root"><%- content %></div>
+    <div id="root">{{{content}}}</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MainLayout from 'layouts/MainLayout';
 import BaseComponent from 'components/BaseComponent/index';
 import PageHeader from 'components/PageHeader/index';
 import StepNav from 'components/StepNav/index';
@@ -54,29 +55,40 @@ class HouseUpload extends BaseComponent {
         const clsPrefix = 'p-house-upload';
         const itemComponent = this.pageInfo[this.state.curPage - 1];
         return (
-            <div className={clsPrefix}>
-                <PageHeader>房源上传</PageHeader>
-                <StepNav
-                    steps={this.pageInfo.map(item => (item.describe))}
-                    curStep={this.state.curPage}
-                />
-                <div
-                    className={`${clsPrefix}--subPage`}
-                >
-                    {
-                        React.createElement(itemComponent.component, {
-                            title: itemComponent.describe,
-                        })
-                    }
-                    <StepButton
-                        curPage={this.state.curPage}
-                        totalPage={this.pageInfo.length}
-                        onNext={this.handleNextStep}
-                        onPrev={this.handlePrevStep}
-                        pageType={this.pageInfo[this.state.curPage - 1].type}
+            <MainLayout>
+                <div className={clsPrefix}>
+                    <PageHeader>房源上传</PageHeader>
+                    <StepNav
+                        steps={this.pageInfo.map(item => (item.describe))}
+                        curStep={this.state.curPage}
                     />
+                    <div
+                        className={`${clsPrefix}--subPage`}
+                    >
+                        {
+                            this.pageInfo.map((item, index) => (
+                                <div
+                                    key={index}
+                                    style={{ display: `${index + 1 === this.state.curPage ? 'block' : 'none'}` }}
+                                >
+                                    {
+                                        React.createElement(item.component, {
+                                            title: item.describe,
+                                        })
+                                    }
+                                </div>
+                            ))
+                        }
+                        <StepButton
+                            curPage={this.state.curPage}
+                            totalPage={this.pageInfo.length}
+                            onNext={this.handleNextStep}
+                            onPrev={this.handlePrevStep}
+                            pageType={this.pageInfo[this.state.curPage - 1].type}
+                        />
+                    </div>
                 </div>
-            </div>
+            </MainLayout>
         );
     }
 }

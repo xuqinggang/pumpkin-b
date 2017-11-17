@@ -18,6 +18,7 @@ class Input extends BaseComponent {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.uncontroled) return;
         this.setState({
             value: nextProps.value,
         });
@@ -57,16 +58,17 @@ class Input extends BaseComponent {
         } = this.props;
 
         const clsPrefix = 'c-input';
+        const { className, style } = this.props;
         const cls = classNames(clsPrefix, {
-            [this.props.className]: true,
             [`${clsPrefix}__disabled`]: disabled,
             [`${clsPrefix}__error`]: error,
             [`${clsPrefix}__${size}`]: true,
-        });
+        }, className);
 
         return (
             <input
                 className={cls}
+                style={style}
                 type={type}
                 name={name}
                 value={this.state.value}
@@ -83,6 +85,7 @@ class Input extends BaseComponent {
 }
 
 Input.defaultProps = {
+    uncontroled: false,
     type: 'text',
     size: 'normal',
     disabled: false,
@@ -98,6 +101,7 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
+    uncontroled: PropTypes.bool,
     type: PropTypes.oneOf(['text', 'password', 'number']),
     size: PropTypes.oneOf(['normal', 'large']),
     disabled: PropTypes.bool,

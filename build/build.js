@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const fse = require('fs-extra');
 const webpackConfig = require('./webpack.config.js');
-const webpackExecutor = require('./webpackExecutor.js');
+const { webpackExecutor } = require('./utils.js');
 
 fse.remove('./dist')
     .then(() => {

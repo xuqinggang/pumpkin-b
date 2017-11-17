@@ -1,6 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const resolve = dir => path.resolve(__dirname, '..', dir);
 const baseConfig = require('../config');
 const basePlugins = require('./webpackConfig/basePlugins.js');
@@ -44,6 +44,8 @@ module.exports = {
             pages: resolve('src/pages'),
             routes: resolve('src/routes'),
             base: resolve('src/base'),
+            modules: resolve('src/modules'),
+            utils: resolve('src/utils'),
         },
     },
 
@@ -58,7 +60,7 @@ module.exports = {
         ...basePlugins(context),
         new HtmlWebpackPlugin({
             filename: 'indexTemplate.html',
-            template: '!!raw-loader!src/index.html',
+            template: 'src/index.html',
             hash: false,
             inject: true,
             minify: false,

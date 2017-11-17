@@ -7,13 +7,12 @@ import './style.less';
 class Overlay extends BaseComponent {
     render() {
         const clsPrefix = 'c-overlay';
+        const { className } = this.props;
         const cls = classNames(clsPrefix, {
             [`${clsPrefix}__modal`]: this.props.modal,
             [`${clsPrefix}__hide`]: this.props.hide,
         });
-        const contentCls = classNames(`${clsPrefix}--content`, {
-            [this.props.className]: true,
-        });
+        const contentCls = classNames(`${clsPrefix}--content`, className);
         return (
             <div className={cls}>
                 <div className={contentCls} >

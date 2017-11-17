@@ -1,7 +1,8 @@
 import App from '../App';
 import ListPage from '../pages/ListPage';
-import MainLayout from '../layouts/MainLayout';
+import IndexPage from '../pages/IndexPage';
 import HouseUploadPage from '../pages/HouseUpload/index';
+import ProfilePage from '../pages/ProfilePage';
 import NotFound from '../pages/NotFound';
 
 const routes = [
@@ -11,7 +12,7 @@ const routes = [
             {
                 path: '/',
                 exact: true,
-                component: MainLayout('ss'),
+                component: IndexPage,
             },
             {
                 path: '/list',
@@ -21,7 +22,12 @@ const routes = [
             {
                 path: '/house-upload',
                 exact: true,
-                component: MainLayout(HouseUploadPage),
+                component: HouseUploadPage,
+            },
+            {
+                path: '/profile',
+                exact: true,
+                component: ProfilePage,
             },
             {
                 path: '*',
