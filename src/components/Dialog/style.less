@@ -1,0 +1,49 @@
+@charset "UTF-8";
+@css-prefix-dialog: c-dialog;
+
+.@{css-prefix-dialog} {
+    background: #fff;
+    box-shadow: 0 2px 6px 1px rgba(92, 92, 92, 0.6);
+    border-radius: 3px;
+    position: absolute;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    padding: 40px 56px;
+
+    &--bottom {
+        bottom: 0;
+        top: auto;
+    }
+
+    &--header {
+        box-sizing: border-box;
+        font-size: 18px;
+        overflow: hidden;
+        line-height: 1;
+        margin-bottom: 30px;
+        text-align: center;
+
+        i {
+            background: red;
+            cursor: pointer;
+            display: block;
+            float: right;
+            font-size: 12px;
+            line-height: inherit;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &--body {
+        overflow-y: auto;
+    }
+
+    &--footer {
+        box-sizing: border-box;
+    }
+}

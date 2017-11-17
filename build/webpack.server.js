@@ -40,6 +40,8 @@ module.exports = {
             pages: resolve('src/pages'),
             routes: resolve('src/routes'),
             base: resolve('src/base'),
+            modules: resolve('src/modules'),
+            utils: resolve('src/utils'),
         },
     },
 

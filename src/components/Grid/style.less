@@ -1,0 +1,28 @@
+@charset "UTF-8";
+@grid-columns: 24;
+
+.loop(@counter) when (@counter <= @grid-columns) {
+    .c-col-@{counter} {
+        width: 100% * @counter/@grid-columns;
+        flex: 0 0 auto;
+    }
+
+    .c-col-offset-@{counter} {
+        margin-left: 100% * (@counter / @grid-columns);
+    }
+
+    .loop((@counter + 1));
+}
+
+.c-col {
+    box-sizing: border-box;
+    display: block;
+}
+
+.c-row {
+    display: flex;
+    width: 100%;
+    margin: 8px 0;
+
+    .loop(1);
+}

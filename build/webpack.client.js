@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const resolve = dir => path.resolve(__dirname, '..', dir);
 const baseConfig = require('../config');
@@ -43,6 +44,8 @@ module.exports = {
             pages: resolve('src/pages'),
             routes: resolve('src/routes'),
             base: resolve('src/base'),
+            modules: resolve('src/modules'),
+            utils: resolve('src/utils'),
         },
     },
 

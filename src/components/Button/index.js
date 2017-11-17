@@ -24,14 +24,14 @@ class Button extends BaseComponent {
 
     render() {
         const clsPrefix = 'c-button';
+        const { className, style } = this.props;
         const cls = classNames(clsPrefix, {
-            [this.props.className]: true,
             [`${clsPrefix}__${this.props.type}`]: true,
             [`${clsPrefix}__${this.props.size}`]: true,
             [`${clsPrefix}__disabled`]: this.props.disabled,
-        });
+        }, className);
         return (
-            <button className={cls} onClick={this.handleClick}>
+            <button className={cls} style={style} onClick={this.handleClick}>
                 {this.props.children}
             </button>
         );
