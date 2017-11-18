@@ -22,7 +22,7 @@ class ScrollFix extends BaseComponent {
         this.state = {
             position: 'static',
         };
-        this.autoBind('handleScroll');
+        this.autoBind('handleScroll', 'getClientHeight');
     }
     handleScroll() {
         if (this.staticXY.y < window.pageYOffset) {
@@ -34,6 +34,9 @@ class ScrollFix extends BaseComponent {
                 position: 'static',
             });
         }
+    }
+    getClientHeight() {
+        return this.scrollFix.clientHeight;
     }
     componentDidMount() {
         this.staticXY = getOffsetXY(this.scrollFix);
