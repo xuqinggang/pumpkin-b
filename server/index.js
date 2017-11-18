@@ -21,10 +21,13 @@ server.use(views(__dirname + '/views', {
   }
 }));
 
-serverRouter.get('/api', (ctx) => {
+serverRouter.get(/\/v1/, (ctx) => {
+    ctx.respond = false;
     proxy.web(ctx.req, ctx.res, {
-        target: 'http://www.test/com',
-        changeOrigin: true,
+        target: 'http://10.23.64.8',
+        headers: {
+            host: 'console.nanguazufang.com',
+        },
     });
 });
 
