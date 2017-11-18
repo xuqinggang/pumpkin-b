@@ -21,20 +21,28 @@ class EquipContain extends BaseComponent {
     }
     componentDidMount() {
         this.fetchEquipList();
+        // 占位
+        this.scrollPlaceHolder.style.height = `${this.scrollFix.getClientHeight()}px`;
+    }
+    componentDidUpdate() {
+        // 占位
+        this.scrollPlaceHolder.style.height = `${this.scrollFix.getClientHeight()}px`;
     }
     render() {
         const clsPrefix = 'c-equip-contain';
         return (
-            <ScrollFix className={clsPrefix}>
-                <UploadHeader>{this.props.title}</UploadHeader>
-                {
-                    this.state.equipList.map(item => (
-                        <div key={item} className={`${clsPrefix}--equipment`}>
-                            <Equipment value={item} />
-                        </div>
-                    ))
-                }
-            </ScrollFix>
+            <div ref={this.storeRef('scrollPlaceHolder')}>
+                <ScrollFix className={clsPrefix} ref={this.storeRef('scrollFix')}>
+                    <UploadHeader>{this.props.title}</UploadHeader>
+                    {
+                        this.state.equipList.map(item => (
+                            <div key={item} className={`${clsPrefix}--equipment`}>
+                                <Equipment value={item} />
+                            </div>
+                        ))
+                    }
+                </ScrollFix>
+            </div>
         );
     }
 }
