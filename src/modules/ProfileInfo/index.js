@@ -8,7 +8,6 @@ import ModifyPasswdModal from '../ModifyPasswdModal';
 import ModifyPhoneModal from '../ModifyPhoneModal';
 import './style.less';
 
-
 class ProfileInfo extends BaseComponent {
     constructor(props) {
         super(props);
