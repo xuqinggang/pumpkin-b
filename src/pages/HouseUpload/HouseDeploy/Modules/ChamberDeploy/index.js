@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
-import ChamberHeader from '../../Coms/ChamberHeader';
+import SubHeader from 'components/SubHeader/index';
 import Equipment from '../../Coms/Equipment/index';
 import DeployContain from '../../Coms/DeployContain/index';
 import { addDeploys, removeDeploys } from '../../actions';
@@ -66,7 +66,7 @@ class ChamberDeploy extends BaseComponent {
             <div
                 className={clsPrefix}
             >
-                <ChamberHeader>{setTitle(name, index, suffix)}</ChamberHeader>
+                <SubHeader>{setTitle(name, index, suffix)}</SubHeader>
                 <DeployContain
                     onDrop={this.handleDrop}
                 >
