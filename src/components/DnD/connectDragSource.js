@@ -1,7 +1,7 @@
 import React from 'react';
 import Drag from './drag';
 import BaseComponent from '../BaseComponent/index';
-import connectMonitor from '../ConnectMonitor';
+import monitorShape from './monitorShape';
 
 const connectDragSource = (lifeCycle, collect) => (DragSource) => {
     const defaultLifeCycle = {
@@ -19,8 +19,8 @@ const connectDragSource = (lifeCycle, collect) => (DragSource) => {
     };
 
     class Connect extends BaseComponent {
-        constructor(props) {
-            super(props);
+        constructor(props, context) {
+            super(props, context);
             this.autoBind(
                 'handleDragStart',
                 'handleDragEnd',
@@ -30,6 +30,8 @@ const connectDragSource = (lifeCycle, collect) => (DragSource) => {
                 draggable: canDrag(props),
                 extraProps: {},
             };
+
+            this.DnDMonitor = context['DnD-monitor'];
 
             this.dragMonitorData = {
                 isDragging: false,
@@ -49,7 +51,7 @@ const connectDragSource = (lifeCycle, collect) => (DragSource) => {
         }
         componentDidMount() {
             // 给所有的drag实例传递数据
-            this.props.listen('dnd-drop', (dropData) => {
+            this.DnDMonitor.listen('dnd-drop', (dropData) => {
                 const dragMonitorData = this.dragMonitorData;
                 this.dragMonitorData = {
                     ...dragMonitorData,
@@ -64,7 +66,7 @@ const connectDragSource = (lifeCycle, collect) => (DragSource) => {
         }
         handleDragStart() {
             const dragData = dragStart(this.props, this.monitor);
-            this.props.trigger('dnd-dragStart', dragData);
+            this.DnDMonitor.trigger('dnd-dragStart', dragData);
 
             this.dragMonitorData = {
                 ...this.dropMonitorData,
@@ -102,7 +104,10 @@ const connectDragSource = (lifeCycle, collect) => (DragSource) => {
             );
         }
     }
-    return connectMonitor(Connect);
+    Connect.contextTypes = {
+        'DnD-monitor': monitorShape,
+    };
+    return Connect;
 };
 
 export default connectDragSource;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Drop from './drop';
 import BaseComponent from '../BaseComponent/index';
-import connectMonitor from '../ConnectMonitor';
+import monitorShape from './monitorShape';
 
 const connectDropTarget = (lifeCycle, collect) => (DropTarget) => {
     const defaultLifeCycle = {
@@ -19,12 +19,14 @@ const connectDropTarget = (lifeCycle, collect) => (DropTarget) => {
     };
 
     class Connect extends BaseComponent {
-        constructor(props) {
-            super(props);
+        constructor(props, context) {
+            super(props, context);
             this.state = {
                 droppable: canDrop(props),
                 extraProps: {},
             };
+
+            this.DnDMonitor = context['DnD-monitor'];
 
             this.autoBind(
                 'handleDropChange',
@@ -55,14 +57,14 @@ const connectDropTarget = (lifeCycle, collect) => (DropTarget) => {
         }
         componentDidMount() {
             // 给所有的drop实例传递数据
-            this.props.listen('dnd-dragStart', (dragData) => {
+            this.DnDMonitor.listen('dnd-dragStart', (dragData) => {
                 this.dropMonitorData = {
                     ...this.dropMonitorData,
                     isDragging: true,
                     dragData,
                 };
             });
-            this.props.listen('dnd-dragEnd', () => {
+            this.DnDMonitor.listen('dnd-dragEnd', () => {
                 this.dropMonitorData = {
                     ...this.dropMonitorData,
                     isDragging: false,
@@ -100,7 +102,7 @@ const connectDropTarget = (lifeCycle, collect) => (DropTarget) => {
                 isOver: false,
                 dropData,
             };
-            this.props.trigger('dnd-drop', dropData);
+            this.DnDMonitor.trigger('dnd-drop', dropData);
         }
         render() {
             const props = this.props;
@@ -119,7 +121,10 @@ const connectDropTarget = (lifeCycle, collect) => (DropTarget) => {
             );
         }
     }
-    return connectMonitor(Connect);
+    Connect.contextTypes = {
+        'DnD-monitor': monitorShape,
+    };
+    return Connect;
 };
 
 export default connectDropTarget;
