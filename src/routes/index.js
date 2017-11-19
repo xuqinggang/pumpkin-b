@@ -3,6 +3,7 @@ import ListPage from '../pages/ListPage';
 import IndexPage from '../pages/IndexPage';
 import HouseUploadPage from '../pages/HouseUpload/index';
 import ProfilePage from '../pages/ProfilePage';
+import HouseManage from '../pages/HouseManage';
 import NotFound from '../pages/NotFound';
 
 const routes = [
@@ -23,6 +24,11 @@ const routes = [
                 path: '/house-upload',
                 exact: true,
                 component: HouseUploadPage,
+            },
+            {
+                path: '/house-manage',
+                exact: true,
+                component: HouseManage,
             },
             {
                 path: '/profile',
