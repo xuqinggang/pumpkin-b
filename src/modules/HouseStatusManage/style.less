@@ -1,0 +1,86 @@
+.m-house-status-manage {
+    width: 1118px;
+    background: #fff;
+    box-shadow: 0 2px 6px 1px #dcdcdc;
+    border-radius: 0 6px 6px 0;
+    position: relative;
+    padding: 24px 0;
+    white-space: nowrap;
+
+    &--indicator {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        display: block;
+        width: 10px;
+        background: rgba(243, 141, 57, 0.55);
+        vertical-align: middle;
+    }
+
+    &--info {
+        display: inline-block;
+        vertical-align: top;
+        width: 125px;
+        padding: 0 50px;
+
+        &--title {
+            height: 60px;
+            white-space: normal;
+        }
+
+        &--name {
+            font-size: 20px;
+            color: #333;
+        }
+
+        &--edit {
+            padding: 0;
+            background-color: #fff;
+            border: none;
+        }
+
+        &--address {
+            font-size: 14px;
+            color: #7e8183;
+            line-height: 20px;
+        }
+    }
+
+    &--rooms {
+        display: inline-block;
+        white-space: normal;
+        width: 880px;
+        margin-bottom: -56px;
+        max-height: 140px;
+        overflow: hidden;
+        transition: max-height 0.3s;
+
+        &__expand {
+            max-height: 1000px;
+        }
+
+        &-unit {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 56px;
+        }
+
+        &-indicator {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #efefef;
+        }
+    }
+
+    &--arrow {
+        position: absolute;
+        top: 30px;
+        right: 16px;
+
+        &:hover {
+            background-color: #f38d39;
+        }
+    }
+}
