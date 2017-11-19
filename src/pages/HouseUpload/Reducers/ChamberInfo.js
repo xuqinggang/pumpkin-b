@@ -42,6 +42,45 @@ const chamberInfo = (state = initData('chamberInfo'), action) => {
             [name]: list,
         };
     }
+    case 'house-upload.chamber-info.addDeploys': {
+        const name = action.name;
+        const coords = action.coords;
+        const value = action.value;
+        const list = [].concat(state[name]);
+
+        const chamberDeploys = state[name][coords[0]];
+        const deploys = [].concat(chamberDeploys.deploys);
+        deploys.push(value);
+
+        list[coords[0]] = {
+            ...chamberDeploys,
+            deploys,
+        };
+        return {
+            ...state,
+            [name]: list,
+        };
+    }
+    case 'house-upload.chamber-info.removeDeploys': {
+        const {
+            name,
+            coords,
+        } = action;
+        const list = [].concat(state[name]);
+
+        const chamberDeploys = state[name][coords[0]];
+        const deploys = [].concat(chamberDeploys.deploys);
+        deploys.splice(coords[1], 1);
+
+        list[coords[0]] = {
+            ...chamberDeploys,
+            deploys,
+        };
+        return {
+            ...state,
+            [name]: list,
+        };
+    }
     default:
         return state;
     }
