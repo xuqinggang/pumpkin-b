@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import houseUpload from './pages/HouseUpload/reducers';
+import houseUpload from 'modules/HouseEdit/reducers';
 
 export default combineReducers({
     houseUpload,
