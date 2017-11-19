@@ -13,3 +13,20 @@ export const isFloatNum = (str) => {
 };
 
 export const isPhoneNo = phone => (/^1[34578]\d{9}$/.test(phone));
+
+export const pageUrl = url => `/${url}`;
+
+export const splitArrayWithIndex = (arr, ...args) => {
+    const tempArr = [];
+    Array.prototype.forEach.call(args, (item) => {
+        tempArr.push(arr[item]);
+    });
+    return tempArr;
+};
+
+export const expandSingleNum = (num) => {
+    if (num >= 0 && num <= 9) {
+        return `0${num}`;
+    }
+    return `${num}`;
+};
