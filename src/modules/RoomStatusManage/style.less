@@ -1,0 +1,93 @@
+.m-room-status-manage {
+    display: inline-block;
+    vertical-align: middle;
+    width: 140px;
+    margin-left: 32px;
+
+    &--title {
+        font-size: 40px;
+        color: #5c5c5c;
+        line-height: 1;
+    }
+
+    &--indicator {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #6db197;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+
+    &--status {
+        font-size: 12px;
+        color: #6db197;
+    }
+
+    &--btn {
+        font-size: 12px;
+        color: #7e8183;
+        border: none;
+        margin-right: 16px;
+        padding: 0;
+        background-color: transparent;
+
+        &:hover {
+            cursor: pointer;
+            color: #f38d39;
+        }
+    }
+
+    &--operate {
+        margin-top: 24px;
+    }
+
+    &__published {
+        .m-room-status-manage {
+            &--status {
+                color: #6db197;
+            }
+
+            &--indicator {
+                background-color: #6db197;
+            }
+        }
+    }
+
+    &__offline {
+        .m-room-status-manage {
+            &--status {
+                color: #e3b63b;
+            }
+
+            &--indicator {
+                background-color: #e3b63b;
+            }
+        }
+    }
+
+    &__occupied {
+        .m-room-status-manage {
+            &--status {
+                color: #86c8d8;
+            }
+
+            &--indicator {
+                background-color: #86c8d8;
+            }
+        }
+    }
+
+    &__undetermined {
+        .m-room-status-manage {
+            &--status {
+                color: #ee9d31;
+            }
+
+            &--indicator {
+                background-color: #ee9d31;
+            }
+        }
+    }
+}
