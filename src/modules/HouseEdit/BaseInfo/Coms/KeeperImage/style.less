@@ -1,0 +1,21 @@
+.c-keeper-image {
+    font-size: 12px;
+    color: #8a8a8a;
+    position: relative;
+    display: inline-block;
+
+    &--note {
+        display: none;
+        width: 100%;
+    }
+
+    &__error {
+        .c-keeper-image--note {
+            display: block;
+            position: absolute;
+            color: #fa390b;
+            text-align: center;
+            line-height: 32px;
+        }
+    }
+}
