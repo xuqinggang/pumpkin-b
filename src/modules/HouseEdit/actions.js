@@ -1,4 +1,6 @@
-import initData from './Coms/InitData/index';
+import axios from 'axios';
+import initData from './coms/InitData/index';
+import { be2feAdapter } from './dataAdapter';
 
 export const nextStep = pageType => ({
     pageType,
@@ -33,17 +35,16 @@ export const initHouseEditData = houseId => (dispatch) => {
         };
         dispatch(initState(state));
     } else {
-        setTimeout(() => {
-            const state = {
-                baseInfo: { ...initData('baseInfo'), rentalType: 0 },
-                roomInfo: initData('roomInfo'),
-                chamberInfo: initData('chamberInfo'),
-                commonInfo: initData('commonInfo'),
-                validateError: initData('validateError'),
-                houseId,
-            };
-            dispatch(initState(state));
-        }, 5000);
+        axios.get(`/v1/houses/${houseId}`)
+            .then((res) => {
+                const state = {
+                    validateError: initData('validateError'),
+                    roomTags: initData('roomTags'),
+                    ...be2feAdapter(res.data.data),
+                    houseId,
+                };
+                dispatch(initState(state));
+            });
     }
 };
 
