@@ -30,3 +30,12 @@ export const expandSingleNum = (num) => {
     }
     return `${num}`;
 };
+
+export const num2Str = (num) => {
+    if (num === null) {
+        return '';
+    }
+    return num.toString();
+};
+
+export const str2Num = str => (Number(str));
