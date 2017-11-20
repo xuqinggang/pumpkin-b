@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import StepNav from 'components/StepNav/index';
-import StepButton from './Coms/StepButton/index';
+import StepButton from './coms/StepButton/index';
 import BaseInfo from './BaseInfo/index';
 import HousePics from './HousePics/index';
 import RoomInfo from './RoomInfo/index';
