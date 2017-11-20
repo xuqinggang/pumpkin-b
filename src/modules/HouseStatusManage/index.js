@@ -50,7 +50,10 @@ class HouseStatusManage extends BaseComponent {
                 >
                     {
                         rooms.map((item, index) => (
-                            <div className={`${clsPrefix}--rooms-unit`}>
+                            <div
+                                key={index}
+                                className={`${clsPrefix}--rooms-unit`}
+                            >
                                 {
                                     index % 5 === 0
                                         ? null
@@ -73,7 +76,7 @@ class HouseStatusManage extends BaseComponent {
 
 HouseStatusManage.propTypes = {
     houseId: PropTypes.number.isRequired,
-    rooms: PropTypes.arrayOf({}),
+    rooms: PropTypes.arrayOf(PropTypes.shape()),
     onEdit: PropTypes.func,
 };
 

@@ -1,4 +1,4 @@
-import initData from '../Coms/InitData/index';
+import initData from '../coms/InitData/index';
 
 const singleRoomInfo = (state, action) => {
     switch (action.type) {
@@ -20,18 +20,13 @@ const singleRoomInfo = (state, action) => {
         };
     }
     case 'house-upload.room-info.activeTags': {
-        const maxActive = state.roomTag.maxActive;
-        if (state.roomTag.active.length >= maxActive) {
-            return state;
-        }
-
         const activeTags = state.roomTag.active.concat(action.value);
 
         return {
             ...state,
             roomTag: {
                 ...state.roomTag,
-                active: activeTags.slice(Math.max(activeTags.length - maxActive, 0)),
+                active: activeTags,
             },
         };
     }

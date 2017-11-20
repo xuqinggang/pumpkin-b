@@ -62,6 +62,7 @@ class HouseType extends BaseComponent {
                         className={`${clsPrefix}--select`}
                         onChange={this.handleSelectChange}
                         options={initHouseTypeOptions('room')}
+                        disabled={!this.props.isCreate}
                     />
                     <Select
                         name="saloon"
@@ -69,6 +70,7 @@ class HouseType extends BaseComponent {
                         className={`${clsPrefix}--select`}
                         onChange={this.handleSelectChange}
                         options={initHouseTypeOptions('saloon')}
+                        disabled={!this.props.isCreate}
                     />
                     <Select
                         name="toilet"
@@ -76,6 +78,7 @@ class HouseType extends BaseComponent {
                         onChange={this.handleSelectChange}
                         className={`${clsPrefix}--select`}
                         options={initHouseTypeOptions('toilet')}
+                        disabled={!this.props.isCreate}
                     />
                 </div>
             </FormItem>
@@ -86,5 +89,6 @@ class HouseType extends BaseComponent {
 export default connect(
     state => ({
         houseType: state.houseUpload.baseInfo.houseType,
+        isCreate: state.houseUpload.houseId === null,
     }),
 )(HouseType);

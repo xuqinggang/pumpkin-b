@@ -58,6 +58,7 @@ class RentalType extends BaseComponent {
                     ]}
                     value={this.props.value}
                     onChange={this.handleChange}
+                    disabled={!this.props.isCreate}
                 />
             </FormItem>
         );
@@ -76,6 +77,7 @@ export default connect(
         }
         return {
             error,
+            isCreate: state.houseUpload.houseId === null,
             value: state.houseUpload.baseInfo.rentalType,
         };
     },

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Form from 'components/Form/index';
 import BaseComponent from 'components/BaseComponent/index';
 import ChamberImage from './Coms/ChamberImage/index';
-import UploadHeader from '../Coms/UploadHeader/index';
+import UploadHeader from '../coms/UploadHeader/index';
 import './style.less';
 
 class HousePics extends BaseComponent {

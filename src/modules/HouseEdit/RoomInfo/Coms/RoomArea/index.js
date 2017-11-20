@@ -5,10 +5,10 @@ import BaseComponent from 'components/BaseComponent/index';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import { FormItem } from 'components/Form/index';
 import Input from 'components/Input/index';
-import NoteWord from '../../../Coms/NoteWord/index';
+import NoteWord from '../../../coms/NoteWord/index';
 import { setRoomArea } from '../../actions';
 import { hideValidateError } from '../../../actions';
-import { validateRoomInfo } from '../../../Coms/ValidateData';
+import { validateRoomInfo } from '../../../coms/ValidateData';
 import './style.less';
 
 class RoomArea extends BaseComponent {

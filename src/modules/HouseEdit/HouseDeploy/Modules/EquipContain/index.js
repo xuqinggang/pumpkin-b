@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
-import UploadHeader from '../../../Coms/UploadHeader/index';
+import UploadHeader from '../../../coms/UploadHeader/index';
 import Equipment from '../../Coms/Equipment/index';
 import ScrollFix from '../../Coms/ScrollFix/index';
 import './style.less';
@@ -13,14 +14,7 @@ class EquipContain extends BaseComponent {
             equipList: [],
         };
     }
-    fetchEquipList() {
-        const equipList = ['BED', 'TABLE', 'QUEENBED'];
-        this.setState({
-            equipList,
-        });
-    }
     componentDidMount() {
-        this.fetchEquipList();
         // 占位
         this.scrollPlaceHolder.style.height = `${this.scrollFix.getClientHeight()}px`;
     }
@@ -35,9 +29,9 @@ class EquipContain extends BaseComponent {
                 <ScrollFix className={clsPrefix} ref={this.storeRef('scrollFix')}>
                     <UploadHeader>{this.props.title}</UploadHeader>
                     {
-                        this.state.equipList.map(item => (
-                            <div key={item} className={`${clsPrefix}--equipment`}>
-                                <Equipment value={item} />
+                        this.props.allDeploys.map(item => (
+                            <div key={item.value} className={`${clsPrefix}--equipment`}>
+                                <Equipment value={item.value} />
                             </div>
                         ))
                     }
@@ -54,4 +48,8 @@ EquipContain.propTypes = {
     title: PropTypes.string,
 };
 
-export default EquipContain;
+export default connect(
+    state => ({
+        allDeploys: state.houseUpload.roomDeploys.allDeploys,
+    }),
+)(EquipContain);

@@ -63,6 +63,7 @@ class RoomStatusManage extends BaseComponent {
                     {
                         curOperates.operates.map(item => (
                             <button
+                                key={item.text}
                                 className={`${clsPreix}--btn`}
                                 onClick={this.handleClick}
                             >{item.text}</button>

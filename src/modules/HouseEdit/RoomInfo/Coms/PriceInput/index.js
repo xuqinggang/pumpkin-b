@@ -5,10 +5,10 @@ import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import Input from 'components/Input/index';
-import NoteWord from '../../../Coms/NoteWord/index';
+import NoteWord from '../../../coms/NoteWord/index';
 import { changeRoomPrice } from '../../actions';
 import { hideValidateError } from '../../../actions';
-import { validateRoomInfo } from '../../../Coms/ValidateData';
+import { validateRoomInfo } from '../../../coms/ValidateData';
 
 const defaultValues = (names) => {
     const values = {};

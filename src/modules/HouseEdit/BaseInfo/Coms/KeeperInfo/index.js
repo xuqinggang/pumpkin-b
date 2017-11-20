@@ -6,7 +6,7 @@ import Form, { FormItem } from 'components/Form/index';
 import KeeperImage from '../KeeperImage/index';
 import { setKeeperInfo } from '../../actions';
 import { hideValidateError } from '../../../actions';
-import { validateBaseInfo, itemError } from '../../../Coms/ValidateData';
+import { validateBaseInfo, itemError } from '../../../coms/ValidateData';
 
 class KeeperInfo extends BaseComponent {
     constructor(props) {

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Input from 'components/Input/index';
 import { FormItem } from 'components/Form/index';
-import NoteWord from '../../../Coms/NoteWord/index';
+import NoteWord from '../../../coms/NoteWord/index';
 import { setHouseAddress } from '../../actions';
-import { validateBaseInfo, itemError } from '../../../Coms/ValidateData';
+import { validateBaseInfo, itemError } from '../../../coms/ValidateData';
 import { hideValidateError } from '../../../actions';
 
 class HouseAddress extends BaseComponent {

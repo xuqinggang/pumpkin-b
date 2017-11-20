@@ -4,7 +4,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import { FormItem } from 'components/Form/index';
 import SearchSelect from 'components/SearchSelect/index';
 import { setVillageInfo } from '../../actions';
-import { validateBaseInfo } from '../../../Coms/ValidateData';
+import { validateBaseInfo } from '../../../coms/ValidateData';
 import { hideValidateError } from '../../../actions';
 
 class VillageInfo extends BaseComponent {

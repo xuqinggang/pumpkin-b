@@ -3,19 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
 import { connectDragSource } from 'components/DnD/index';
+import equipMap from './equipMap';
 import './style.less';
-
-const equipmentMap = {
-    BED: {
-        text: '床',
-    },
-    TABLE: {
-        text: '桌子',
-    },
-    QUEENBED: {
-        text: '象棋',
-    },
-};
 
 class Equipment extends BaseComponent {
     constructor(props) {
@@ -29,6 +18,7 @@ class Equipment extends BaseComponent {
     }
     render() {
         const clsPrefix = 'c-equipment';
+
         const cls = classNames(clsPrefix, {
             [`${clsPrefix}__del`]: this.props.onDel,
         });
@@ -36,7 +26,7 @@ class Equipment extends BaseComponent {
             <div className={cls}>
                 <div className={`${clsPrefix}--drag`}>
                     <i className={`${clsPrefix}--indicator`} />
-                    <span className={`${clsPrefix}--text`}>{equipmentMap[this.props.value].text}</span>
+                    <span className={`${clsPrefix}--text`}>{equipMap[this.props.value].text}</span>
                 </div>
                 {
                     this.props.onDel ?
@@ -58,10 +48,12 @@ class Equipment extends BaseComponent {
 Equipment.defaultProps = {
     value: 'BED',
     onDel: null,
+    children: null,
 };
 Equipment.propTypes = {
     value: PropTypes.string,
     onDel: PropTypes.func,
+    children: PropTypes.node,
 };
 
 export default connectDragSource(

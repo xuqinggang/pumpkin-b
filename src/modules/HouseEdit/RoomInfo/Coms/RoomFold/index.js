@@ -43,6 +43,8 @@ class RoomFold extends BaseComponent {
     }
     render() {
         const clsPrefix = 'c-room-fold';
+        const { allTag, maxActiveTagNum, tagValues } = this.props;
+        const allTagValues = allTag.map(item => (item.value));
         return (
             <div className={clsPrefix}>
                 <div className={`${clsPrefix}--base`}>
@@ -66,14 +68,17 @@ class RoomFold extends BaseComponent {
                 </div>
                 <div className={`${clsPrefix}--tags`}>
                     {
-                        this.props.tags.map((item, index) => (
-                            <Tag key={index} className={`${clsPrefix}--tags-tag`}>{item}</Tag>
+                        tagValues.map((tagVal, index) => (
+                            <Tag key={index} className={`${clsPrefix}--tags-tag`}>
+                                {allTag[allTagValues.indexOf(tagVal)].text}
+                            </Tag>
                         ))
                     }
                     {
-                        creatNDimArray(4 - this.props.tags.length, null).map((item, index) => (
-                            <TagPlaceholder key={index} />
-                        ))
+                        creatNDimArray(maxActiveTagNum - tagValues.length, null).map(
+                            (item, index) => (
+                                <TagPlaceholder key={index} />
+                            ))
                     }
                 </div>
                 <div className={`${clsPrefix}--operate`}>
@@ -113,12 +118,16 @@ export default connect(
             brief,
         } = roomInfo[roomIndex];
         const roomNum = roomIds.length;
+
+        const { allTag, maxActiveTagNum } = state.houseUpload.roomTags;
         return {
             priceInfo,
             brief,
             roomNum,
             roomIndex,
-            tags: roomTag.active,
+            allTag,
+            maxActiveTagNum,
+            tagValues: roomTag.active,
         };
     },
 )(RoomFold);

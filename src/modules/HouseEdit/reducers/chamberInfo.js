@@ -1,4 +1,4 @@
-import initData from '../Coms/InitData/index';
+import initData from '../coms/InitData/index';
 
 // 负责页面HouseDeploy 和 HousePics 的数据管理
 const chamberInfo = (state = initData('chamberInfo'), action) => {

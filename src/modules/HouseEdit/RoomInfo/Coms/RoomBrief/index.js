@@ -6,7 +6,7 @@ import Textarea from 'components/Textarea/index';
 import PropTypes from 'prop-types';
 import { changeRoomBrief } from '../../actions';
 import { hideValidateError } from '../../../actions';
-import { validateRoomInfo } from '../../../Coms/ValidateData';
+import { validateRoomInfo } from '../../../coms/ValidateData';
 import './style.less';
 
 const validValue = (value) => {

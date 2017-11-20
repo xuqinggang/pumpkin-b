@@ -18,7 +18,7 @@ class HouseManageList extends BaseComponent {
     }
     render() {
         const clsPrefix = 'm-house-manage-list';
-        const houseList = [{ houseId: 1111111111 }, { houseId: 2222222222 }, { houseId: 3333333333 }];
+        const houseList = [{ houseId: 15 }, { houseId: 16 }, { houseId: 17 }];
         return (
             <div className={clsPrefix}>
                 <PageHeader>房态管理</PageHeader>

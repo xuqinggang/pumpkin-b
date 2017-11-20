@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
-import UploadHeader from '../Coms/UploadHeader/index';
+import UploadHeader from '../coms/UploadHeader/index';
 import SingleRoomInfo from './SingleRoomInfo';
 import AddRoomButton from './Coms/AddRoomButton/index';
 import RoomHeader from './Coms/RoomHeader/index';

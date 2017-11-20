@@ -26,7 +26,7 @@ class UploadButton extends BaseComponent {
             const error = validateData({ type: pageType }, data[pageType]);
             if (error.error) {
                 this.props.dispatch(showValidateError({ pageType, error }));
-                return;
+                // return;
             }
             // 更改redux state
             this.props.dispatch(nextStep(this.props.pageType));
@@ -48,7 +48,7 @@ class UploadButton extends BaseComponent {
                         },
                     }));
                     this.props.dispatch(switchRoomExpand(curRoomInfo.roomId));
-                    return;
+                    // return;
                 }
             }
             // 更改redux state
@@ -59,7 +59,7 @@ class UploadButton extends BaseComponent {
             const error = validateData({ type: pageType }, data.chamberInfo);
             if (error.error) {
                 this.props.dispatch(showValidateError({ pageType, error }));
-                return;
+                // return;
             }
             break;
         }
