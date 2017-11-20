@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import reduceReducers from 'reduce-reducers';
 import RoomInfoReducers from './RoomInfo/reducers';
-import ChamberInfoReducers from './Reducers/ChamberInfo';
+import ChamberInfoReducers from './reducers/chamberInfo';
 import BaseInfoReducers from './BaseInfo/reducers';
-import initData, { creatChamberArr } from './Coms/InitData/index';
+import initData, { creatChamberArr } from './coms/InitData/index';
 
 const cropChamberArrWithRoomIds = (arr, { roomIds, number }) => {
     if (roomIds !== undefined) {
@@ -42,6 +42,14 @@ const validateError = (
     state = initData('validateError'),
 ) => (state);
 
+const roomTags = (
+    state = initData('roomTags'),
+) => (state);
+
+const roomDeploys = (
+    state = initData('roomDeploys'),
+) => (state);
+
 const houseId = (state = null) => (state);
 
 export default reduceReducers(
@@ -50,6 +58,8 @@ export default reduceReducers(
         ...ChamberInfoReducers,
         ...BaseInfoReducers,
         commonInfo,
+        roomTags,
+        roomDeploys,
         validateError,
         houseId,
     }),
