@@ -1,0 +1,24 @@
+.c-deploy-contain {
+    height: 184px;
+    width: 700px;
+    border: 1px dotted #e0dfe7;
+    background: #fff;
+    border-radius: 6px;
+    overflow: auto;
+
+    &__isOver {
+        border-color: #f38d39;
+    }
+
+    &--note {
+        font-size: 14px;
+        color: #dcdcdc;
+        margin: 8px 0 0 16px;
+    }
+
+    &__isOver {
+        .c-deploy-contain--note {
+            color: #f38d39;
+        }
+    }
+}

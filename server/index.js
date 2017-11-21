@@ -24,7 +24,7 @@ server.use(views(__dirname + '/views', {
   }
 }));
 
-serverRouter.get(/\/v1/, (ctx) => {
+serverRouter.all(/\/v1/, (ctx) => {
     ctx.respond = false;
     proxy.web(ctx.req, ctx.res, {
         target: 'http://10.23.64.8',

@@ -1,0 +1,95 @@
+.c-checkbox {
+    display: block;
+    height: 14px;
+    line-height: 14px;
+    user-select: none;
+    cursor: pointer;
+    color: #333;
+
+    &--indicator,
+    &--label {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    &--indicator {
+        position: relative;
+        width: 13px;
+        height: 13px;
+        border-radius: 2px;
+        border: 1px solid #c9ccd0;
+        background: #fff;
+        margin-right: 8px;
+    }
+
+    &:hover {
+        .c-checkbox {
+            &--indicator {
+                border-color: #f38d39;
+            }
+        }
+    }
+
+    &__checked,
+    &__partial-checked {
+        .c-checkbox--indicator {
+            background-color: #f38d39;
+            border-color: #f38d39;
+
+            &::before {
+                position: absolute;
+                content: ' ';
+                display: block;
+            }
+        }
+    }
+
+    &__checked {
+        .c-checkbox--indicator {
+            &::before {
+                width: 3px;
+                height: 7px;
+                border: 2px solid #fff;
+                border-top: 0;
+                border-left: 0;
+                transform: rotate(45deg);
+                top: 1px;
+                left: 4px;
+            }
+        }
+    }
+
+    &__partial-checked {
+        .c-checkbox--indicator {
+            &::before {
+                width: 7px;
+                height: 2px;
+                border-top: 0;
+                border-bottom: 0;
+                top: 5px;
+                left: 3px;
+                background-color: white;
+            }
+        }
+    }
+
+    &__disabled {
+        cursor: not-allowed;
+        color: rgba(168, 168, 168, 1);
+
+        .c-checkbox {
+            &--indicator {
+                background-color: rgba(237, 236, 240, 1);
+                border-color: #ccc;
+            }
+
+            &__checked,
+            &__partial-checked {
+                .c-checkbox--indicator {
+                    background-color: #f38d39;
+                    border-color: #f38d39;
+                }
+            }
+        }
+    }
+}
