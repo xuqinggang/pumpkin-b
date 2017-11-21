@@ -13,11 +13,13 @@ class HouseManageFilter extends BaseComponent {
                 </div>
                 <div className={`${clsPrefix}--right`}>
                     <Select
-                        name="toilet"
+                        name="village"
+                        defaultText="所属小区"
                         options={[
                             {
                                 value: 0,
                                 text: '全部小区',
+                                blank: true,
                             }, {
                                 value: 1,
                                 text: '小区a',
@@ -25,26 +27,42 @@ class HouseManageFilter extends BaseComponent {
                         ]}
                     />
                     <Select
-                        name="toilet"
+                        name="rentalType"
+                        defaultText="出租方式"
                         options={[
                             {
-                                value: 0,
-                                text: '全部小区',
+                                value: 'ALL',
+                                text: '所有方式',
+                                blank: true,
                             }, {
-                                value: 1,
-                                text: '小区a',
+                                value: 'WHOLE',
+                                text: '整租',
+                            }, {
+                                value: 'SHARE',
+                                text: '合租',
                             },
                         ]}
                     />
                     <Select
-                        name="toilet"
+                        name="roomStatus"
+                        defaultText="房间状态"
                         options={[
                             {
-                                value: 0,
-                                text: '全部小区',
+                                value: 'ALL',
+                                text: '所有状态',
+                                blank: true,
                             }, {
-                                value: 1,
-                                text: '小区a',
+                                value: 'PUBLISHED',
+                                text: '已发布',
+                            }, {
+                                value: 'OCCUPIED',
+                                text: '已入住',
+                            }, {
+                                value: 'OFFLINE',
+                                text: '已下架',
+                            }, {
+                                value: 'FINISHED',
+                                text: '待发布',
                             },
                         ]}
                     />
