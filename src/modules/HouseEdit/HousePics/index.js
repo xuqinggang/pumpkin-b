@@ -5,16 +5,11 @@ import Form from 'components/Form/index';
 import BaseComponent from 'components/BaseComponent/index';
 import ChamberImage from './coms/ChamberImage/index';
 import UploadHeader from '../coms/UploadHeader/index';
-import { hideValidateError } from '../actions';
-import './style.less';
 
 class HousePics extends BaseComponent {
     constructor(props) {
         super(props);
         this.names = ['rooms', 'saloons', 'toilets', 'kitchens'];
-    }
-    componentDidMount() {
-        this.props.dispatch(hideValidateError({ pageType: 'housePics' }));
     }
     render() {
         const clsPrefix = 'c-house-pics';
