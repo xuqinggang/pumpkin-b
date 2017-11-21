@@ -31,7 +31,6 @@ class HouseManage extends BaseComponent {
         });
     }
     render() {
-        const clsPrefix = 'p-house-manage';
         const { subPageInfo } = this.state;
         return (
             <MainLayout>
