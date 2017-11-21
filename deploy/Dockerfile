@@ -7,7 +7,7 @@ RUN export PATH=$PATH:/opt/kuaizhan/bin && \
     # mv /nodejs/node_modules node_modules && \
     npm install && \
     npm run build && \
-    npm run server -- --port=80
+    npm start -- --port=80
     # ./node_modules/.bin/gulp bundle
 EXPOSE 80
 

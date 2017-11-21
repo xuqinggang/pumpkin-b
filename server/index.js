@@ -45,5 +45,5 @@ server.listen(PORT, (err) => {
         console.log('error: ', err);
         return;
     }
-    console.log(`server start at port: ${conf.port}`);
+    console.log(`server start at port: ${PORT}`);
 });
