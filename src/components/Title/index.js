@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.less'
+import './style.less';
 
 function Title({ children }) {
     return (
