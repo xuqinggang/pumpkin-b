@@ -59,7 +59,10 @@ class HouseStatusManage extends BaseComponent {
                                         ? null
                                         : <i className={`${clsPrefix}--rooms-indicator`} />
                                 }
-                                <RoomStatusManage title={expandSingleNum(index + 1)} />
+                                <RoomStatusManage
+                                    renUnitId={/* todo */11}
+                                    title={expandSingleNum(index + 1)}
+                                />
                             </div>
                         ))
                     }

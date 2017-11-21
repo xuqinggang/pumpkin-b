@@ -1,7 +1,10 @@
+import { connect } from 'react-redux';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
 import { splitArrayWithIndex } from 'utils/index';
+import { showStatusChangeDialog } from '../HouseManageList/actions';
 import './style.less';
 
 class RoomStatusManage extends BaseComponent {
@@ -43,8 +46,22 @@ class RoomStatusManage extends BaseComponent {
 
         this.autoBind('handleClick');
     }
-    handleClick() {
-        // TODO
+    handleClick(type) {
+        return () => {
+            this.props.dispatch(showStatusChangeDialog(type, ({ value }) => {
+                // TODO: 针对不同的type发送请求
+                axios.put(`/v1/rentUnits/${this.props.renUnitId}/houseStatus?status=${type.toUpperCase()}`)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+
+                console.log(type);
+                console.log(value);
+            }));
+        };
     }
     render() {
         const clsPreix = 'm-room-status-manage';
@@ -65,7 +82,7 @@ class RoomStatusManage extends BaseComponent {
                             <button
                                 key={item.text}
                                 className={`${clsPreix}--btn`}
-                                onClick={this.handleClick}
+                                onClick={this.handleClick(item.type)}
                             >{item.text}</button>
                         ))
                     }
@@ -78,11 +95,13 @@ class RoomStatusManage extends BaseComponent {
 RoomStatusManage.defaultProps = {
     title: '',
     status: 'published',
+    renUnitId: 0,
 };
 
 RoomStatusManage.propTypes = {
     title: PropTypes.string,
+    renUnitId: PropTypes.number,
     status: PropTypes.oneOf(['published', 'occupied', 'offline', 'undetermined']),
 };
 
-export default RoomStatusManage;
+export default connect()(RoomStatusManage);

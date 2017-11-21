@@ -6,9 +6,9 @@ import BaseComponent from 'components/BaseComponent/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
 import UploadHeader from '../coms/UploadHeader/index';
 import SingleRoomInfo from './SingleRoomInfo';
-import AddRoomButton from './Coms/AddRoomButton/index';
-import RoomHeader from './Coms/RoomHeader/index';
-import RoomFold from './Coms/RoomFold/index';
+import AddRoomButton from './coms/AddRoomButton/index';
+import RoomHeader from './coms/RoomHeader/index';
+import RoomFold from './coms/RoomFold/index';
 import { delRoomInfo, addRoomInfo } from './actions';
 import './style.less';
 

@@ -84,6 +84,7 @@ class RadioGroup extends BaseComponent {
     render() {
         const clsPrefix = 'c-radio-group';
         const className = classNames(clsPrefix, {
+            [this.props.className]: true,
             [`${clsPrefix}__disabled`]: this.props.disabled,
             [`${clsPrefix}__layout-${this.props.layout}`]: true,
         });

@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
 import Select from 'components/Select/index';
-import RoomArea from './Coms/RoomArea/index';
-import RoomBrief from './Coms/RoomBrief/index';
-import RoomTag from './Coms/RoomTag/index';
-import PriceInput from './Coms/PriceInput/index';
+import RoomArea from './coms/RoomArea/index';
+import RoomBrief from './coms/RoomBrief/index';
+import RoomTag from './coms/RoomTag/index';
+import PriceInput from './coms/PriceInput/index';
 import './style.less';
 
 class SingleRoomInfo extends BaseComponent {
