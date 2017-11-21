@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from 'components/Form/index';
 import BaseComponent from 'components/BaseComponent/index';
-import ChamberImage from './Coms/ChamberImage/index';
+import ChamberImage from './coms/ChamberImage/index';
 import UploadHeader from '../coms/UploadHeader/index';
 import { hideValidateError } from '../actions';
 import './style.less';

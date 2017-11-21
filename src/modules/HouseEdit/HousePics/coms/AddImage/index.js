@@ -10,7 +10,7 @@ class AddImage extends BaseComponent {
         super(props);
         this.autoBind('handleImageSelect', 'handleImageDel');
     }
-    handleImageSelect(dump, file) {
+    handleImageSelect() {
         const {
             name,
             coords,
