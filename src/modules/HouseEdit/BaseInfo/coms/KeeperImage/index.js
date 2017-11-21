@@ -11,7 +11,7 @@ class KeeperImage extends BaseComponent {
         super(props);
         this.autoBind('handleSelect');
     }
-    handleSelect({ name, file }) {
+    handleSelect() {
         const fakeImgUrl = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2236350875,3008024805&fm=27&gp=0.jpg';
         this.props.onChange({ name: this.props.name, value: fakeImgUrl });
     }

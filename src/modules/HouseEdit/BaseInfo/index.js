@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import Form from 'components/Form/index';
 import UploadHeader from '../coms/UploadHeader/index';
-import HouseFloor from './Coms/HouseFloor/index';
-import HouseAddress from './Coms/HouseAddress/index';
-import KeeperInfo from './Coms/KeeperInfo/index';
-import RentalType from './Coms/RentalType/index';
-import HouseType from './Coms/HouseType/index';
-import VillageInfo from './Coms/VillageInfo/index';
+import HouseFloor from './coms/HouseFloor/index';
+import HouseAddress from './coms/HouseAddress/index';
+import KeeperInfo from './coms/KeeperInfo/index';
+import RentalType from './coms/RentalType/index';
+import HouseType from './coms/HouseType/index';
+import VillageInfo from './coms/VillageInfo/index';
 import './style.less';
 
 class HouseUpload extends BaseComponent {
