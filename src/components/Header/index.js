@@ -4,11 +4,14 @@ import './style.less';
 
 class Header extends Component {
     render() {
-        console.log('render');
         return (
             <div className="c-header">
                 <div className="c-header--login">
-                    登录
+                    {
+                        this.props.name
+                        ? this.props.name
+                        : '登录'
+                    }
                 </div>
             </div>
         );
@@ -16,7 +19,7 @@ class Header extends Component {
 }
 
 Header.defaultProps = {
-    name: 'saber',
+    name: '',
 };
 
 Header.propTypes = {

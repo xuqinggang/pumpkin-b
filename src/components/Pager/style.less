@@ -1,0 +1,59 @@
+.c-pager {
+    text-align: center;
+
+    &--controls {
+        display: inline-block;
+    }
+
+    &-button {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        margin-right: 8px;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        background-color: #fff;
+        color: #f38d39;
+        user-select: none;
+        cursor: pointer;
+        box-sizing: border-box;
+
+        &__more {
+            color: #333;
+            background-color: transparent;
+        }
+
+        &__cur {
+            border-color: #f38d39;
+            background-color: #f38d39;
+            color: #fff;
+        }
+
+        &--prev {
+            color: #fff;
+            background: #f38d39;
+        }
+
+        &--next {
+            color: #fff;
+            background: #f38d39;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &__more {
+            border: none;
+            cursor: default;
+        }
+
+        &__disabled {
+            background-color: #f9c192;
+            border-color: #f9c192;
+            cursor: default;
+        }
+    }
+}

@@ -12,12 +12,13 @@ const setSelect = (value, options, defaultText) => {
         value: null,
         text: defaultText,
     };
-    const select = {
+    let select = {
         ...defaultSelect,
     };
     const isSelected = options.some((item) => {
-        select.value = item.value;
-        select.text = item.text;
+        select = {
+            ...item,
+        };
 
         return item.value === value;
     });
@@ -89,8 +90,13 @@ class Select extends BaseComponent {
                 onBlur={this.handleBlur}
             >
                 <div className={`${clsPrefix}--selected`}>
-                    <span>{this.state.select.text}</span>
-                    <div />
+                    <span>
+                        {
+                            this.state.select.blank
+                            ? this.props.defaultText
+                            : this.state.select.text
+                        }
+                    </span>
                 </div>
                 <EventBlackHole captureEvents={['click']}>
                     <div
