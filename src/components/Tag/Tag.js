@@ -29,7 +29,9 @@ const Tag = ({ name, value, erasable, status, onClick, children, className }) =>
             onClick={handleClick}
             className={cls}
         >
-            {children}
+            <div className={`${clsPrefix}--contain`}>
+                {children}
+            </div>
             {
                 erasable ?
                     <div
