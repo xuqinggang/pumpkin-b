@@ -2,9 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import SubHeader from 'components/SubHeader/index';
+import { FormItem } from 'components/Form/index';
 import Equipment from '../../Coms/Equipment/index';
 import DeployContain from '../../Coms/DeployContain/index';
 import { addDeploys, removeDeploys } from '../../actions';
+import { hideValidateError } from '../../../actions';
 import './style.less';
 
 const notSingleNum = (num) => {
@@ -36,13 +38,35 @@ const setTitle = (roomType, cur, suffix) => {
 class ChamberDeploy extends BaseComponent {
     constructor(props) {
         super(props);
+        this.state = {
+            error: {
+                error: false,
+                message: '',
+            },
+        };
         this.autoBind('handleDrop', 'handleDelEquipment');
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.error.error !== this.props.error.error && nextProps.error.error) {
+            this.setState({
+                error: {
+                    ...nextProps.error,
+                },
+            });
+        }
     }
     handleDrop(value) {
         const {
             name,
             index,
         } = this.props;
+        this.setState({
+            error: {
+                error: false,
+                message: '',
+            },
+        });
+        this.props.dispatch(hideValidateError({ pageType: 'houseDeploy' }));
         this.props.dispatch(addDeploys(name, [index, null], value));
     }
     handleDelEquipment(deployIndex) {
@@ -67,23 +91,28 @@ class ChamberDeploy extends BaseComponent {
                 className={clsPrefix}
             >
                 <SubHeader>{setTitle(name, index, suffix)}</SubHeader>
-                <DeployContain
-                    onDrop={this.handleDrop}
+                <FormItem
+                    error={this.state.error}
+                    className={`${clsPrefix}--item`}
                 >
-                    {
-                        deploys.map((item, deployIndex) => (
-                            <div
-                                key={deployIndex}
-                                className={`${clsPrefix}--equipment`}
-                            >
-                                <Equipment
-                                    value={item}
-                                    onDel={this.handleDelEquipment(deployIndex)}
-                                />
-                            </div>
-                        ))
-                    }
-                </DeployContain>
+                    <DeployContain
+                        onDrop={this.handleDrop}
+                    >
+                        {
+                            deploys.map((item, deployIndex) => (
+                                <div
+                                    key={deployIndex}
+                                    className={`${clsPrefix}--equipment`}
+                                >
+                                    <Equipment
+                                        value={item}
+                                        onDel={this.handleDelEquipment(deployIndex)}
+                                    />
+                                </div>
+                            ))
+                        }
+                    </DeployContain>
+                </FormItem>
             </div>
         );
     }
@@ -97,7 +126,20 @@ export default connect(
             index,
         } = props;
         const deploys = state.houseUpload.chamberInfo[name][index].deploys;
+
+        let error = {
+            error: false,
+            message: '',
+        };
+
+        const houseDeployError = state.houseUpload.validateError.houseDeploy;
+        if (houseDeployError &&
+            houseDeployError.type === name &&
+            houseDeployError.chamberIndex === index) {
+            error = houseDeployError;
+        }
         return {
+            error,
             deploys,
         };
     },
