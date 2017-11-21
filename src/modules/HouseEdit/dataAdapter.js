@@ -1,5 +1,5 @@
-import { num2Str } from 'utils/index';
-import initData from './coms/initData';
+import { num2Str, str2Num } from 'utils/index';
+import initData from './coms/initData/index';
 
 const be2feAdapter = (data) => {
     const rentalTypeMap = {
@@ -78,7 +78,7 @@ const be2feAdapter = (data) => {
             },
             village: {
                 value: data.blockId,
-                text: '后端接口暂无',
+                text: data.name,
             },
             houseFloor: {
                 curFloor: num2Str(data.floor),
@@ -110,8 +110,107 @@ const be2feAdapter = (data) => {
     };
 };
 
-const fe2beAdapter = () => {
-    // TODO
+const fe2beAdapter = (data) => {
+    const {
+        buildNo,
+        unitNo,
+        houseNo,
+    } = data.baseInfo.houseAddress;
+    const {
+        curFloor,
+        totalFloor,
+    } = data.baseInfo.houseFloor;
+    const {
+        room,
+        saloon,
+        toilet,
+    } = data.baseInfo.houseType;
+    const {
+        name,
+        phone,
+        imgUrl,
+    } = data.baseInfo.keeperInfo;
+    const rentalTypeMap = {
+        0: 'WHOLE',
+        1: 'SHARED',
+    };
+
+    const rentsConvert = (rentsData, rentalType) => {
+        const {
+            priceInfo,
+        } = rentsData;
+        return {
+            rentalType,
+
+            number: rentsData.roomId,
+            area: str2Num(rentsData.roomArea),
+            direct: rentsData.direct,
+
+            priceMonth: priceInfo.month.price,
+            depositMonth: priceInfo.month.deposit,
+
+            priceSeason: priceInfo.season.price,
+            depositSeason: priceInfo.season.deposit,
+
+            priceHalfYear: priceInfo.halfYear.price,
+            depositHalfYear: priceInfo.halfYear.deposit,
+
+            priceYear: priceInfo.year.price,
+            depositYear: priceInfo.year.deposit,
+
+            tags: rentsData.roomTag.active,
+
+            intro: rentsData.brief,
+        };
+    };
+    const singleRoomConvert = (singleData, roomType, roomId) => ({
+        type: roomType,
+        number: roomId,
+        images: singleData.picUrls,
+        furniture: singleData.deploys,
+    });
+    const roomConvert = (chamberInfo) => {
+        let allRoomInfoList = [];
+        const roomTypes = ['rooms', 'saloons', 'toilets', 'kitchens'];
+        const roomTypeMap = {
+            rooms: 'BEDROOM',
+            toilets: 'BATHROOM',
+            saloons: 'LIVINGROOM',
+            kitchens: 'KITCHEN',
+        };
+        roomTypes.forEach((roomType) => {
+            allRoomInfoList = allRoomInfoList.concat(
+                chamberInfo[roomType].map((sigleRoomData, index) => (
+                    // TODO roomId 和 index 对应关系
+                    singleRoomConvert(sigleRoomData, roomTypeMap[roomType], index + 1)
+                )),
+            );
+        });
+        return allRoomInfoList;
+    };
+    return {
+        houseParam: {
+            blockId: data.baseInfo.village.value,
+            buildingNum: str2Num(buildNo),
+            unitNum: str2Num(unitNo),
+            houseNum: str2Num(houseNo),
+            floor: str2Num(curFloor),
+            totalFloor: str2Num(totalFloor),
+            bedroomCount: room,
+            livingRoomCount: saloon,
+            bathroomCount: toilet,
+
+            supervisorName: name,
+            supervisorTel: phone,
+            supervisorImg: imgUrl,
+        },
+
+        rentalType: rentalTypeMap[data.baseInfo.rentalType],
+
+        rents: data.roomInfo.map(rentData => rentsConvert(rentData)),
+
+        roomParams: roomConvert(data.chamberInfo),
+    };
 };
 
 export {

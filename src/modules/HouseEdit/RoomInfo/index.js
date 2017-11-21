@@ -10,7 +10,6 @@ import AddRoomButton from './Coms/AddRoomButton/index';
 import RoomHeader from './Coms/RoomHeader/index';
 import RoomFold from './Coms/RoomFold/index';
 import { delRoomInfo, addRoomInfo } from './actions';
-
 import './style.less';
 
 class HouseUpload extends BaseComponent {

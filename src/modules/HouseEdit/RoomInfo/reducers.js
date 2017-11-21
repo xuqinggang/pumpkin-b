@@ -1,4 +1,4 @@
-import initData from '../coms/InitData/index';
+import initData from '../coms/initData/index';
 
 const singleRoomInfo = (state, action) => {
     switch (action.type) {

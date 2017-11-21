@@ -26,7 +26,13 @@ class Equipment extends BaseComponent {
             <div className={cls}>
                 <div className={`${clsPrefix}--drag`}>
                     <i className={`${clsPrefix}--indicator`} />
-                    <span className={`${clsPrefix}--text`}>{equipMap[this.props.value].text}</span>
+                    <span className={`${clsPrefix}--text`}>
+                        {
+                            equipMap[this.props.value]
+                            ? equipMap[this.props.value].text
+                            : '未知类型家具'
+                        }
+                    </span>
                 </div>
                 {
                     this.props.onDel ?

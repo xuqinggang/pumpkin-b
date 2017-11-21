@@ -73,7 +73,6 @@ class ChamberImage extends BaseComponent {
 
         return (
             <FormItem
-                key={`${name}${index}`}
                 label={setTitle(
                     name,
                     index,

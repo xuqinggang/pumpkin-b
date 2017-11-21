@@ -1,5 +1,5 @@
 import axios from 'axios';
-import initData from './coms/InitData/index';
+import initData from './coms/initData/index';
 import { be2feAdapter } from './dataAdapter';
 
 export const nextStep = pageType => ({

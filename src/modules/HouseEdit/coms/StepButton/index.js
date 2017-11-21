@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { nextStep, showValidateError } from '../../actions';
 import { switchRoomExpand } from '../../RoomInfo/actions';
 import validateData from '../ValidateData/index';
+import { fe2beAdapter } from '../../dataAdapter';
 import './style.less';
 
 class UploadButton extends BaseComponent {
@@ -26,7 +27,7 @@ class UploadButton extends BaseComponent {
             const error = validateData({ type: pageType }, data[pageType]);
             if (error.error) {
                 this.props.dispatch(showValidateError({ pageType, error }));
-                // return;
+                return;
             }
             // 更改redux state
             this.props.dispatch(nextStep(this.props.pageType));
@@ -48,7 +49,7 @@ class UploadButton extends BaseComponent {
                         },
                     }));
                     this.props.dispatch(switchRoomExpand(curRoomInfo.roomId));
-                    // return;
+                    return;
                 }
             }
             // 更改redux state
@@ -59,8 +60,18 @@ class UploadButton extends BaseComponent {
             const error = validateData({ type: pageType }, data.chamberInfo);
             if (error.error) {
                 this.props.dispatch(showValidateError({ pageType, error }));
-                // return;
+                return;
             }
+            break;
+        }
+        case 'houseDeploy': {
+            // TODO
+            const error = validateData({ type: pageType }, data.chamberInfo);
+            if (error.error) {
+                this.props.dispatch(showValidateError({ pageType, error }));
+                return;
+            }
+            console.log(fe2beAdapter(data));
             break;
         }
         default:

@@ -8,7 +8,7 @@ import BaseInfo from './BaseInfo/index';
 import HousePics from './HousePics/index';
 import RoomInfo from './RoomInfo/index';
 import HouseDeploy from './HouseDeploy/index';
-import { initHouseEditData } from './actions';
+import { initHouseEditData, hideValidateError } from './actions';
 import './style.less';
 
 class HouseUpload extends BaseComponent {
@@ -43,6 +43,12 @@ class HouseUpload extends BaseComponent {
         const curPage = this.state.curPage;
         this.setState({
             curPage: curPage === this.pageInfo.length ? curPage : curPage + 1,
+        }, () => {
+            this.props.dispatch(
+                hideValidateError({
+                    pageType: this.pageInfo[this.state.curPage - 1].type,
+                }),
+            );
         });
     }
     handlePrevStep() {

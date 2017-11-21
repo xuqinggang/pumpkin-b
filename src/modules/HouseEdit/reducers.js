@@ -3,7 +3,7 @@ import reduceReducers from 'reduce-reducers';
 import RoomInfoReducers from './RoomInfo/reducers';
 import ChamberInfoReducers from './reducers/chamberInfo';
 import BaseInfoReducers from './BaseInfo/reducers';
-import initData, { creatChamberArr } from './coms/InitData/index';
+import initData, { creatChamberArr } from './coms/initData/index';
 
 const cropChamberArrWithRoomIds = (arr, { roomIds, number }) => {
     if (roomIds !== undefined) {
