@@ -9,7 +9,6 @@ import NoteWord from '../../../coms/NoteWord/index';
 import { setRoomArea } from '../../actions';
 import { hideValidateError } from '../../../actions';
 import { validateRoomInfo } from '../../../coms/ValidateData';
-import './style.less';
 
 class RoomArea extends BaseComponent {
     constructor(props) {
