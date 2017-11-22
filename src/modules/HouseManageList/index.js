@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
-import Pager from 'components/Pager/index';
 import SubHeader from 'components/SubHeader/index';
 import PageHeader from 'components/PageHeader/index';
 import HouseStatusManage from 'modules/HouseStatusManage/index';
 import HouseManageFilter from 'modules/HouseManageFilter/index';
 import RoomStatusDialog from 'modules/RoomStatusDialog/index';
+import HouseManageListPager from 'modules/HouseManageListPager/index';
+import { timeSignBy, timeFormat } from 'utils/index';
 import { hideStatusChangeDialog } from './actions';
 import './style.less';
 
@@ -28,24 +29,45 @@ class HouseManageList extends BaseComponent {
     }
     render() {
         const clsPrefix = 'm-house-manage-list';
-        const houseList = [{ houseId: 15 }, { houseId: 16 }, { houseId: 17 }];
+        let lastBlockTitleValue = null;
         return (
             <div className={clsPrefix}>
                 <PageHeader>房态管理</PageHeader>
                 <HouseManageFilter />
                 {
-                    houseList.map((item, index) => (
-                        <div key={index}>
-                            <SubHeader>双玉树小区</SubHeader>
-                            <HouseStatusManage houseId={item.houseId} onEdit={this.handleEdit} />
-                        </div>
-                    ))
+                    this.props.houseList.map((item) => {
+                        let blockTitleValue = null;
+                        let blockTitleText = '';
+
+                        // 合并列表
+                        if (this.props.isSortByTime) {
+                            blockTitleValue = timeSignBy('day', item.createTime * 1000);
+                            blockTitleText = timeFormat(item.createTime * 1000);
+                        } else {
+                            blockTitleValue = item.block.id;
+                            blockTitleText = item.block.name;
+                        }
+                        // 判断是否合并
+                        const hideTitle = lastBlockTitleValue &&
+                            blockTitleValue === lastBlockTitleValue;
+
+                        lastBlockTitleValue = blockTitleValue;
+                        return (
+                            <div key={item.id}>
+                                {
+                                    hideTitle
+                                    ? null
+                                    : <SubHeader>{blockTitleText}</SubHeader>
+                                }
+                                <HouseStatusManage
+                                    house={item}
+                                    onEdit={this.handleEdit}
+                                />
+                            </div>
+                        );
+                    })
                 }
-                <Pager
-                    className={`${clsPrefix}--pager`}
-                    curPage={1}
-                    totalPage={20}
-                />
+                <HouseManageListPager />
                 <RoomStatusDialog
                     type={this.props.dialogType}
                     hide={this.props.dialogHide}
@@ -71,11 +93,16 @@ export default connect(
             type,
             hide,
             onConfirm,
-        } = state.roomStatusChangeDialog;
+        } = state.houseManage.roomStatusDialog;
+
+        const houseList = state.houseManage.houseList;
+        const isSortByTime = state.houseManage.filter.isSortByTime;
         return {
             dialogType: type,
             dialogHide: hide,
             dialogOnConfirm: onConfirm,
+            houseList,
+            isSortByTime,
         };
     },
 )(HouseManageList);
