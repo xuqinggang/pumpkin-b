@@ -34,11 +34,13 @@ class HouseManage extends BaseComponent {
         const { subPageInfo } = this.state;
         return (
             <MainLayout>
-                {
-                    subPageInfo.type === 'EDIT'
-                    ? <HouseModify onBack={this.handleBack} houseId={subPageInfo.houseId} />
-                    : <HouseManageList onEdit={this.handleEdit} />
-                }
+                <div className="p-house-manage">
+                    {
+                        subPageInfo.type === 'EDIT'
+                            ? <HouseModify onBack={this.handleBack} houseId={subPageInfo.houseId} />
+                            : <HouseManageList onEdit={this.handleEdit} />
+                    }
+                </div>
             </MainLayout>
         );
     }
