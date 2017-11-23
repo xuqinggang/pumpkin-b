@@ -1,17 +1,10 @@
 import { num2Str, str2Num } from 'utils/index';
-import initData from './coms/initData/index';
+import { creatChamberArr } from './coms/initData/index';
 
 const be2feAdapter = (data) => {
     const rentalTypeMap = {
         WHOLE: 0,
         SHARED: 1,
-    };
-
-    const roomTypeMap = {
-        BEDROOM: 'rooms',
-        BATHROOM: 'toilets',
-        LIVINGROOM: 'saloons',
-        KITCHEN: 'kitchens',
     };
 
     const rentalUnit = (unitData, expand = false) => ({
@@ -43,31 +36,13 @@ const be2feAdapter = (data) => {
         brief: unitData.intro === null ? '' : unitData.intro,
     });
 
-    const chamberConvert = (chamberData) => {
-        const chamberInfo = initData('chamberInfo', {
-            roomNum: 0,
-            saloonNum: 0,
-            toiletNum: 0,
-            kitchenNum: 0,
-        });
-        chamberData.forEach((item) => {
-            const itemData = {
-                roomId: item.number,
-                picUrls: item.images || [],
-                deploys: item.furniture || [],
-            };
-            chamberInfo[roomTypeMap[item.type]].push(itemData);
-        });
-        return {
-            ...initData('chamberInfo', {
-                roomNum: 1,
-                saloonNum: 1,
-                toiletNum: 1,
-                kitchenNum: 1,
-            }),
-            ...chamberInfo,
-        };
-    };
+    const chamberConvert = chamberData => (
+        chamberData.map(chamberItem => ({
+            roomId: chamberItem.number,
+            picUrls: chamberItem.images || [],
+            deploys: chamberItem.furniture || [],
+        }))
+    );
     return {
         baseInfo: {
             rentalType: rentalTypeMap[data.rentalType],
@@ -78,7 +53,7 @@ const be2feAdapter = (data) => {
             },
             village: {
                 value: data.blockId,
-                text: data.name,
+                text: data.blockName,
             },
             houseFloor: {
                 curFloor: num2Str(data.floor),
@@ -106,7 +81,14 @@ const be2feAdapter = (data) => {
             },
         },
 
-        chamberInfo: chamberConvert(data.room),
+        chamberInfo: {
+            rooms: chamberConvert(data.bedrooms),
+            saloons: chamberConvert(data.livingRooms),
+            toilets: chamberConvert(data.bathrooms),
+            kitchens: chamberConvert(data.kitchen).length === 0
+                ? [creatChamberArr(1)]
+                : chamberConvert(data.kitchen),
+        },
     };
 };
 
@@ -163,33 +145,15 @@ const fe2beAdapter = (data) => {
             intro: rentsData.brief,
         };
     };
-    const singleRoomConvert = (singleData, roomType, roomId) => ({
-        type: roomType,
-        number: roomId,
-        images: singleData.picUrls,
-        furniture: singleData.deploys,
-    });
-    const roomConvert = (chamberInfo) => {
-        let allRoomInfoList = [];
-        const roomTypes = ['rooms', 'saloons', 'toilets', 'kitchens'];
-        const roomTypeMap = {
-            rooms: 'BEDROOM',
-            toilets: 'BATHROOM',
-            saloons: 'LIVINGROOM',
-            kitchens: 'KITCHEN',
-        };
-        roomTypes.forEach((roomType) => {
-            allRoomInfoList = allRoomInfoList.concat(
-                chamberInfo[roomType].map((sigleRoomData, index) => (
-                    // TODO roomId 和 index 对应关系
-                    singleRoomConvert(sigleRoomData, roomTypeMap[roomType], index + 1)
-                )),
-            );
-        });
-        return allRoomInfoList;
-    };
+    const chamberConvert = chamberInfo => (
+        chamberInfo.map(chamberItem => ({
+            number: chamberItem.roomId,
+            images: chamberItem.picUrls,
+            furniture: chamberItem.deploys,
+        }))
+    );
     return {
-        houseParam: {
+        house: {
             blockId: data.baseInfo.village.value,
             buildingNum: str2Num(buildNo),
             unitNum: str2Num(unitNo),
@@ -209,7 +173,10 @@ const fe2beAdapter = (data) => {
 
         rents: data.roomInfo.map(rentData => rentsConvert(rentData)),
 
-        roomParams: roomConvert(data.chamberInfo),
+        bedrooms: chamberConvert(data.chamberInfo.rooms),
+        livingRooms: chamberConvert(data.chamberInfo.saloons),
+        bathrooms: chamberConvert(data.chamberInfo.toilets),
+        kitchens: chamberConvert(data.chamberInfo.kitchens),
     };
 };
 
