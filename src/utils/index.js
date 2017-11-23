@@ -38,4 +38,42 @@ export const num2Str = (num) => {
     return num.toString();
 };
 
-export const str2Num = str => (Number(str));
+export const str2Num = (str) => {
+    if (str === '') return null;
+    return Number(str);
+};
+
+export const timeSignBy = (type, timeStamp) => {
+    const time = new Date(timeStamp);
+    switch (type) {
+    case 'day':
+        return new Date(time.getFullYear(), time.getMonth(), time.getDate()).getTime();
+    case 'year':
+        return new Date(time.getFullYear(), 0).getTime();
+    default:
+        return timeStamp;
+    }
+};
+
+export const timeFormat = (timeStamp) => {
+    const time = new Date(timeStamp);
+    const nowTime = new Date();
+    if (timeSignBy('day', time) === timeSignBy('day', nowTime)) {
+        return '今天';
+    }
+    if (timeSignBy('year', time) === timeSignBy('year', nowTime)) {
+        return `${time.getMonth() + 1}月${time.getDate()}日`;
+    }
+
+    return `${time.getFullYear()}年${time.getMonth() + 1}月${time.getDate()}日`;
+};
+
+export const throttle = (fn, delay) => {
+    let timeHandler = null;
+    return (...args) => {
+        clearTimeout(timeHandler);
+        timeHandler = setTimeout(() => {
+            fn(...args);
+        }, delay);
+    };
+};
