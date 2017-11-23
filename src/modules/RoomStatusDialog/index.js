@@ -16,9 +16,9 @@ class RoomStatusDialog extends BaseComponent {
             },
         };
         this.roomStatusChangeNote = {
-            published: '确定发布此房间吗？',
-            offline: '确定下架此房间吗？',
-            delete: '确定删除此房间吗？',
+            PUBLISHED: '确定发布此房间吗？',
+            OFFLINE: '确定下架此房间吗？',
+            DELETE: '确定删除此房间吗？',
         };
         this.autoBind('handleConfirm', 'handleChange', 'handleCancel');
     }
@@ -40,7 +40,7 @@ class RoomStatusDialog extends BaseComponent {
         const {
             value,
         } = this.state;
-        if (this.props.type === 'occupied' && value === null) {
+        if (this.props.type === 'OCCUPIED' && value === null) {
             this.setState({
                 error: {
                     error: true,
@@ -70,7 +70,7 @@ class RoomStatusDialog extends BaseComponent {
                 className={clsPrefix}
             >
                 {
-                    this.props.type === 'occupied' ?
+                    this.props.type === 'OCCUPIED' ?
                         <FormItem
                             className={`${clsPrefix}--occupied`}
                             error={this.state.error}
@@ -107,13 +107,13 @@ class RoomStatusDialog extends BaseComponent {
 
 RoomStatusDialog.defaultProps = {
     hide: true,
-    type: 'delete',
+    type: 'DELETE',
     onConfirm: () => {},
     onCancel: () => {},
 };
 RoomStatusDialog.propTypes = {
     hide: PropTypes.bool,
-    type: PropTypes.oneOf(['published', 'occupied', 'offline', 'delete']),
+    type: PropTypes.oneOf(['PUBLISHED', 'OCCUPIED', 'OFFLINE', 'DELETE']),
     onConfirm: PropTypes.func,
     onCancel: PropTypes.func,
 };
