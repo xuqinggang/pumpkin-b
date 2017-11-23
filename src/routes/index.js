@@ -1,9 +1,10 @@
 import App from '../App';
 import ListPage from '../pages/ListPage';
 import IndexPage from '../pages/IndexPage';
-import HouseUploadPage from '../pages/HouseUpload/index';
+import HouseUploadPage from '../pages/HouseUpload';
 import ProfilePage from '../pages/ProfilePage';
 import HouseManage from '../pages/HouseManage';
+import LoginPage from '../pages/LoginPage';
 import NotFound from '../pages/NotFound';
 
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
                 path: '/',
                 exact: true,
                 component: IndexPage,
+            },
+            {
+                path: '/login',
+                exact: true,
+                component: LoginPage,
             },
             {
                 path: '/list',
