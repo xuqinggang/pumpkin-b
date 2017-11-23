@@ -23,6 +23,7 @@ const initialState = {
         phone: '',
         imgUrl: '',
     },
+    houseTypeImgUrl: '',
 };
 
 const baseInfo = (state = initialState, action) => {
@@ -76,6 +77,12 @@ const baseInfo = (state = initialState, action) => {
                 ...state.keeperInfo,
                 [action.name]: action.value,
             },
+        };
+    }
+    case 'house-upload.base-info.setHouseTypeImgUrl': {
+        return {
+            ...state,
+            houseTypeImgUrl: action.value,
         };
     }
     default:

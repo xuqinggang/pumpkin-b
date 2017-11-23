@@ -25,7 +25,7 @@ class Equipment extends BaseComponent {
         return (
             <div className={cls}>
                 <div className={`${clsPrefix}--drag`}>
-                    <i className={`${clsPrefix}--indicator`} />
+                    <i className={`${clsPrefix}--indicator ${equipMap[this.props.value].className}`} />
                     <span className={`${clsPrefix}--text`}>
                         {
                             equipMap[this.props.value]

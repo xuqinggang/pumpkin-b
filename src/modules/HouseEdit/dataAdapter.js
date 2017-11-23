@@ -10,6 +10,7 @@ const be2feAdapter = (data) => {
     const rentalUnit = (unitData, expand = false) => ({
         roomId: unitData.roomNumber,
         expand,
+        offline: false,
         roomArea: num2Str(unitData.area),
         direct: unitData.direct,
         priceInfo: {
@@ -39,6 +40,7 @@ const be2feAdapter = (data) => {
     const chamberConvert = chamberData => (
         chamberData.map(chamberItem => ({
             roomId: chamberItem.number,
+            offline: false,
             picUrls: chamberItem.images || [],
             deploys: chamberItem.furniture || [],
         }))
@@ -86,7 +88,7 @@ const be2feAdapter = (data) => {
             saloons: chamberConvert(data.livingRooms),
             toilets: chamberConvert(data.bathrooms),
             kitchens: chamberConvert(data.kitchen).length === 0
-                ? [creatChamberArr(1)]
+                ? creatChamberArr(1)
                 : chamberConvert(data.kitchen),
         },
     };
@@ -124,21 +126,21 @@ const fe2beAdapter = (data) => {
         return {
             rentalType,
 
-            number: rentsData.roomId,
+            ...(rentsData.offline ? {} : { number: rentsData.roomId }),
             area: str2Num(rentsData.roomArea),
             direct: rentsData.direct,
 
-            priceMonth: priceInfo.month.price,
-            depositMonth: priceInfo.month.deposit,
+            priceMonth: str2Num(priceInfo.month.price),
+            depositMonth: str2Num(priceInfo.month.deposit),
 
-            priceSeason: priceInfo.season.price,
-            depositSeason: priceInfo.season.deposit,
+            priceSeason: str2Num(priceInfo.season.price),
+            depositSeason: str2Num(priceInfo.season.deposit),
 
-            priceHalfYear: priceInfo.halfYear.price,
-            depositHalfYear: priceInfo.halfYear.deposit,
+            priceHalfYear: str2Num(priceInfo.halfYear.price),
+            depositHalfYear: str2Num(priceInfo.halfYear.deposit),
 
-            priceYear: priceInfo.year.price,
-            depositYear: priceInfo.year.deposit,
+            priceYear: str2Num(priceInfo.year.price),
+            depositYear: str2Num(priceInfo.year.deposit),
 
             tags: rentsData.roomTag.active,
 
@@ -147,7 +149,7 @@ const fe2beAdapter = (data) => {
     };
     const chamberConvert = chamberInfo => (
         chamberInfo.map(chamberItem => ({
-            number: chamberItem.roomId,
+            ...(chamberItem.offline ? {} : { number: chamberItem.roomId }),
             images: chamberItem.picUrls,
             furniture: chamberItem.deploys,
         }))
@@ -165,7 +167,7 @@ const fe2beAdapter = (data) => {
             bathroomCount: toilet,
 
             supervisorName: name,
-            supervisorTel: phone,
+            supervisorTel: str2Num(phone),
             supervisorImg: imgUrl,
         },
 

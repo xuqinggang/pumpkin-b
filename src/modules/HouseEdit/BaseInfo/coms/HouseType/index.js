@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import { FormItem } from 'components/Form/index';
 import Select from 'components/Select/index';
+import HouseTypeImage from '../HouseTypeImage/index';
 import { setHouseType } from '../../actions';
 
 const houseTypeMap = {
@@ -54,6 +55,7 @@ class HouseType extends BaseComponent {
             <FormItem
                 label="房源户型"
                 className={clsPrefix}
+                layout="top"
             >
                 <div>
                     <Select
@@ -81,6 +83,7 @@ class HouseType extends BaseComponent {
                         disabled={!this.props.isCreate}
                     />
                 </div>
+                <HouseTypeImage />
             </FormItem>
         );
     }
