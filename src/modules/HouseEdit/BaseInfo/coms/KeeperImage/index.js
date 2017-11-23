@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
@@ -11,9 +12,14 @@ class KeeperImage extends BaseComponent {
         super(props);
         this.autoBind('handleSelect');
     }
-    handleSelect() {
-        const fakeImgUrl = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2236350875,3008024805&fm=27&gp=0.jpg';
-        this.props.onChange({ name: this.props.name, value: fakeImgUrl });
+    handleSelect(name, file) {
+        const data = new FormData();
+        data.append('file', file);
+        axios.post('/v1/common/pics', data)
+        .then((res) => {
+            const imgUrl = res.data.data.url;
+            this.props.onChange({ name: this.props.name, value: imgUrl });
+        });
     }
     render() {
         const clsPrefix = 'c-keeper-image';
