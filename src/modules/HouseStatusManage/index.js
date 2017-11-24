@@ -13,7 +13,10 @@ class HouseStatusManage extends BaseComponent {
         this.state = {
             expand: false,
         };
-        this.autoBind('handleSwitchExpand', 'handleEdit');
+        this.autoBind('handleSwitchExpand', 'handleEdit', 'handleDelete');
+    }
+    getChildContext() {
+        return { houseId: this.props.house.id };
     }
     handleSwitchExpand() {
         this.setState({
@@ -23,8 +26,12 @@ class HouseStatusManage extends BaseComponent {
     handleEdit() {
         this.props.onEdit({ houseId: this.props.house.id });
     }
+    handleDelete() {
+        this.props.onDelete({ houseId: this.props.house.id });
+    }
     render() {
         const clsPrefix = 'm-house-status-manage';
+        const cls = classNames(clsPrefix, {});
         const {
             block,
             houseAddress,
@@ -32,7 +39,7 @@ class HouseStatusManage extends BaseComponent {
             rentalType,
         } = this.props.house;
         return (
-            <div className={clsPrefix}>
+            <div className={cls}>
                 <i className={`${clsPrefix}--indicator`} />
                 <div className={`${clsPrefix}--info`}>
                     <div className={`${clsPrefix}--info--title`}>
@@ -43,6 +50,10 @@ class HouseStatusManage extends BaseComponent {
                             className={`${clsPrefix}--info--edit`}
                             onClick={this.handleEdit}
                         >编辑</button>
+                        <button
+                            className={`${clsPrefix}--info--delete`}
+                            onClick={this.handleDelete}
+                        >删除</button>
                     </div>
                     <div className={`${clsPrefix}--address`}>
                         <div>
@@ -61,19 +72,19 @@ class HouseStatusManage extends BaseComponent {
                     {
                         rentUnits.map((item, index) => (
                             <div
-                                key={index}
+                                key={item.id}
                                 className={`${clsPrefix}--rooms-unit`}
                             >
-                                {
-                                    index % 5 === 0
-                                        ? null
-                                        : <i className={`${clsPrefix}--rooms-indicator`} />
-                                }
                                 <RoomStatusManage
                                     renUnit={item}
                                     rentalType={rentalType}
                                     title={rentalType === 'SHARED' ? expandSingleNum(index + 1) : '整租'}
                                 />
+                                {
+                                    index % 5 === 4
+                                        ? null
+                                        : <i className={`${clsPrefix}--rooms-indicator`} />
+                                }
                             </div>
                         ))
                     }
@@ -91,10 +102,14 @@ class HouseStatusManage extends BaseComponent {
 HouseStatusManage.propTypes = {
     house: houseType.isRequired,
     onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
 };
 
 HouseStatusManage.defaultProps = {
     onEdit: () => {},
+    onDelete: () => {},
 };
-
+HouseStatusManage.childContextTypes = {
+    houseId: PropTypes.number,
+};
 export default HouseStatusManage;
