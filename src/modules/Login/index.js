@@ -1,7 +1,9 @@
 // import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent';
 import Input from 'components/Input';
 // import Button from 'components/Button';
+import { passportLogin } from '../Passport/actions';
 import './style.less';
 
 class Login extends BaseComponent {
@@ -17,17 +19,23 @@ class Login extends BaseComponent {
 
         this.state = {
             account: '',
-            passwd: '',
+            password: '',
         };
     }
 
     handleSubmit() {
-        console.log(this);
+        const { dispatch } = this.props;
+        const { account, password } = this.state;
+
+        dispatch(passportLogin({
+            account,
+            password,
+        }));
     }
 
     handlePasswdChange({ value }) {
         this.setState({
-            passwd: value,
+            password: value,
         });
     }
 
@@ -57,9 +65,9 @@ class Login extends BaseComponent {
                     <Input
                         className={`${clsPrefix}--input`}
                         type="password"
-                        value={this.state.passwd}
+                        value={this.state.password}
                         placeholder="请输入密码"
-                        name="passwd"
+                        name="password"
                         onChange={this.handlePasswdChange}
                     />
                 </div>
@@ -67,7 +75,7 @@ class Login extends BaseComponent {
                     className={`${clsPrefix}--submit`}
                     role="button"
                     tabIndex={0}
-                    onClick={this.handleLogin}
+                    onClick={this.handleSubmit}
                 >登录</div>
             </div>
         );
@@ -81,4 +89,4 @@ Login.defaultProps = {};
 Login.propTypes = {};
 
 
-export default Login;
+export default connect()(Login);
