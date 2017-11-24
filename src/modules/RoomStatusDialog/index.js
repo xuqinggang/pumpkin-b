@@ -84,11 +84,11 @@ class RoomStatusDialog extends BaseComponent {
                                     layout="horizontal"
                                     options={[
                                         {
-                                            value: 'WOMEN',
+                                            value: 'FEMALE',
                                             text: '女',
                                         },
                                         {
-                                            value: 'MAN',
+                                            value: 'MALE',
                                             text: '男',
                                         },
                                     ]}
