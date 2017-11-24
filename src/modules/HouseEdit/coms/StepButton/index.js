@@ -107,7 +107,13 @@ class UploadButton extends BaseComponent {
                 this.props.dispatch(showValidateError({ pageType, error }));
                 return;
             }
-            axios.post('/v1/houses/', fe2beAdapter(data));
+            if (data.houseId) {
+                // 修改
+                axios.put(`/v1/houses/${data.houseId}`, fe2beAdapter(data));
+            } else {
+                // 新建
+                axios.post('/v1/houses/', fe2beAdapter(data));
+            }
             break;
         }
         default:
