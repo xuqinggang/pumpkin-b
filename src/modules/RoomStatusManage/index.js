@@ -23,6 +23,7 @@ class RoomStatusManage extends BaseComponent {
                 type: 'OFFLINE',
                 text: '下架',
             }, {
+                // 目前需求不做
                 type: 'DELETE',
                 text: '删除',
             },
@@ -30,7 +31,7 @@ class RoomStatusManage extends BaseComponent {
         this.statusMapOperates = {
             FINISHED: {
                 text: '待发布',
-                operates: splitArrayWithIndex(this.operates, 0, 2),
+                operates: splitArrayWithIndex(this.operates, 0),
             },
             PUBLISHED: {
                 text: '已发布',
@@ -38,7 +39,7 @@ class RoomStatusManage extends BaseComponent {
             },
             OCCUPIED: {
                 text: '已入住',
-                operates: splitArrayWithIndex(this.operates, 2),
+                operates: splitArrayWithIndex(this.operates, 0),
             },
             OFFLINE: {
                 text: '已下架',
@@ -52,7 +53,10 @@ class RoomStatusManage extends BaseComponent {
         return () => {
             this.props.dispatch(showStatusChangeDialog(type, ({ value }) => {
                 // TODO: 针对不同的type发送请求
-                axios.put(`/v1/rentUnits/${this.props.renUnit.id}/houseStatus?status=${type.toUpperCase()}`)
+                axios.put(`/v1/rentUnits/${this.props.renUnit.id}/houseStatus`, {
+                    status: type.toUpperCase(),
+                    gender: value,
+                })
                 .then((res) => {
                     if (res.data.code === 200) {
                         this.props.dispatch(updateRentalUnitStatus(

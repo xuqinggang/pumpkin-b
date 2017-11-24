@@ -47,6 +47,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "express": "^4.16.2",
@@ -60,6 +61,7 @@
     "koa-static": "^4.0.1",
     "koa-views": "^6.1.1",
     "prop-types": "^15.5.10",
+    "pumpkin-font-b": "^1.0.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.5",
