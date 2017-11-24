@@ -75,7 +75,7 @@ class HouseManageList extends BaseComponent {
 
                         // 合并列表
                         if (this.props.isSortByTime) {
-                            blockTitleValue = timeSignBy('day', item.createTime * 1000);
+                            blockTitleValue = timeSignBy('date', item.createTime * 1000);
                             blockTitleText = timeFormat(item.createTime * 1000);
                         } else {
                             blockTitleValue = item.block.id;
