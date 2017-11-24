@@ -4,4 +4,14 @@
     &--pager {
         margin: 40px 0;
     }
+
+    &--house {
+        max-height: 1000px;
+        transition: max-height 0.3s;
+
+        &__deleted {
+            max-height: 0;
+            overflow: hidden;
+        }
+    }
 }

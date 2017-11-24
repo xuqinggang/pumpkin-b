@@ -1,24 +1,58 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
 import SubHeader from 'components/SubHeader/index';
 import PageHeader from 'components/PageHeader/index';
+import ConfirmDialog from 'components/ConfirmDialog/index';
 import HouseStatusManage from 'modules/HouseStatusManage/index';
 import HouseManageFilter from 'modules/HouseManageFilter/index';
 import RoomStatusDialog from 'modules/RoomStatusDialog/index';
 import HouseManageListPager from 'modules/HouseManageListPager/index';
 import { timeSignBy, timeFormat } from 'utils/index';
-import { hideStatusChangeDialog } from './actions';
+import { hideStatusChangeDialog, deleteHouse } from './actions';
 import './style.less';
 
 class HouseManageList extends BaseComponent {
     constructor(props) {
         super(props);
-        this.autoBind('handleEdit', 'handleDialogConfirm', 'handleDialogCancel');
+        this.state = {
+            deleteHouseId: -1,
+            deleteDialogHide: true,
+        };
+        this.autoBind(
+            'handleEdit',
+            'handleDialogConfirm',
+            'handleDialogCancel',
+            'handleDelete',
+            'handleDeleteDialogConfirm',
+            'handleDeleteDialogCancel',
+        );
     }
     handleEdit({ houseId }) {
         this.props.onEdit({ houseId });
+    }
+    handleDelete({ houseId }) {
+        this.setState({
+            deleteDialogHide: false,
+        });
+        this.handleDeleteDialogConfirm = () => {
+            this.setState({
+                deleteDialogHide: true,
+                deleteHouseId: houseId,
+            }, () => {
+                // 延迟执行，等待动画完成
+                setTimeout(() => {
+                    this.props.dispatch(deleteHouse(houseId));
+                }, 500);
+            });
+        };
+    }
+    handleDeleteDialogCancel() {
+        this.setState({
+            deleteDialogHide: true,
+        });
     }
     handleDialogConfirm({ type, value }) {
         this.props.dialogOnConfirm({ type, value });
@@ -59,10 +93,17 @@ class HouseManageList extends BaseComponent {
                                     ? null
                                     : <SubHeader>{blockTitleText}</SubHeader>
                                 }
-                                <HouseStatusManage
-                                    house={item}
-                                    onEdit={this.handleEdit}
-                                />
+                                <div
+                                    className={classNames(`${clsPrefix}--house`, {
+                                        [`${clsPrefix}--house__deleted`]: this.state.deleteHouseId === item.id,
+                                    })}
+                                >
+                                    <HouseStatusManage
+                                        house={item}
+                                        onEdit={this.handleEdit}
+                                        onDelete={this.handleDelete}
+                                    />
+                                </div>
                             </div>
                         );
                     })
@@ -74,6 +115,11 @@ class HouseManageList extends BaseComponent {
                     onCancel={this.handleDialogCancel}
                     onConfirm={this.handleDialogConfirm}
                 />
+                <ConfirmDialog
+                    hide={this.state.deleteDialogHide}
+                    onConfirm={this.handleDeleteDialogConfirm}
+                    onCancel={this.handleDeleteDialogCancel}
+                >确定删除该房源吗？</ConfirmDialog>
             </div>
         );
     }

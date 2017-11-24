@@ -32,6 +32,17 @@ export const updateHouseManageList = houseList => ({
     type: 'houseManage-updateHouseManageList',
 });
 
+export const updateRentalUnitStatus = (houseId, rentUnitId, status) => ({
+    houseId,
+    rentUnitId,
+    status,
+    type: 'houseManage-updateRentalUnitStatus',
+});
+
+export const deleteHouse = houseId => ({
+    houseId,
+    type: 'houseManage-deleteHouse',
+});
 
 export const fetchHouseManageList = (
 {
