@@ -1,3 +1,4 @@
+const argv = require('optimist').argv;
 const http = require('http');
 const path = require('path');
 const Koa = require('koa');
@@ -14,6 +15,8 @@ const router = require('../dist/server');
 const server = new Koa();
 const proxy = httpProxy.createProxyServer();
 const serverRouter = new Router();
+
+const PORT = argv.port ? parseInt(argv.port) : conf.port;
 
 server.use(views(__dirname + '/views', {
   map: {
@@ -37,10 +40,10 @@ server.use(KoaStatic('public'));
 server.use(serverRouter.routes());
 server.use(router.routes());
 
-server.listen(conf.port, (err) => {
+server.listen(PORT, (err) => {
     if (err) {
         console.log('error: ', err);
         return;
     }
-    console.log(`server start at port: ${conf.port}`);
+    console.log(`server start at port: ${PORT}`);
 });

@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import BaseComponent from '../BaseComponent';
 import Overlay from '../Overlay';
-import Portal from '../Portal';
 import './style.less';
 
 class Dialog extends BaseComponent {
