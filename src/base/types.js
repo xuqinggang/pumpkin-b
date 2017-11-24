@@ -18,3 +18,24 @@ export const errorType = PropTypes.shape({
     error: PropTypes.bool,
     message: PropTypes.string,
 });
+
+export const rentUnitType = PropTypes.shape({
+    id: PropTypes.number,
+    status: PropTypes.oneOf(['UNFINISHED', 'FINISHED', 'PUBLISHED', 'OCCUPIED', 'OFFLINE']),
+});
+
+export const houseType = PropTypes.shape({
+    id: PropTypes.number,
+    block: PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+    }),
+    rentalType: PropTypes.oneOf(['WHOLE', 'SHARED']),
+    rentUnits: PropTypes.arrayOf(rentUnitType),
+    houseAddress: PropTypes.shape({
+        buildNo: PropTypes.number,
+        unitNo: PropTypes.number,
+        houseNo: PropTypes.number,
+    }),
+    createTime: PropTypes.number,
+});

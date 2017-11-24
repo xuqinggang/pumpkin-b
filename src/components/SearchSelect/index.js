@@ -45,6 +45,9 @@ class SearchSelect extends BaseComponent {
                 },
             });
         }
+        this.setState({
+            expand: true,
+        });
     }
     handleFocus() {
         this.setState({

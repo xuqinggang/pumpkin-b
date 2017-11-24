@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
 import Form from 'components/Form/index';
 import UploadHeader from '../coms/UploadHeader/index';

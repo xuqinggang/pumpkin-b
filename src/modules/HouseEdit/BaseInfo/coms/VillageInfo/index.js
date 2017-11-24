@@ -1,8 +1,10 @@
 import React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import { FormItem } from 'components/Form/index';
 import SearchSelect from 'components/SearchSelect/index';
+import { throttle } from 'utils/index';
 import { setVillageInfo } from '../../actions';
 import { validateBaseInfo } from '../../../coms/ValidateData';
 import { hideValidateError } from '../../../actions';
@@ -15,22 +17,9 @@ class VillageInfo extends BaseComponent {
                 error: false,
                 message: '',
             },
-            options: [
-                {
-                    value: 101,
-                    text: '双榆树',
-                },
-                {
-                    value: 102,
-                    text: '双榆树小',
-                },
-                {
-                    value: 103,
-                    text: '双榆树小区',
-                },
-            ],
+            options: [],
         };
-        this.autoBind('handleSelect', 'handleSearch', 'handleBlur');
+        this.autoBind('handleSelect', 'handleSearch', 'handleBlur', 'fetchSearch');
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.error.error !== this.props.error.error && nextProps.error.error) {
@@ -41,6 +30,22 @@ class VillageInfo extends BaseComponent {
             });
         }
     }
+    fetchSearch(text) {
+        axios.get('/v1/common/blockSearch', {
+            params: {
+                keyword: text,
+                cityId: 1,
+            },
+        })
+        .then((res) => {
+            this.setState({
+                options: res.data.data.blocks.map(item => ({
+                    value: item.id,
+                    text: item.name,
+                })),
+            });
+        });
+    }
     handleSearch({ search }) {
         this.setState({
             error: {
@@ -50,14 +55,7 @@ class VillageInfo extends BaseComponent {
         });
         this.props.dispatch(setVillageInfo(search));
         this.props.dispatch(hideValidateError({ pageType: 'baseInfo' }));
-        this.setState({
-            options: [
-                {
-                    value: 101,
-                    text: '双榆树',
-                },
-            ],
-        });
+        this.throttleSearch(search.text);
     }
     handleBlur({ search }) {
         const error = validateBaseInfo.village(search);
@@ -66,6 +64,9 @@ class VillageInfo extends BaseComponent {
                 ...error,
             },
         });
+    }
+    componentDidMount() {
+        this.throttleSearch = throttle(this.fetchSearch, 200);
     }
     render() {
         const clsPrefix = 'c-village-info';

@@ -97,6 +97,7 @@ class Select extends BaseComponent {
                             : this.state.select.text
                         }
                     </span>
+                    <i className={`${clsPrefix}--selected--icon icon-pull-down`} />
                 </div>
                 <EventBlackHole captureEvents={['click']}>
                     <div

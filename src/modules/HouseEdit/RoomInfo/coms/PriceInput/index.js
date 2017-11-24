@@ -25,7 +25,7 @@ class PriceInput extends BaseComponent {
         const values = props.values || defaultValues(this.names);
         this.state = {
             values,
-            expand: false,
+            expand: !!values[this.names[1]],
             error: {
                 error: false,
                 message: '',
@@ -47,6 +47,7 @@ class PriceInput extends BaseComponent {
         if (nextProps.values !== this.props.values) {
             this.setState({
                 values: nextProps.values,
+                expand: !!nextProps.values[this.names[1]],
             });
         }
         if (nextProps.error.error !== this.props.error.error && nextProps.error.error) {

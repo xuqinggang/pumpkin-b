@@ -6,6 +6,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import AddImage from '../AddImage/index';
 import { uploadPics, removePics } from '../../actions';
 import { hideValidateError } from '../../../actions';
+import './style.less';
 
 const notSingleNum = (num) => {
     if (num >= 0 && num <= 9) {
@@ -68,7 +69,7 @@ class ChamberImage extends BaseComponent {
         this.props.dispatch(removePics(name, coords));
     }
     render() {
-        const clsPrefix = 'c-house-pics';
+        const clsPrefix = 'c-chamber-image';
         const { name, index, pics, suffix } = this.props;
 
         return (
@@ -79,31 +80,34 @@ class ChamberImage extends BaseComponent {
                     suffix)}
                 className={clsPrefix}
                 error={this.state.error}
+                layout="top"
             >
-                {
-                    pics.map((picItem, picIndex) => (
+                <div className={`${clsPrefix}--wrap`}>
+                    {
+                        pics.map((picItem, picIndex) => (
+                            <AddImage
+                                key={`${name}${index}${picIndex}`}
+                                name={name}
+                                coords={[index, picIndex]}
+                                onDel={this.handleDelImage}
+                                picUrl={picItem}
+                            />
+                        ))
+                    }
+                    {
                         <AddImage
-                            key={`${name}${index}${picIndex}`}
                             name={name}
-                            coords={[index, picIndex]}
-                            onDel={this.handleDelImage}
-                            picUrl={picItem}
-                        />
-                    ))
-                }
-                {
-                    <AddImage
-                        name={name}
-                        coords={[index, null]} // for add
-                        forAdd
-                        onAdd={this.handleAddImage}
-                    >
-                        {`上传${setTitle(
-                            name,
-                            index,
-                            suffix)}照片`}
-                    </AddImage>
-                }
+                            coords={[index, null]} // for add
+                            forAdd
+                            onAdd={this.handleAddImage}
+                        >
+                            {`上传${setTitle(
+                                name,
+                                index,
+                                suffix)}照片`}
+                        </AddImage>
+                    }
+                </div>
             </FormItem>
         );
     }

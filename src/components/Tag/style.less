@@ -1,6 +1,5 @@
 .c-tag {
     border-radius: 3px;
-    border: 1px solid #e0dfe7;
     line-height: 30px;
     height: 32px;
     width: 88px;
@@ -17,6 +16,10 @@
 
     &-normal {
         text-align: center;
+
+        &--contain {
+            border: 1px solid #e0dfe7;
+        }
 
         &__active {
             color: #f38d39;
@@ -62,6 +65,7 @@
     &-add {
         color: #f38d39;
         cursor: text;
+        border: 1px solid #e0dfe7;
 
         &__active {
             border-color: #fa390b;

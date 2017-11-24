@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
 import Arrow from 'components/Arrow/index';
 import RoomStatusManage from 'modules/RoomStatusManage/index';
+import { houseType } from 'base/types';
 import { expandSingleNum } from 'utils/index';
 import './style.less';
 
@@ -12,7 +13,10 @@ class HouseStatusManage extends BaseComponent {
         this.state = {
             expand: false,
         };
-        this.autoBind('handleSwitchExpand', 'handleEdit');
+        this.autoBind('handleSwitchExpand', 'handleEdit', 'handleDelete');
+    }
+    getChildContext() {
+        return { houseId: this.props.house.id };
     }
     handleSwitchExpand() {
         this.setState({
@@ -20,25 +24,44 @@ class HouseStatusManage extends BaseComponent {
         });
     }
     handleEdit() {
-        this.props.onEdit({ houseId: this.props.houseId });
+        this.props.onEdit({ houseId: this.props.house.id });
+    }
+    handleDelete() {
+        this.props.onDelete({ houseId: this.props.house.id });
     }
     render() {
         const clsPrefix = 'm-house-status-manage';
-        const rooms = [1, 2, 3, 4, 5, 7, 8];
+        const cls = classNames(clsPrefix, {});
+        const {
+            block,
+            houseAddress,
+            rentUnits,
+            rentalType,
+        } = this.props.house;
         return (
-            <div className={clsPrefix}>
+            <div className={cls}>
                 <i className={`${clsPrefix}--indicator`} />
                 <div className={`${clsPrefix}--info`}>
                     <div className={`${clsPrefix}--info--title`}>
-                        <span className={`${clsPrefix}--info--name`}>双榆树的一个小区</span>
-                        <button
-                            className={`${clsPrefix}--info--edit`}
-                            onClick={this.handleEdit}
-                        >编辑</button>
+                        <span className={`${clsPrefix}--info--name`}>
+                            {block.name}
+                        </span>
+                        <div className={`${clsPrefix}--info--btn`}>
+                            <button
+                                className={`${clsPrefix}--info--edit icon-edit`}
+                                onClick={this.handleEdit}
+                            />
+                            <button
+                                className={`${clsPrefix}--info--delete icon-delete`}
+                                onClick={this.handleDelete}
+                            />
+                        </div>
                     </div>
                     <div className={`${clsPrefix}--address`}>
-                        <div>1栋101单元</div>
-                        <div>1012号</div>
+                        <div>
+                            {houseAddress.buildNo}栋{houseAddress.unitNo === null ? '' : `${houseAddress.unitNo}单元`}
+                        </div>
+                        <div>{houseAddress.houseNo}号</div>
                     </div>
                 </div>
                 <div
@@ -49,26 +72,27 @@ class HouseStatusManage extends BaseComponent {
                     ref={this.storeRef('roomsWrap')}
                 >
                     {
-                        rooms.map((item, index) => (
+                        rentUnits.map((item, index) => (
                             <div
-                                key={index}
+                                key={item.id}
                                 className={`${clsPrefix}--rooms-unit`}
                             >
+                                <RoomStatusManage
+                                    renUnit={item}
+                                    rentalType={rentalType}
+                                    title={rentalType === 'SHARED' ? expandSingleNum(index + 1) : '整租'}
+                                />
                                 {
-                                    index % 5 === 0
+                                    index % 5 === 4
                                         ? null
                                         : <i className={`${clsPrefix}--rooms-indicator`} />
                                 }
-                                <RoomStatusManage
-                                    renUnitId={/* todo */11}
-                                    title={expandSingleNum(index + 1)}
-                                />
                             </div>
                         ))
                     }
                 </div>
                 {
-                    rooms.length > 5
+                    rentUnits.length > 5
                     ? <Arrow down={this.state.expand} className={`${clsPrefix}--arrow`} onClick={this.handleSwitchExpand} />
                     : null
                 }
@@ -78,14 +102,16 @@ class HouseStatusManage extends BaseComponent {
 }
 
 HouseStatusManage.propTypes = {
-    houseId: PropTypes.number.isRequired,
-    rooms: PropTypes.arrayOf(PropTypes.shape()),
+    house: houseType.isRequired,
     onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
 };
 
 HouseStatusManage.defaultProps = {
-    rooms: [],
     onEdit: () => {},
+    onDelete: () => {},
 };
-
+HouseStatusManage.childContextTypes = {
+    houseId: PropTypes.number,
+};
 export default HouseStatusManage;

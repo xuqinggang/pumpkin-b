@@ -1,8 +1,10 @@
 import React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
-import PropTypes from 'prop-types';
+import ConfirmDialog from 'components/ConfirmDialog/index';
 import { nextStep, showValidateError } from '../../actions';
 import { switchRoomExpand } from '../../RoomInfo/actions';
 import validateData from '../ValidateData/index';
@@ -12,7 +14,23 @@ import './style.less';
 class UploadButton extends BaseComponent {
     constructor(props) {
         super(props);
-        this.autoBind('handlePrev', 'handleNext');
+        this.state = {
+            dialogHide: true,
+        };
+        this.autoBind('handlePrev', 'handleNext', 'handleDialogConfirm', 'handleDialogCancel');
+    }
+    handleDialogConfirm() {
+        this.setState({
+            dialogHide: true,
+        }, () => {
+            this.props.dispatch(nextStep(this.props.pageType));
+            this.props.onNext();
+        });
+    }
+    handleDialogCancel() {
+        this.setState({
+            dialogHide: true,
+        });
     }
     handlePrev() {
         this.props.onPrev();
@@ -30,8 +48,24 @@ class UploadButton extends BaseComponent {
                 return;
             }
             // 更改redux state
-            this.props.dispatch(nextStep(this.props.pageType));
-            // 下一步
+            const curHouseType = data[pageType].houseType;
+            const curRentalType = data[pageType].rentalType;
+
+            const lastHouseType = data.commonInfo.houseType;
+            const lastRentalType = data.commonInfo.rentalType;
+
+            if (lastRentalType !== null &&
+                (curRentalType !== lastRentalType ||
+                    curHouseType.room !== lastHouseType.room ||
+                    curHouseType.saloon !== lastHouseType.saloon ||
+                    curHouseType.toilet !== lastHouseType.toilet)) {
+                this.setState({
+                    dialogHide: false,
+                });
+            } else {
+                this.props.dispatch(nextStep(this.props.pageType));
+                this.props.onNext();
+            }
             break;
         }
         case 'roomInfo': {
@@ -54,6 +88,7 @@ class UploadButton extends BaseComponent {
             }
             // 更改redux state
             this.props.dispatch(nextStep(this.props.pageType));
+            this.props.onNext();
             break;
         }
         case 'housePics': {
@@ -62,6 +97,7 @@ class UploadButton extends BaseComponent {
                 this.props.dispatch(showValidateError({ pageType, error }));
                 return;
             }
+            this.props.onNext();
             break;
         }
         case 'houseDeploy': {
@@ -71,12 +107,17 @@ class UploadButton extends BaseComponent {
                 this.props.dispatch(showValidateError({ pageType, error }));
                 return;
             }
-            console.log(fe2beAdapter(data));
+            if (data.houseId) {
+                // 修改
+                axios.put(`/v1/houses/${data.houseId}`, fe2beAdapter(data));
+            } else {
+                // 新建
+                axios.post('/v1/houses/', fe2beAdapter(data));
+            }
             break;
         }
         default:
         }
-        this.props.onNext();
     }
     render() {
         const clsPrefix = 'c-upload-button';
@@ -105,6 +146,14 @@ class UploadButton extends BaseComponent {
                 >
                     {`${curPage === totalPage ? '完成上传' : '下一步'}`}
                 </Button>
+                <ConfirmDialog
+                    hide={this.state.dialogHide}
+                    onConfirm={this.handleDialogConfirm}
+                    onCancel={this.handleDialogCancel}
+                >
+                    <div>确定修改房源户型吗</div>
+                    <div>信息将清空重新编辑</div>
+                </ConfirmDialog>
             </div>
         );
     }

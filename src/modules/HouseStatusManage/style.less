@@ -6,6 +6,8 @@
     position: relative;
     padding: 24px 0;
     white-space: nowrap;
+    margin-bottom: 32px;
+    display: inline-block;
 
     &--indicator {
         position: absolute;
@@ -33,10 +35,26 @@
             color: #333;
         }
 
+        &--btn {
+            display: inline-block;
+            vertical-align: middle;
+            white-space: nowrap;
+            margin-left: 8px;
+        }
+
+        &--edit,
+        &--delete {
+            font-size: 14px;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
         &--edit {
-            padding: 0;
-            background-color: #fff;
-            border: none;
+            color: #f38d39;
+        }
+
+        &--delete {
+            color: #b2b4b5;
         }
 
         &--address {
