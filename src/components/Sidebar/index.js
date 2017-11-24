@@ -37,7 +37,7 @@ class Sidebar extends BaseComponent {
         return (
             <div className={clsPrefix}>
                 <div className={`${clsPrefix}--header`}>
-                    <img src="http://img0.imgtn.bdimg.com/it/u=2761922488,4233734238&fm=27&gp=0.jpg" alt="头像" />
+                    <img src="" alt="头像" />
                 </div>
                 <div className={`${clsPrefix}--nav`}>
                     {

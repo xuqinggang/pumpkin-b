@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import houseUpload from 'modules/HouseEdit/reducers';
-import roomStatusChangeDialog from 'modules/HouseManageList/reducers';
 import passportReducer from 'modules/Passport/reducers';
+import houseManage from 'modules/HouseManageList/reducers';
 
 export default combineReducers({
     houseUpload,
-    roomStatusChangeDialog,
+    houseManage,
     passportReducer,
 });

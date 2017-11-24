@@ -32,3 +32,8 @@ export const setKeeperInfo = ({ name, value }) => ({
     value,
     type: 'house-upload.base-info.setKeeperInfo',
 });
+
+export const setHouseTypeImgUrl = value => ({
+    value,
+    type: 'house-upload.base-info.setHouseTypeImgUrl',
+});

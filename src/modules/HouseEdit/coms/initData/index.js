@@ -1,7 +1,7 @@
 const creatChamberArr = (num) => {
     const arr = [];
     for (let i = 0; i < num; i += 1) {
-        arr.push({ picUrls: [], deploys: [] });
+        arr.push({ picUrls: [], deploys: [], offline: true });
     }
     return arr;
 };
@@ -10,6 +10,7 @@ const initRentalUnit = (data = {}) => {
     const roomId = new Date().getTime();
     return {
         roomId,
+        offline: true, // 用于区分新增和后端请求回的数据
         expand: false, // 默认
         roomArea: '',
         priceInfo: {

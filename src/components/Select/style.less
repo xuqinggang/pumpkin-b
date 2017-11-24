@@ -5,20 +5,28 @@
     display: inline-block;
     margin-right: 16px;
     background-color: #fff;
+    color: #333;
 
     &__disabled {
         color: #888;
+        cursor: default;
     }
 
     &--selected {
-        color: #333;
         font-size: 14px;
         width: 176px;
         border: 1px solid #e0dfe7;
         border-radius: 3px;
-        line-height: 32px;
+        line-height: 30px;
         padding: 0 8px;
         box-sizing: border-box;
+        position: relative;
+
+        &--icon {
+            position: absolute;
+            right: 10px;
+            line-height: 30px;
+        }
     }
 
     &--popover {

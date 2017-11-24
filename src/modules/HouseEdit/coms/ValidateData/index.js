@@ -207,11 +207,11 @@ const validate = {
     },
     housePics: {
         fn: validateChamberInfo('picUrls'),
-        seq: ['rooms', 'saloons', 'toilets', 'kitchens'],
+        seq: ['rooms', 'saloons', 'toilets'],
     },
     houseDeploy: {
         fn: validateChamberInfo('deploys'),
-        seq: ['rooms', 'saloons', 'toilets', 'kitchens'],
+        seq: ['rooms', 'saloons', 'toilets'],
     },
 };
 

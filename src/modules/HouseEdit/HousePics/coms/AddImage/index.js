@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import classNames from 'classnames';
 import UploadImage from 'components/UploadImage/index';
 import BaseComponent from 'components/BaseComponent/index';
@@ -10,14 +11,20 @@ class AddImage extends BaseComponent {
         super(props);
         this.autoBind('handleImageSelect', 'handleImageDel');
     }
-    handleImageSelect() {
+    handleImageSelect(dump, file) {
         const {
             name,
             coords,
         } = this.props;
-        const picUrl = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4234467682,519299782&fm=27&gp=0.jpg';
+
         if (this.props.forAdd) {
-            this.props.onAdd({ name, coords, value: picUrl });
+            const data = new FormData();
+            data.append('file', file);
+            axios.post('/v1/common/pics', data)
+            .then((res) => {
+                const imgUrl = res.data.data.url;
+                this.props.onAdd({ name, coords, value: imgUrl });
+            });
         }
     }
     handleImageDel() {
