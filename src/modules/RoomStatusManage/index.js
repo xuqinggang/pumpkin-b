@@ -3,9 +3,10 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
+import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import { splitArrayWithIndex } from 'utils/index';
 import { rentUnitType } from 'base/types';
-import { showStatusChangeDialog } from '../HouseManageList/actions';
+import { showStatusChangeDialog, updateRentalUnitStatus } from '../HouseManageList/actions';
 import './style.less';
 
 class RoomStatusManage extends BaseComponent {
@@ -29,7 +30,7 @@ class RoomStatusManage extends BaseComponent {
         this.statusMapOperates = {
             FINISHED: {
                 text: '待发布',
-                operates: splitArrayWithIndex(this.operates, 0, 2, 3),
+                operates: splitArrayWithIndex(this.operates, 0, 2),
             },
             PUBLISHED: {
                 text: '已发布',
@@ -37,11 +38,11 @@ class RoomStatusManage extends BaseComponent {
             },
             OCCUPIED: {
                 text: '已入住',
-                operates: splitArrayWithIndex(this.operates, 2, 3),
+                operates: splitArrayWithIndex(this.operates, 2),
             },
             OFFLINE: {
                 text: '已下架',
-                operates: splitArrayWithIndex(this.operates, 0, 3),
+                operates: splitArrayWithIndex(this.operates, 0),
             },
         };
 
@@ -53,7 +54,12 @@ class RoomStatusManage extends BaseComponent {
                 // TODO: 针对不同的type发送请求
                 axios.put(`/v1/rentUnits/${this.props.renUnit.id}/houseStatus?status=${type.toUpperCase()}`)
                 .then((res) => {
-                    console.log(res);
+                    if (res.data.code === 200) {
+                        this.props.dispatch(updateRentalUnitStatus(
+                            this.props.houseId,
+                            this.props.renUnit.id,
+                            type));
+                    }
                 })
                 .catch((e) => {
                     console.log(e);
@@ -110,4 +116,10 @@ RoomStatusManage.propTypes = {
     rentalType: PropTypes.oneOf(['SHARED', 'WHOLE']),
 };
 
-export default connect()(RoomStatusManage);
+export default ConnectContextToProps(connect(
+    (state, props) => ({
+        houseId: props.houseId,
+    }),
+)(RoomStatusManage), {
+    houseId: PropTypes.number,
+});
