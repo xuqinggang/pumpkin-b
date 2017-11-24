@@ -42,7 +42,7 @@ class Equipment extends BaseComponent {
                             onClick={this.handleDel}
                             className={`${clsPrefix}--del`}
                         >
-                            <i className={`${clsPrefix}--del-icon`}>删除</i>
+                            <i className={`${clsPrefix}--del-icon icon-delete`} />
                         </div>
                         : null
                 }
