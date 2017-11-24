@@ -46,14 +46,16 @@ class HouseStatusManage extends BaseComponent {
                         <span className={`${clsPrefix}--info--name`}>
                             {block.name}
                         </span>
-                        <button
-                            className={`${clsPrefix}--info--edit`}
-                            onClick={this.handleEdit}
-                        >编辑</button>
-                        <button
-                            className={`${clsPrefix}--info--delete`}
-                            onClick={this.handleDelete}
-                        >删除</button>
+                        <div className={`${clsPrefix}--info--btn`}>
+                            <button
+                                className={`${clsPrefix}--info--edit icon-edit`}
+                                onClick={this.handleEdit}
+                            />
+                            <button
+                                className={`${clsPrefix}--info--delete icon-delete`}
+                                onClick={this.handleDelete}
+                            />
+                        </div>
                     </div>
                     <div className={`${clsPrefix}--address`}>
                         <div>
