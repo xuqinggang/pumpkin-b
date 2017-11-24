@@ -46,7 +46,7 @@ export const str2Num = (str) => {
 export const timeSignBy = (type, timeStamp) => {
     const time = new Date(timeStamp);
     switch (type) {
-    case 'day':
+    case 'date':
         return new Date(time.getFullYear(), time.getMonth(), time.getDate()).getTime();
     case 'year':
         return new Date(time.getFullYear(), 0).getTime();
@@ -58,7 +58,7 @@ export const timeSignBy = (type, timeStamp) => {
 export const timeFormat = (timeStamp) => {
     const time = new Date(timeStamp);
     const nowTime = new Date();
-    if (timeSignBy('day', time) === timeSignBy('day', nowTime)) {
+    if (timeSignBy('date', time) === timeSignBy('date', nowTime)) {
         return '今天';
     }
     if (timeSignBy('year', time) === timeSignBy('year', nowTime)) {
