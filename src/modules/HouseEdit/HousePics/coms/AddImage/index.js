@@ -45,8 +45,10 @@ class AddImage extends BaseComponent {
                     picUrl={this.props.picUrl}
                     onSelect={this.handleImageSelect}
                 >
-                    <i />
-                    {this.props.children}
+                    <i className={`${clsPrefix}--indicator icon-add`} />
+                    <div>
+                        {this.props.children}
+                    </div>
                 </UploadImage>
                 { this.props.picUrl ?
                     <div
