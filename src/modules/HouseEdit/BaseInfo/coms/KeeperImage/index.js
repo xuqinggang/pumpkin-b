@@ -32,8 +32,8 @@ class KeeperImage extends BaseComponent {
                     picUrl={this.props.value}
                     onSelect={this.handleSelect}
                 >
-                    <i />
-                    <span>上传管家图片</span>
+                    <i className={`${clsPrefix}--indicator icon-add`} />
+                    <div className={`${clsPrefix}--text`}>上传管家图片</div>
                 </UploadImage>
                 <div className={`${clsPrefix}--note`}><span>{this.props.error.message}</span></div>
             </div>
