@@ -31,9 +31,9 @@ class RoomHeader extends BaseComponent {
                     <i
                         role="button"
                         tabIndex={0}
-                        className={`${clsPrefix}--del`}
+                        className={`${clsPrefix}--del icon-delete`}
                         onClick={this.handleDelClick}
-                    >删除</i>
+                    />
                 }
             </div>
         );
