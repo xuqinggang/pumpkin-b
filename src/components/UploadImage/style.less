@@ -1,4 +1,6 @@
-.c-upload-image {
+@className: c-upload-image;
+
+.@{className} {
     position: relative;
     box-sizing: border-box;
     height: 128px;
@@ -15,17 +17,15 @@
         background: rgba(254, 250, 246, 0.63);
         border: 1px solid #f38d39;
 
-        .c-upload-image {
-            &--note {
-                color: #f38d39;
-            }
+        .@{className}--note {
+            color: #f38d39;
         }
     }
 
     &__error {
         border: 1px solid #f04134;
 
-        .c-upload-image--note {
+        .@{className}--note {
             color: #f04134;
         }
     }

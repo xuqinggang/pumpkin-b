@@ -67,6 +67,7 @@ const initData = (type, extra = {}) => {
                 saloon: 0,
                 toilet: 0,
             },
+            houseTypeImgUrl: '',
             village: {
                 value: '',
                 text: '',

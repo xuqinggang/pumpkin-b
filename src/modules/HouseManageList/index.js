@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
@@ -38,14 +39,19 @@ class HouseManageList extends BaseComponent {
             deleteDialogHide: false,
         });
         this.handleDeleteDialogConfirm = () => {
-            this.setState({
-                deleteDialogHide: true,
-                deleteHouseId: houseId,
-            }, () => {
-                // 延迟执行，等待动画完成
-                setTimeout(() => {
-                    this.props.dispatch(deleteHouse(houseId));
-                }, 500);
+            axios.delete(`/v1/houses/${houseId}`)
+            .then((res) => {
+                if (res.data.code === 200) {
+                    this.setState({
+                        deleteDialogHide: true,
+                        deleteHouseId: houseId,
+                    }, () => {
+                        // 延迟执行，等待动画完成
+                        setTimeout(() => {
+                            this.props.dispatch(deleteHouse(houseId));
+                        }, 500);
+                    });
+                }
             });
         };
     }
