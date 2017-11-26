@@ -6,23 +6,6 @@ import HouseModify from 'modules/HouseModify/index';
 import './style.less';
 
 class HouseManage extends BaseComponent {
-    constructor(props) {
-        super(props);
-        this.autoBind('handleBack');
-    }
-    handleEdit({ houseId }) {
-        this.setState({
-            subPageInfo: {
-                type: 'EDIT',
-                houseId,
-            },
-        });
-    }
-    handleBack() {
-        this.props.history.push({
-            pathname: '/house-manage',
-        });
-    }
     render() {
         return (
             <MainLayout>
