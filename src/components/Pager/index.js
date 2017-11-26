@@ -21,7 +21,7 @@ const PageButton = (props) => {
                 [`${clsPrefix}__more`]: true,
             })}
             >
-                ...
+                <i className="icon-more" />
             </a>
         );
     }
@@ -123,7 +123,7 @@ class Pager extends BaseComponent {
                         onClick={this.handleClick}
                         disabled={curPage === 1}
                     >
-                        {'<'}
+                        <i className="icon-pull-down" />
                     </PageButton>
                     {buttons.map(
                         num => (
@@ -137,7 +137,7 @@ class Pager extends BaseComponent {
                         onClick={this.handleClick}
                         disabled={curPage === totalPage}
                     >
-                        {'>'}
+                        <i className="icon-pull-down" />
                     </PageButton>
                 </div>
             </div>
