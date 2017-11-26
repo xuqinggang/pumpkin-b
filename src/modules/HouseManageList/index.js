@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
 import SubHeader from 'components/SubHeader/index';
@@ -32,7 +32,10 @@ class HouseManageList extends BaseComponent {
         );
     }
     handleEdit({ houseId }) {
-        this.props.onEdit({ houseId });
+        this.props.history.push({
+            pathname: '/house-modify',
+            search: `?houseId=${houseId}`,
+        });
     }
     handleDelete({ houseId }) {
         this.setState({
@@ -131,14 +134,6 @@ class HouseManageList extends BaseComponent {
     }
 }
 
-HouseManageList.propTypes = {
-    onEdit: PropTypes.func,
-};
-
-HouseManageList.defaultProps = {
-    onEdit: () => {},
-};
-
 export default connect(
     (state) => {
         const {
@@ -157,4 +152,4 @@ export default connect(
             isSortByTime,
         };
     },
-)(HouseManageList);
+)(withRouter(HouseManageList));
