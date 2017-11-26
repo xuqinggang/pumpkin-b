@@ -5,7 +5,7 @@ import PageHeader from 'components/PageHeader/index';
 import HouseEdit from 'modules/HouseEdit/index';
 import './style.less';
 
-class HouseUpload extends BaseComponent {
+class HouseUploadPage extends BaseComponent {
     render() {
         const clsPrefix = 'p-house-upload';
         return (
@@ -19,4 +19,4 @@ class HouseUpload extends BaseComponent {
     }
 }
 
-export default HouseUpload;
+export default HouseUploadPage;

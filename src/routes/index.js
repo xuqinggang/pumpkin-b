@@ -1,10 +1,10 @@
 import App from '../App';
 import ListPage from '../pages/ListPage';
 import IndexPage from '../pages/IndexPage';
-import HouseUploadPage from '../pages/HouseUpload';
-import HouseModify from '../pages/HouseModify';
+import HouseUploadPage from '../pages/HouseUploadPage';
+import HouseModify from '../pages/HouseModifyPage';
 import ProfilePage from '../pages/ProfilePage';
-import HouseManage from '../pages/HouseManage';
+import HouseManage from '../pages/HouseManagePage';
 import LoginPage from '../pages/LoginPage';
 import NotFound from '../pages/NotFound';
 

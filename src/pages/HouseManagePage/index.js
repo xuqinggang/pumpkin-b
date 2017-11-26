@@ -5,7 +5,7 @@ import HouseModify from 'modules/HouseModify/index';
 import HouseManageList from 'modules/HouseManageList/index';
 import './style.less';
 
-class HouseManage extends BaseComponent {
+class HouseManagePage extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -46,4 +46,4 @@ class HouseManage extends BaseComponent {
     }
 }
 
-export default HouseManage;
+export default HouseManagePage;

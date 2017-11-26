@@ -5,7 +5,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import HouseModify from 'modules/HouseModify/index';
 import './style.less';
 
-class HouseManage extends BaseComponent {
+class HouseModifyPage extends BaseComponent {
     render() {
         return (
             <MainLayout>
@@ -17,4 +17,4 @@ class HouseManage extends BaseComponent {
     }
 }
 
-export default withRouter(HouseManage);
+export default withRouter(HouseModifyPage);
