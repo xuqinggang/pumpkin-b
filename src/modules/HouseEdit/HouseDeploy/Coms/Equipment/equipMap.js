@@ -24,7 +24,7 @@ const equipMap = {
         className: 'icon-tv',
     },
     WIFI: {
-        text: '无线网络',
+        text: '网络',
         className: 'icon-wifi',
     },
     COOKER: {
@@ -40,8 +40,8 @@ const equipMap = {
         className: 'icon-Refrigerator',
     },
     VENTILATOR: {
-        text: '通风机',
-        className: '',
+        text: '油烟机',
+        className: 'icon-kitchen-ventilator',
     },
     MICROWAVE: {
         text: '微波炉',
@@ -54,10 +54,6 @@ const equipMap = {
     WASHMACHINE: {
         text: '洗衣机',
         className: 'icon-washing-machine',
-    },
-    QUEENSIZEBED: {
-        text: '加大双人床',
-        className: '',
     },
 };
 
