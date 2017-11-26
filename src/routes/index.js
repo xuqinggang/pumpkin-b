@@ -2,6 +2,7 @@ import App from '../App';
 import ListPage from '../pages/ListPage';
 import IndexPage from '../pages/IndexPage';
 import HouseUploadPage from '../pages/HouseUpload';
+import HouseModify from '../pages/HouseModify';
 import ProfilePage from '../pages/ProfilePage';
 import HouseManage from '../pages/HouseManage';
 import LoginPage from '../pages/LoginPage';
@@ -40,6 +41,11 @@ const routes = [
                 path: '/profile',
                 exact: true,
                 component: ProfilePage,
+            },
+            {
+                path: '/house-modify',
+                exact: true,
+                component: HouseModify,
             },
             {
                 path: '*',

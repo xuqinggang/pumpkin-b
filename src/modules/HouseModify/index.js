@@ -25,10 +25,6 @@ class HouseModify extends BaseComponent {
             this.setState({
                 houseId,
             });
-        } else {
-            this.props.history.push({
-                pathname: '/house-manage',
-            });
         }
     }
     componentDidMount() {
@@ -48,7 +44,11 @@ class HouseModify extends BaseComponent {
                     <span className={`${clsPrefix}--title`}>房源编辑 (房源ID: {this.props.houseId})</span>
                 </div>
                 <PageHeader className={`${clsPrefix}--page-title`}>房源编辑</PageHeader>
-                <HouseEdit houseId={this.state.houseId} />
+                {
+                    this.state.houseId
+                    ? <HouseEdit houseId={this.state.houseId} />
+                    : null
+                }
             </div>
         );
     }

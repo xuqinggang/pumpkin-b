@@ -77,3 +77,23 @@ export const throttle = (fn, delay) => {
         }, delay);
     };
 };
+
+export const decodeQuerySting = (str) => {
+    const qs = str.startsWith('?') ? str.substr(1) : str;
+    const obj = {};
+    qs.split('&').forEach((part) => {
+        const pair = part.split('=');
+        if (pair.length === 2) {
+            obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+        }
+    });
+    return obj;
+};
+
+export const encodeQueryString = (obj) => {
+    const pairs = [];
+    Object.keys(obj).forEach(key => (
+        pairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
+    ));
+    return pairs.join('&');
+};
