@@ -13,6 +13,7 @@ const initRentalUnit = (data = {}) => {
         offline: true, // 用于区分新增和后端请求回的数据
         expand: false, // 默认
         roomArea: '',
+        direct: 'SOUTH',
         priceInfo: {
             month: {
                 price: '',

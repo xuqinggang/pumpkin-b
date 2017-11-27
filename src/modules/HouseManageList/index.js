@@ -12,7 +12,7 @@ import HouseManageFilter from 'modules/HouseManageFilter/index';
 import RoomStatusDialog from 'modules/RoomStatusDialog/index';
 import HouseManageListPager from 'modules/HouseManageListPager/index';
 import { timeSignBy, timeFormat } from 'utils/index';
-import { hideStatusChangeDialog, deleteHouse } from './actions';
+import { hideStatusChangeDialog, deleteHouse, fetchHouseManageList } from './actions';
 import './style.less';
 
 class HouseManageList extends BaseComponent {
@@ -69,6 +69,17 @@ class HouseManageList extends BaseComponent {
     }
     handleDialogCancel() {
         this.props.dispatch(hideStatusChangeDialog());
+    }
+    componentDidMount() {
+        // 页面数据初始化
+        this.props.dispatch(fetchHouseManageList({
+            ...this.props.filter,
+            village: 'ALL',
+            rentalType: 'ALL',
+            roomStatus: 'ALL',
+            isSortByTime: true,
+            curPage: 1,
+        }));
     }
     render() {
         const clsPrefix = 'm-house-manage-list';
