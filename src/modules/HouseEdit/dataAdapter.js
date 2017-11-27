@@ -7,9 +7,10 @@ const be2feAdapter = (data) => {
         SHARED: 1,
     };
 
-    const rentalUnit = (unitData, expand = false) => ({
-        roomId: unitData.roomNumber,
+    const rentalUnit = (unitData, roomId, expand = false) => ({
+        roomId,
         expand,
+        onLineId: unitData.id,
         offline: false,
         roomArea: num2Str(unitData.area),
         direct: unitData.direct,
@@ -38,8 +39,9 @@ const be2feAdapter = (data) => {
     });
 
     const chamberConvert = chamberData => (
-        chamberData.map(chamberItem => ({
-            roomId: chamberItem.number,
+        chamberData.map((chamberItem, index) => ({
+            roomId: index,
+            onLineId: chamberItem.id,
             offline: false,
             picUrls: chamberItem.images || [],
             deploys: chamberItem.furniture || [],
@@ -53,6 +55,7 @@ const be2feAdapter = (data) => {
                 saloon: data.livingRoomCount,
                 toilet: data.bathroomCount,
             },
+            houseTypeImgUrl: data.houseTypeImg,
             village: {
                 value: data.blockId,
                 text: data.blockName,
@@ -72,7 +75,7 @@ const be2feAdapter = (data) => {
                 imgUrl: data.supervisorImg,
             },
         },
-        roomInfo: data.rentUnits.map(item => (rentalUnit(item))),
+        roomInfo: data.rentUnits.map((item, index) => (rentalUnit(item, index))),
 
         commonInfo: {
             rentalType: rentalTypeMap[data.rentalType],
@@ -126,7 +129,7 @@ const fe2beAdapter = (data) => {
         return {
             rentalType,
 
-            ...(rentsData.offline ? {} : { number: rentsData.roomId }),
+            ...(rentsData.offline ? {} : { id: rentsData.onLineId }),
             area: str2Num(rentsData.roomArea),
             direct: rentsData.direct,
 
@@ -149,7 +152,7 @@ const fe2beAdapter = (data) => {
     };
     const chamberConvert = chamberInfo => (
         chamberInfo.map(chamberItem => ({
-            ...(chamberItem.offline ? {} : { number: chamberItem.roomId }),
+            ...(chamberItem.offline ? {} : { id: chamberItem.onLineId }),
             images: chamberItem.picUrls,
             furniture: chamberItem.deploys,
         }))
@@ -165,6 +168,8 @@ const fe2beAdapter = (data) => {
             bedroomCount: room,
             livingRoomCount: saloon,
             bathroomCount: toilet,
+
+            houseTypeImg: data.baseInfo.houseTypeImgUrl,
 
             supervisorName: name,
             supervisorTel: str2Num(phone),

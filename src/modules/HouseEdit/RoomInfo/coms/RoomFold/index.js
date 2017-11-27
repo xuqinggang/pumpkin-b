@@ -84,7 +84,7 @@ class RoomFold extends BaseComponent {
                 <div className={`${clsPrefix}--operate`}>
                     <Button type="confirm" onClick={this.handleEditClick}>编辑</Button>
                     {
-                        this.props.roomNum <= 1 ? null :
+                        this.props.roomNum <= 1 || !this.props.offline ? null :
                         <Button
                             className={`${clsPrefix}--operate-btn`}
                             onClick={this.handleDelClick}
@@ -116,6 +116,7 @@ export default connect(
             priceInfo,
             roomTag,
             brief,
+            offline,
         } = roomInfo[roomIndex];
         const roomNum = roomIds.length;
 
@@ -123,6 +124,7 @@ export default connect(
         return {
             priceInfo,
             brief,
+            offline,
             roomNum,
             roomIndex,
             allTag,

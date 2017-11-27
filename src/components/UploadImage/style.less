@@ -1,19 +1,31 @@
-.c-upload-image {
+@className: c-upload-image;
+
+.@{className} {
     position: relative;
     box-sizing: border-box;
     height: 128px;
     width: 220px;
     background: #fcfcfc;
-    border: 1px dashed #e0dfe7;
+    border: 1px solid #e0dfe7;
     border-radius: 4px;
     transition: background 0.2s;
     text-align: center;
     cursor: pointer;
+    line-height: 2;
+
+    &:hover {
+        background: rgba(254, 250, 246, 0.63);
+        border: 1px solid #f38d39;
+
+        .@{className}--note {
+            color: #f38d39;
+        }
+    }
 
     &__error {
         border: 1px solid #f04134;
 
-        .c-upload-image--note {
+        .@{className}--note {
             color: #f04134;
         }
     }

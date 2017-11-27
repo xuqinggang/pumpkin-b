@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
@@ -109,10 +110,24 @@ class UploadButton extends BaseComponent {
             }
             if (data.houseId) {
                 // 修改
-                axios.put(`/v1/houses/${data.houseId}`, fe2beAdapter(data));
+                axios.put(`/v1/houses/${data.houseId}`, fe2beAdapter(data))
+                .then((res) => {
+                    if (res.data.code === 200) {
+                        this.props.history.push({
+                            pathname: '/house-manage',
+                        });
+                    }
+                });
             } else {
                 // 新建
-                axios.post('/v1/houses/', fe2beAdapter(data));
+                axios.post('/v1/houses/', fe2beAdapter(data))
+                .then((res) => {
+                    if (res.data.code === 200) {
+                        this.props.history.push({
+                            pathname: '/house-manage',
+                        });
+                    }
+                });
             }
             break;
         }
@@ -121,6 +136,9 @@ class UploadButton extends BaseComponent {
     }
     render() {
         const clsPrefix = 'c-upload-button';
+
+        const isNew = !this.props.data.houseId;
+        const finalBtnText = isNew ? '完成上传' : '完成修改';
         const {
             totalPage,
             curPage,
@@ -144,7 +162,7 @@ class UploadButton extends BaseComponent {
                     onClick={this.handleNext}
                     type="confirm"
                 >
-                    {`${curPage === totalPage ? '完成上传' : '下一步'}`}
+                    {`${curPage === totalPage ? finalBtnText : '下一步'}`}
                 </Button>
                 <ConfirmDialog
                     hide={this.state.dialogHide}
@@ -182,4 +200,4 @@ export default connect(
             data,
         };
     },
-)(UploadButton);
+)(withRouter(UploadButton));

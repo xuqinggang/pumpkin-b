@@ -13,15 +13,15 @@
         text-align: center;
         margin-right: 8px;
         border-radius: 50%;
-        border: 1px solid #fff;
         background-color: #fff;
+        border: 1px solid #e0dfe7;
         color: #f38d39;
         user-select: none;
         cursor: pointer;
         box-sizing: border-box;
 
         &__more {
-            color: #333;
+            color: #d8d8d8;
             background-color: transparent;
         }
 
@@ -32,13 +32,11 @@
         }
 
         &--prev {
-            color: #fff;
-            background: #f38d39;
+            transform: rotate(90deg);
         }
 
         &--next {
-            color: #fff;
-            background: #f38d39;
+            transform: rotate(-90deg);
         }
 
         &:hover {
@@ -51,8 +49,7 @@
         }
 
         &__disabled {
-            background-color: #f9c192;
-            border-color: #f9c192;
+            color: #d8d8d8;
             cursor: default;
         }
     }

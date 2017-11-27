@@ -39,6 +39,11 @@ class HouseUpload extends BaseComponent {
 
         this.autoBind('handleNextStep', 'handlePrevStep');
     }
+    componentWillReceiveProps(nextProps) {
+        if (this.props.houseId !== nextProps.houseId) {
+            this.props.dispatch(initHouseEditData(nextProps.houseId));
+        }
+    }
     handleNextStep() {
         const curPage = this.state.curPage;
         this.setState({

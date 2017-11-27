@@ -28,8 +28,8 @@ class HouseTypeImage extends BaseComponent {
                     picUrl={this.props.houseTypeImgUrl}
                     onSelect={this.handleSelect}
                 >
-                    <i />
-                    <span>上传房源户型图片</span>
+                    <i className={`${clsPrefix}--indicator icon-add`} />
+                    <div className={`${clsPrefix}--text`}>上传房源户型图片</div>
                 </UploadImage>
             </div>
         );
