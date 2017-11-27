@@ -4,8 +4,7 @@ ADD ./ /pumpkin-b/
 
 RUN export PATH=$PATH:/opt/kuaizhan/bin && \
     cd /pumpkin-b/ && \
-    npm config set production=false -g \
-    npm install pumpkin-font-b --registry=http://10.10.126.140:4873 \
+    npm install pumpkin-font-b --registry=http://10.10.126.140:4873 && \
     npm install && \
     npm run build
 
