@@ -38,7 +38,7 @@ const Tag = ({ name, value, erasable, status, onClick, children, className }) =>
                         role="presentation"
                         className={`${clsPrefix}--overlay`}
                         onClick={handleClick}
-                    >删除</div>
+                    ><i className="icon-delete" /></div>
                     : null
             }
         </div>

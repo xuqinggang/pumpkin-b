@@ -27,13 +27,13 @@ class RoomHeader extends BaseComponent {
                 <i className={`${clsPrefix}--icon`} />
                 <span className={`${clsPrefix}--text`}>{`卧室 ${notSingleNum(roomIndex + 1)}`}</span>
                 {
-                    this.props.roomNum <= 1 ? null :
+                    this.props.roomNum <= 1 || !this.props.offline ? null :
                     <i
                         role="button"
                         tabIndex={0}
-                        className={`${clsPrefix}--del`}
+                        className={`${clsPrefix}--del icon-delete`}
                         onClick={this.handleDelClick}
-                    >删除</i>
+                    />
                 }
             </div>
         );
@@ -52,11 +52,18 @@ RoomHeader.propTypes = {
 };
 
 export default connect(
-    (state) => {
-        const roomIds = state.houseUpload.roomInfo.map(item => (item.roomId));
+    (state, props) => {
+        const roomInfo = state.houseUpload.roomInfo;
+        const roomIds = roomInfo.map(item => (item.roomId));
+        const roomIndex = roomIds.indexOf(props.roomId);
+
         const roomNum = roomIds.length;
+        const {
+            offline,
+        } = roomInfo[roomIndex];
 
         return {
+            offline,
             roomNum,
             roomIds,
         };

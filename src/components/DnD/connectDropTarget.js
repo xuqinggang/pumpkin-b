@@ -94,7 +94,7 @@ const connectDropTarget = (lifeCycle, collect) => (DropTarget) => {
             dragOver(this.props, this.monitor);
         }
         handleDrop() {
-            const dropData = drop(this.props, this.monitor);
+            const dropData = drop(this.props, this.monitor, this.dropTarget);
             this.dropMonitorData = {
                 ...this.dropMonitorData,
                 didDrop: true,
@@ -116,7 +116,7 @@ const connectDropTarget = (lifeCycle, collect) => (DropTarget) => {
                     dragLeave={this.handleDragLeave}
                     droppable={this.state.droppable}
                 >
-                    <DropTarget {...props} {...extraProps} />
+                    <DropTarget {...props} {...extraProps} ref={this.storeRef('dropTarget')} />
                 </Drop>
             );
         }

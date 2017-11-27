@@ -54,8 +54,8 @@ class RoomStatusManage extends BaseComponent {
             this.props.dispatch(showStatusChangeDialog(type, ({ value }) => {
                 // TODO: 针对不同的type发送请求
                 axios.put(`/v1/rentUnits/${this.props.renUnit.id}/houseStatus`, {
-                    status: type.toUpperCase(),
-                    gender: value,
+                    status: type,
+                    ...(type === 'OCCUPIED' ? { gender: value } : {}),
                 })
                 .then((res) => {
                     if (res.data.code === 200) {
