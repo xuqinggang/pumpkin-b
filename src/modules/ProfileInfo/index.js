@@ -14,6 +14,7 @@ class ProfileInfo extends BaseComponent {
         this.state = {
             modifyPasswdHide: true,
             modifyPhoneHide: true,
+            bindAction: 'unbind',
         };
 
         this.autoBind(
@@ -22,7 +23,8 @@ class ProfileInfo extends BaseComponent {
             'handleCancelModifyPasswd',
             'handleConfirmModifyPasswd',
             'handleCancelModifyPhone',
-            'handleConfirmModifyPhone',
+            'handleConfirmBindPhone',
+            'handleConfirmUnbindPhone',
         );
     }
 
@@ -37,9 +39,15 @@ class ProfileInfo extends BaseComponent {
             modifyPhoneHide: true,
         });
     }
-    handleConfirmModifyPhone() {
+    handleConfirmBindPhone() {
         this.setState({
             modifyPhoneHide: true,
+        });
+    }
+    handleConfirmUnbindPhone() {
+        this.setState({
+            modifyPhoneHide: false,
+            bindAction: 'bind',
         });
     }
 
@@ -102,7 +110,9 @@ class ProfileInfo extends BaseComponent {
                 <ModifyPhoneModal
                     hide={this.state.modifyPhoneHide}
                     onCancel={this.handleCancelModifyPhone}
-                    onConfirm={this.handleConfirmModifyPhone}
+                    onConfirmBind={this.handleConfirmBindPhone}
+                    onConfirmUnbind={this.handleConfirmUnbindPhone}
+                    type={this.state.bindAction}
                 />
             </div>
         );

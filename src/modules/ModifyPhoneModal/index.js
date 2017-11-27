@@ -13,7 +13,8 @@ class ModifyPhoneModal extends BaseComponent {
     constructor(props) {
         super(props);
         this.autoBind(
-            'handleConfirm',
+            'handleConfirmBind',
+            'handleConfirmUnbind',
             'handleCancel',
             'handleSendVcode',
             'countDown',
@@ -34,8 +35,12 @@ class ModifyPhoneModal extends BaseComponent {
         this.timer = null;
     }
 
-    handleConfirm() {
-        this.props.onConfirm();
+    handleConfirmBind() {
+        this.props.onConfirmBind();
+    }
+
+    handleConfirmUnbind() {
+        this.props.onConfirmUnbind();
     }
 
     handleCancel() {
@@ -45,6 +50,7 @@ class ModifyPhoneModal extends BaseComponent {
     handleSendVcode() {
         // 判断当前手机号是否合法
         if (!this.state.errorPhone) {
+            // ajax 发送验证码
             axios.get('url', {
                 parmas: {
                     phone: this.state.phoneNumber,
@@ -63,18 +69,21 @@ class ModifyPhoneModal extends BaseComponent {
     }
 
     handlePhoneChange({ value }) {
+        // 输入手机号
         this.setState({
             phoneNumber: value,
         });
     }
 
     handleVcodeChagne({ value }) {
+        // 输入验证码
         this.setState({
             vcode: value,
         });
     }
 
     handlePhoneBlur({ value }) {
+        // 手机输入框blur
         if (!value) {
             this.setState({
                 errorPhone: '手机号不能为空',
@@ -95,6 +104,7 @@ class ModifyPhoneModal extends BaseComponent {
     }
 
     handleVcodeBlur({ value }) {
+        // 验证码输入框blur
         if (!value) {
             this.setState({
                 errorVcode: '请输入验证码',
@@ -108,6 +118,7 @@ class ModifyPhoneModal extends BaseComponent {
     }
 
     countDown() {
+        // 发送验证码倒计时
         this.timer = setInterval(() => {
             if (this.state.countDownSecond === 0) {
                 clearInterval(this.timer);
@@ -132,6 +143,7 @@ class ModifyPhoneModal extends BaseComponent {
     render() {
         const clsPrefix = 'm-modify-phone-modal';
         const { errorPhone, errorVcode } = this.state;
+        const { hide, type } = this.props;
         const inputStyle = {
             width: '100%',
         };
@@ -144,36 +156,50 @@ class ModifyPhoneModal extends BaseComponent {
                     width: 116,
                 }}
             >取消</Button>,
-            <Button
-                key="confirm"
-                type="confirm"
-                onClick={this.handleConfirm}
-                style={{
-                    width: 116,
-                    float: 'right',
-                }}
-            >确定</Button>,
+            type === 'bind' ?
+                <Button
+                    key="confirm"
+                    type="confirm"
+                    onClick={this.handleConfirmBind}
+                    style={{
+                        width: 116,
+                        float: 'right',
+                    }}
+                >绑定</Button>
+                : <Button
+                    key="confirm"
+                    type="confirm"
+                    onClick={this.handleConfirmUnbind}
+                    style={{
+                        width: 116,
+                        float: 'right',
+                    }}
+                >下一步</Button>,
         ];
         return (
             <Dialog
                 title="修改手机号"
                 actions={actions}
-                hide={this.props.hide}
+                hide={hide}
                 onClose={this.handleCancel}
             >
                 <div className={clsPrefix}>
                     <div className={`${clsPrefix}--cell`}>
-                        <Input
-                            type="text"
-                            name="phone"
-                            value={this.state.phoneNumber}
-                            style={{
-                                width: 142,
-                            }}
-                            placeholder="请输入手机号"
-                            onChange={this.handlePhoneChange}
-                            onBlur={this.handlePhoneBlur}
-                        />
+                        {
+                            type === 'bind' ?
+                                <Input
+                                    type="text"
+                                    name="phone"
+                                    value={this.state.phoneNumber}
+                                    style={{
+                                        width: 142,
+                                    }}
+                                    placeholder="请输入手机号"
+                                    onChange={this.handlePhoneChange}
+                                    onBlur={this.handlePhoneBlur}
+                                />
+                                : <div className={`${clsPrefix}--txt`}>1888888888888</div>
+                        }
                         <Button
                             type="confirm"
                             onClick={this.handleSendVcode}
@@ -207,14 +233,18 @@ const defaultFunc = () => {};
 
 ModifyPhoneModal.defaultProps = {
     hide: true,
-    onConfirm: defaultFunc,
+    onConfirmBind: defaultFunc,
+    onConfirmUnbind: defaultFunc,
     onCancel: defaultFunc,
+    type: 'bind',
 };
 
 ModifyPhoneModal.propTypes = {
     hide: PropTypes.bool,
-    onConfirm: PropTypes.func,
+    onConfirmBind: PropTypes.func,
+    onConfirmUnbind: PropTypes.func,
     onCancel: PropTypes.func,
+    type: PropTypes.string,
 };
 
 

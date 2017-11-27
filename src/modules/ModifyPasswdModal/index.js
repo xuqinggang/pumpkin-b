@@ -26,6 +26,7 @@ class ModifyPasswdModal extends BaseComponent {
     }
 
     checkPasswd() {
+        // 检查旧密码是否合法, 并设置新密码
         const { passwdOld: oldPassword, passwdNewFirst: newPassword } = this.state;
 
         axios.put('/v1/user/password', {
