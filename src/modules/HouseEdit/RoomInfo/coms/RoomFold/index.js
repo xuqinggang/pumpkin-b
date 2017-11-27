@@ -5,6 +5,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import Tag, { TagPlaceholder } from 'components/Tag/index';
 import { switchRoomExpand } from '../../actions';
+import directMap from '../../directMap';
 import './style.less';
 
 const switchReturn = (value, returnValue) => {
@@ -49,7 +50,11 @@ class RoomFold extends BaseComponent {
             <div className={clsPrefix}>
                 <div className={`${clsPrefix}--base`}>
                     <div className={`${clsPrefix}--base-title`}>{`卧室${notSingleNum(this.props.roomIndex + 1)}`}</div>
-                    <div className={`${clsPrefix}--base-info`}><span>16平米</span> | <span>南北</span></div>
+                    <div className={`${clsPrefix}--base-info`}>
+                        <span>
+                            {this.props.roomArea}平米
+                        </span> | <span>{directMap[this.props.direct]}</span>
+                    </div>
                 </div>
                 <div className={`${clsPrefix}--price`}>
                     {this.priceType.map((item, index) => (
@@ -117,6 +122,8 @@ export default connect(
             roomTag,
             brief,
             offline,
+            roomArea,
+            direct,
         } = roomInfo[roomIndex];
         const roomNum = roomIds.length;
 
@@ -124,6 +131,8 @@ export default connect(
         return {
             priceInfo,
             brief,
+            roomArea,
+            direct,
             offline,
             roomNum,
             roomIndex,

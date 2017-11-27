@@ -8,6 +8,12 @@ const singleRoomInfo = (state, action) => {
             roomArea: action.value,
         };
     }
+    case 'house-upload.room-info.setRoomDirect': {
+        return {
+            ...state,
+            direct: action.value,
+        };
+    }
     case 'house-upload.room-info.changePrice': {
         const priceType = action.priceType;
         const values = action.values;
@@ -85,6 +91,7 @@ const roomInfo = (state = [], action) => {
         }));
     }
     case 'house-upload.room-info.setRoomArea':
+    case 'house-upload.room-info.setRoomDirect':
     case 'house-upload.room-info.changePrice':
     case 'house-upload.room-info.activeTags':
     case 'house-upload.room-info.delActiveTags':

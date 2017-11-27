@@ -50,11 +50,6 @@ class HouseManageFilter extends BaseComponent {
     }
     componentDidMount() {
         this.fetchVillageList();
-
-        // 页面数据初始化
-        this.props.dispatch(fetchHouseManageList({
-            ...this.props.filter,
-        }));
     }
     render() {
         const clsPrefix = 'm-house-manage-filter';

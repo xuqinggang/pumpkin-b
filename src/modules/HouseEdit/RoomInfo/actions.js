@@ -11,6 +11,12 @@ export const setRoomArea = (roomId, { value }) => ({
     type: 'house-upload.room-info.setRoomArea',
 });
 
+export const setRoomDirect = (roomId, { value }) => ({
+    roomId,
+    value,
+    type: 'house-upload.room-info.setRoomDirect',
+});
+
 export const activeTags = (roomId, { value }) => ({
     roomId,
     value,

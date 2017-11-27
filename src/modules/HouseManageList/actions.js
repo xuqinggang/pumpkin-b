@@ -57,7 +57,7 @@ export const fetchHouseManageList = (
         ...(village === 'ALL' ? {} : { blockId: village }),
         ...(rentalType === 'ALL' ? {} : { type: rentalType }),
         ...(roomStatus === 'ALL' ? {} : { status: roomStatus }),
-        sortedByBlock: isSortByTime,
+        sortedByBlock: !isSortByTime,
         offset: (curPage - 1) * prePage,
         limit: prePage,
     };
