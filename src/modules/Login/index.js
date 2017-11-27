@@ -185,8 +185,6 @@ class Login extends BaseComponent {
     }
 }
 
-// const defaultFunc = () => {};
-
 Login.defaultProps = {};
 
 Login.propTypes = {};

@@ -34,11 +34,13 @@ export const getNewState = (value, name, prevState) => {
         break;
     }
     case 'newFirst': {
+        // 为空
         if (!value) {
             newState[curErrorKey] = errorsMap.noEmpty;
             break;
         }
 
+        // 如果第二个新密码输入框不为空，则需要判断两次密码输入是否一致
         if (prevState.passwdNewSecond && prevState.passwdNewSecond !== value) {
             newState.passwdNewSecond = errorsMap.passwdNotEqual;
         }
@@ -47,11 +49,13 @@ export const getNewState = (value, name, prevState) => {
         break;
     }
     case 'newSecond': {
+        // 为空
         if (!value) {
             newState[curErrorKey] = '请再次输入新密码';
             break;
         }
 
+        // 密码两次输入不一致
         if (prevState.passwdNewFirst !== value) {
             newState[curErrorKey] = errorsMap.passwdNotEqual;
         } else {
