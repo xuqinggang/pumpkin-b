@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import BaseComponent from 'components/BaseComponent';
 import Dialog from 'components/Dialog';
 import Input from 'components/Input';
@@ -42,7 +43,23 @@ class ModifyPhoneModal extends BaseComponent {
     }
 
     handleSendVcode() {
-        this.countDown();
+        // 判断当前手机号是否合法
+        if (!this.state.errorPhone) {
+            axios.get('url', {
+                parmas: {
+                    phone: this.state.phoneNumber,
+                },
+            })
+                .then((res) => {
+                    // TODO
+                    console.log(res);
+                })
+                .catch(() => {
+                    // TODO
+                    alert('错误');
+                });
+            this.countDown();
+        }
     }
 
     handlePhoneChange({ value }) {

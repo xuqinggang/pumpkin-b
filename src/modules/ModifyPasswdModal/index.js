@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import BaseComponent from 'components/BaseComponent';
 import Dialog from 'components/Dialog';
 import Input from 'components/Input';
@@ -21,7 +22,28 @@ class ModifyPasswdModal extends BaseComponent {
     }
 
     handleConfirm() {
-        this.props.onConfirm();
+        this.checkPasswd();
+    }
+
+    checkPasswd() {
+        const { passwdOld: oldPassword, passwdNewFirst: newPassword } = this.state;
+
+        axios.put('/v1/user/password', {
+            params: {
+                oldPassword,
+                newPassword,
+            },
+        })
+            .then((res) => {
+                if (res.code === 200) {
+                    alert('成功');
+                } else {
+                    alert('失败');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     handleCancel() {

@@ -7,7 +7,8 @@
     "dev": "node build/dev.js",
     "build": "node build/build.js",
     "server": "nodemon server/index.js",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "reinstall": "npm install pumpkin-font-b --save --registry=http://10.10.126.140:4873 && npm install"
   },
   "author": "",
   "license": "ISC",
