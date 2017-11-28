@@ -42,6 +42,22 @@ class Login extends BaseComponent {
         const { dispatch } = this.props;
         const { account, password } = this.state;
 
+        if (!account) {
+            this.setState({
+                isAccountCorrect: false,
+                accountError: '用户名不能为空',
+            });
+            return;
+        }
+
+        if (!password) {
+            this.setState({
+                isPasswordCorrect: false,
+                passwordError: '密码不能为空',
+            });
+            return;
+        }
+
         dispatch(passportLogin({
             userName: account,
             password,
@@ -92,6 +108,7 @@ class Login extends BaseComponent {
             this.setState({
                 isAccountCorrect: true,
                 showAccountStatus: true,
+                accountError: '',
             });
             return;
         }
