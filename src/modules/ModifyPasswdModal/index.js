@@ -22,29 +22,29 @@ class ModifyPasswdModal extends BaseComponent {
     }
 
     handleConfirm() {
+        const { errorOld, passwdNewFirst, passwdNewSecond } = this.state;
+        if (!errorOld || passwdNewFirst !== passwdNewSecond) {
+            return;
+        }
         this.checkPasswd();
     }
 
     checkPasswd() {
         // 检查旧密码是否合法, 并设置新密码
         const { passwdOld: oldPassword, passwdNewFirst: newPassword } = this.state;
-
         axios.put('/v1/user/password', {
-            params: {
-                oldPassword,
-                newPassword,
-            },
+            oldPassword,
+            newPassword,
         })
-            .then((res) => {
-                if (res.code === 200) {
-                    alert('成功');
-                } else {
-                    alert('失败');
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        .then((res) => {
+            if (res.data.code === 200) {
+                this.props.onConfirm();
+            } else {
+                this.setState({
+                    errorOld: res.data.msg,
+                });
+            }
+        });
     }
 
     handleCancel() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from 'components/Header';
-import Sidebar from 'components/Sidebar';
+import Header from 'modules/Header/index';
+import Sidebar from 'modules/Sidebar/index';
 import './style.less';
 
 const MainLayout = ({ children }) => (

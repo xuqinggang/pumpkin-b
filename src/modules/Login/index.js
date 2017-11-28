@@ -1,11 +1,10 @@
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import classNames from 'classnames';
 import { withRouter } from 'react-router';
 import BaseComponent from 'components/BaseComponent';
 import Input from 'components/Input';
-// import Button from 'components/Button';
-import { passportLogin } from '../Passport/actions';
 import './style.less';
 
 class Login extends BaseComponent {
@@ -20,6 +19,7 @@ class Login extends BaseComponent {
             'handleAccountBlur',
             'handleLoginFailure',
             'handleChange',
+            'handleKeyPress',
         );
 
         this.state = {
@@ -32,14 +32,9 @@ class Login extends BaseComponent {
             showAccountStatus: false,
             showPasswordStatus: false,
         };
-
-        if (props.isOnline) {
-            props.history.push('/');
-        }
     }
 
     handleSubmit() {
-        const { dispatch } = this.props;
         const { account, password } = this.state;
 
         if (!account) {
@@ -57,13 +52,35 @@ class Login extends BaseComponent {
             });
             return;
         }
-
-        dispatch(passportLogin({
+        axios.post('/v1/user/login', {
             userName: account,
             password,
-        }, {
-            error: this.handleLoginFailure,
-        }));
+        })
+        .then((res) => {
+            switch (res.data.code) {
+            case 200: {
+                this.props.history.push({
+                    pathname: '/house-manage',
+                });
+                break;
+            }
+            case 1101: {
+                this.setState({
+                    isAccountCorrect: false,
+                    accountError: res.data.msg,
+                });
+                break;
+            }
+            case 1102: {
+                this.setState({
+                    isPasswordCorrect: false,
+                    passwordError: res.data.msg,
+                });
+                break;
+            }
+            default:
+            }
+        });
     }
 
     handleLoginFailure(err) {
@@ -102,6 +119,11 @@ class Login extends BaseComponent {
         });
     }
 
+    handleKeyPress(e) {
+        if (e.keyCode === 13) {
+            this.handleSubmit();
+        }
+    }
     handleAccountBlur() {
         // 若有输入账号，则认为是正确的账号，显示status
         if (this.state.account) {
@@ -145,58 +167,62 @@ class Login extends BaseComponent {
             <div className={clsPrefix}>
                 <div className={`${clsPrefix}--title`}>南瓜租房</div>
                 <div className={`${clsPrefix}--desc`}>一个真实，高效的长租公寓平台</div>
-                <div className={`${clsPrefix}--cell`}>
-                    <div className={`${clsPrefix}--input-wrap`}>
-                        <Input
-                            className={`${clsPrefix}--input`}
-                            type="text"
-                            value={this.state.account}
-                            placeholder="请输入账号/手机号"
-                            name="account"
-                            onChange={this.handleAccountChange}
-                            onBlur={this.handleAccountBlur}
-                        />
+                <form>
+                    <div className={`${clsPrefix}--cell`}>
+                        <div className={`${clsPrefix}--input-wrap`}>
+                            <Input
+                                className={`${clsPrefix}--input`}
+                                type="text"
+                                value={this.state.account}
+                                placeholder="请输入账号/手机号"
+                                name="account"
+                                onKeyPress={this.handleKeyPress}
+                                onChange={this.handleAccountChange}
+                                onBlur={this.handleAccountBlur}
+                            />
+                            {
+                                showAccountStatus ?
+                                    <div className={accountStatusCls} />
+                                    : null
+                            }
+                        </div>
                         {
-                            showAccountStatus ?
-                                <div className={accountStatusCls} />
+                            accountError ?
+                                <div className={`${clsPrefix}--error`}>{accountError}</div>
                                 : null
                         }
                     </div>
-                    {
-                        accountError ?
-                            <div className={`${clsPrefix}--error`}>{accountError}</div>
-                            : null
-                    }
-                </div>
-                <div className={`${clsPrefix}--cell`}>
-                    <div className={`${clsPrefix}--input-wrap`}>
-                        <Input
-                            className={`${clsPrefix}--input`}
-                            type="password"
-                            value={this.state.password}
-                            placeholder="请输入密码"
-                            name="password"
-                            onChange={this.handlePasswdChange}
-                            onBlur={this.handlePasswdBlur}
-                        />
+                    <div className={`${clsPrefix}--cell`}>
+                        <div className={`${clsPrefix}--input-wrap`}>
+                            <Input
+                                className={`${clsPrefix}--input`}
+                                type="password"
+                                value={this.state.password}
+                                placeholder="请输入密码"
+                                name="password"
+                                onKeyPress={this.handleKeyPress}
+                                onChange={this.handlePasswdChange}
+                                onBlur={this.handlePasswdBlur}
+                            />
+                            {
+                                showPasswordStatus ?
+                                    <div className={passwordStatusCls} />
+                                    : null
+                            }
+                        </div>
                         {
-                            showPasswordStatus ?
-                                <div className={passwordStatusCls} />
+                            passwordError ?
+                                <div className={`${clsPrefix}--error`}>{passwordError}</div>
                                 : null
                         }
                     </div>
-                    {
-                        passwordError ?
-                            <div className={`${clsPrefix}--error`}>{passwordError}</div>
-                            : null
-                    }
-                </div>
-                <div
-                    className={`${clsPrefix}--submit`}
-                    role="button"
-                    tabIndex={0}
-                    onClick={this.handleSubmit}
-                >登录</div>
+                    <div
+                        className={`${clsPrefix}--submit`}
+                        role="button"
+                        tabIndex={0}
+                        onClick={this.handleSubmit}
+                    >登录</div>
+                </form>
             </div>
         );
     }
