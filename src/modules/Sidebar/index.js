@@ -12,20 +12,28 @@ class Sidebar extends BaseComponent {
         this.state = {
             curPageIndex: -1,
         };
-        this.pagesUrl = ['house-upload', 'house-manage', 'profile'];
-        this.pagesName = ['房源上传', '房态管理', '个人中心'];
+        this.pages = [{
+            url: 'house-manage',
+            title: '房源管理',
+        }, {
+            url: 'house-upload',
+            title: '房源上传',
+        }, {
+            url: 'profile',
+            title: '个人中心',
+        }];
     }
     handleTurnPage(index) {
         return () => {
             this.props.history.push({
-                pathname: this.pagesUrl[index],
+                pathname: this.pages[index].url,
             });
         };
     }
 
     initPage(pathname) {
         this.setState({
-            curPageIndex: this.pagesUrl.map(item => (pageUrl(item))).indexOf(pathname),
+            curPageIndex: this.pages.map(item => (pageUrl(item.url))).indexOf(pathname),
         });
     }
     componentDidMount() {
@@ -42,7 +50,7 @@ class Sidebar extends BaseComponent {
                 </div>
                 <div className={`${clsPrefix}--nav`}>
                     {
-                        this.pagesName.map((item, index) => (
+                        this.pages.map((item, index) => (
                             <div
                                 key={index}
                                 role="presentation"
@@ -54,7 +62,7 @@ class Sidebar extends BaseComponent {
                                     ? <i className={`${clsPrefix}--nav-item-indicator`} />
                                     : null
                                 }
-                                <span className={`${clsPrefix}--nav-item-note`}>{item}</span>
+                                <span className={`${clsPrefix}--nav-item-note`}>{item.title}</span>
                             </div>
                         ))
                     }
