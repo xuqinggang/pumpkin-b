@@ -4,12 +4,8 @@ export const passportOffline = () => ({
     type: 'passport.offline',
 });
 
-export const passportOnline = ({
-    userName,
-    phone,
-}) => ({
-    userName,
-    phone,
+export const passportOnline = userInfo => ({
+    userInfo,
     type: 'passport.online',
 });
 
@@ -52,59 +48,32 @@ export const passportModifyPhone = ({
  *             console.log(res);
  *         });
  * }; */
-export const passportStatus = () => (dispatch) => {
-    axios.get('v1/user/info')
+export const passportStatus = ({ onLine, offLine } = {
+    onLine: () => {},
+    offLine: () => {},
+}) => (dispatch) => {
+    axios.get('v1/user')
     .then((res) => {
-        dispatch(passportOnline({
-            userName: res.body.data.username,
-            verificationType: res.body.data.verification_type,
-            verificationStatus: res.body.data.verification_status,
-            inWhiteList: res.body.data.in_white_list,
-        }));
-    }).catch((e) => {
-        if (e.code === 6 || e.code === 3) {
-            dispatch(passportOffline());
+        if (res.data.code === 200) {
+            const {
+                username,
+                phone,
+                isCentralizedOwner,
+                apartment,
+            } = res.data.data;
+            dispatch(passportOnline({
+                username,
+                phone,
+                isCentralizedOwner,
+                apartment: {
+                    name: apartment.name,
+                    image: apartment.image,
+                    intro: apartment.intro,
+                },
+            }));
+            onLine();
         } else {
-            // TODO
+            offLine();
         }
     });
-};
-
-// 账号登录操作
-export const passportLogin = (formData, callbacks) => (dispatch) => {
-    // 校验参数
-    if (!formData.userName) {
-        alert('用户名不能为空');
-        return;
-    }
-    if (!formData.password) {
-        alert('密码不能为空');
-        return;
-    }
-
-    axios.post('/v1/user/login', {
-        userName: formData.userName,
-        password: formData.password,
-    })
-        .then((res) => {
-            if (res.data.status === 200) {
-                const data = res.body;
-                if (data.ret === 0) {
-                    if (callbacks.success) {
-                        callbacks.success();
-                    }
-                    dispatch(passportOnline({
-                        userName: '张三',
-                        phone: '133333333',
-                    }));
-                } else {
-                    alert(data.msg);
-                }
-            }
-        })
-        .catch((e) => {
-            if (callbacks.error) {
-                callbacks.error(`网络错误: ${e.message}`);
-            }
-        });
 };

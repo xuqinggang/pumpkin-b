@@ -14,7 +14,7 @@ class ProfileInfo extends BaseComponent {
         this.state = {
             modifyPasswdHide: true,
             modifyPhoneHide: true,
-            bindAction: 'unbind',
+            bindAction: 'bind',
         };
 
         this.autoBind(
@@ -102,18 +102,24 @@ class ProfileInfo extends BaseComponent {
                         <Hint>提示： 可用已绑定手机号登录</Hint>
                     </Col>
                 </Row>
-                <ModifyPasswdModal
-                    hide={this.state.modifyPasswdHide}
-                    onCancel={this.handleCancelModifyPasswd}
-                    onConfirm={this.handleConfirmModifyPasswd}
-                />
-                <ModifyPhoneModal
-                    hide={this.state.modifyPhoneHide}
-                    onCancel={this.handleCancelModifyPhone}
-                    onConfirmBind={this.handleConfirmBindPhone}
-                    onConfirmUnbind={this.handleConfirmUnbindPhone}
-                    type={this.state.bindAction}
-                />
+                {
+                    this.state.modifyPasswdHide ? null :
+                    <ModifyPasswdModal
+                        hide={this.state.modifyPasswdHide}
+                        onCancel={this.handleCancelModifyPasswd}
+                        onConfirm={this.handleConfirmModifyPasswd}
+                    />
+                }
+                {
+                    this.state.modifyPhoneHide ? null :
+                    <ModifyPhoneModal
+                        hide={this.state.modifyPhoneHide}
+                        onCancel={this.handleCancelModifyPhone}
+                        onConfirmBind={this.handleConfirmBindPhone}
+                        onConfirmUnbind={this.handleConfirmUnbindPhone}
+                        type={this.state.bindAction}
+                    />
+                }
             </div>
         );
     }

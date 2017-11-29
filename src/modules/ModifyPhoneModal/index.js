@@ -36,7 +36,22 @@ class ModifyPhoneModal extends BaseComponent {
     }
 
     handleConfirmBind() {
-        this.props.onConfirmBind();
+        const { phoneNumber, vcode } = this.state;
+        if (isPhoneNo(phoneNumber) && vcode) {
+            axios.put('/v1/user/phone', {
+                phoneNumber,
+                verificationCode: vcode,
+            })
+            .then((res) => {
+                if (res.data.code === 200) {
+                    this.props.onConfirmBind();
+                } else {
+                    this.setState({
+                        errorVcode: res.data.msg,
+                    });
+                }
+            });
+        }
     }
 
     handleConfirmUnbind() {
@@ -51,19 +66,9 @@ class ModifyPhoneModal extends BaseComponent {
         // 判断当前手机号是否合法
         if (!this.state.errorPhone) {
             // ajax 发送验证码
-            axios.get('url', {
-                parmas: {
-                    phone: this.state.phoneNumber,
-                },
-            })
-                .then((res) => {
-                    // TODO
-                    console.log(res);
-                })
-                .catch(() => {
-                    // TODO
-                    alert('错误');
-                });
+            axios.post('/v1/user/phone/verificationCode', {
+                phoneNumber: this.state.phoneNumber,
+            });
             this.countDown();
         }
     }
@@ -72,13 +77,15 @@ class ModifyPhoneModal extends BaseComponent {
         // 输入手机号
         this.setState({
             phoneNumber: value,
+            errorPhone: '',
         });
     }
 
-    handleVcodeChagne({ value }) {
+    handleVcodeChange({ value }) {
         // 输入验证码
         this.setState({
             vcode: value,
+            errorVcode: '',
         });
     }
 
@@ -202,6 +209,7 @@ class ModifyPhoneModal extends BaseComponent {
                         }
                         <Button
                             type="confirm"
+                            disabled={!this.state.canSend}
                             onClick={this.handleSendVcode}
                             style={{
                                 width: 102,
