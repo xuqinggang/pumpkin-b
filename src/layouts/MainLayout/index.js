@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from 'modules/Header/index';
 import Sidebar from 'modules/Sidebar/index';
+import PageTitle from 'modules/PageTitle/index';
 import './style.less';
 
-const MainLayout = ({ children }) => (
+const MainLayout = ({ title, children }) => (
     <div className="l-main">
+        <PageTitle title={title} />
         <Header />
         <div>
             <Sidebar />
@@ -18,10 +20,12 @@ const MainLayout = ({ children }) => (
 
 MainLayout.defaultProps = {
     children: null,
+    title: '',
 };
 
 MainLayout.propTypes = {
     children: PropTypes.node,
+    title: PropTypes.string,
 };
 
 export default MainLayout;
