@@ -7,23 +7,12 @@ import PageHeader from 'components/PageHeader';
 import './style.less';
 
 class ProfilePage extends BaseComponent {
-    constructor(props) {
-        super(props);
-        this.autoBind('handleChangePasswd', 'handleChangePhone');
-    }
-
-    handleChangePasswd() {
-        console.log(this);
-    }
-
-    handleChangePhone() {
-        console.log(this);
-    }
-
     render() {
         const clsPrefix = 'p-profile';
         return (
-            <MainLayout>
+            <MainLayout
+                title="南瓜租房 - 个人中心"
+            >
                 <div className={clsPrefix}>
                     <PageHeader>个人中心</PageHeader>
                     <Content>

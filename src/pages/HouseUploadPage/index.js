@@ -9,7 +9,9 @@ class HouseUploadPage extends BaseComponent {
     render() {
         const clsPrefix = 'p-house-upload';
         return (
-            <MainLayout>
+            <MainLayout
+                title="南瓜租房 - 房源上传"
+            >
                 <div className={clsPrefix}>
                     <PageHeader>房源上传</PageHeader>
                     <HouseEdit />

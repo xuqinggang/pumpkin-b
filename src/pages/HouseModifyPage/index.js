@@ -8,7 +8,9 @@ import './style.less';
 class HouseModifyPage extends BaseComponent {
     render() {
         return (
-            <MainLayout>
+            <MainLayout
+                title="南瓜租房 - 房源编辑"
+            >
                 <div className="p-house-modify">
                     <HouseModify />
                 </div>
