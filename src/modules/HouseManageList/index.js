@@ -86,7 +86,7 @@ class HouseManageList extends BaseComponent {
         let lastBlockTitleValue = null;
         return (
             <div className={clsPrefix}>
-                <PageHeader>房态管理</PageHeader>
+                <PageHeader>房源管理</PageHeader>
                 <HouseManageFilter />
                 {
                     this.props.houseList.map((item) => {
