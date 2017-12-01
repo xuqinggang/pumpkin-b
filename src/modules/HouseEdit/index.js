@@ -99,6 +99,7 @@ class HouseUpload extends BaseComponent {
     handlePageUnmount(e) {
         const tip = '系统可能不会保存您所做的更改';
         e.returnValue = tip;
+
         return tip;
     }
     handleInitPage() {
