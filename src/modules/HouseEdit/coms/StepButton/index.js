@@ -2,18 +2,16 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
-import houseLocalStorage from '../../houseLocalStorage';
 import { nextStep, showValidateError } from '../../actions';
 import { switchRoomExpand } from '../../RoomInfo/actions';
 import validateData from '../ValidateData/index';
 import { fe2beAdapter } from '../../dataAdapter';
 import './style.less';
 
-class UploadButton extends BaseComponent {
+class StepButton extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -114,9 +112,7 @@ class UploadButton extends BaseComponent {
                 axios.put(`/v1/houses/${data.houseId}`, fe2beAdapter(data))
                 .then((res) => {
                     if (res.data.code === 200) {
-                        this.props.history.push({
-                            pathname: '/house-manage',
-                        });
+                        this.props.onSubmit.success({ type: 'MODIFY' });
                     }
                 });
             } else {
@@ -124,12 +120,7 @@ class UploadButton extends BaseComponent {
                 axios.post('/v1/houses/', fe2beAdapter(data))
                 .then((res) => {
                     if (res.data.code === 200) {
-                        this.props.history.push({
-                            pathname: '/house-manage',
-                        });
-
-                        // clear localStorage about house info
-                        houseLocalStorage.clear();
+                        this.props.onSubmit.success({ type: 'NEW' });
                     }
                 });
             }
@@ -181,19 +172,27 @@ class UploadButton extends BaseComponent {
     }
 }
 
-UploadButton.propTypes = {
+StepButton.propTypes = {
     totalPage: PropTypes.number,
     curPage: PropTypes.number,
     onPrev: PropTypes.func,
     onNext: PropTypes.func,
+    onSubmit: PropTypes.shape({
+        success: PropTypes.func,
+        failed: PropTypes.func,
+    }),
     pageType: PropTypes.string,
 };
 
-UploadButton.defaultProps = {
+StepButton.defaultProps = {
     totalPage: 1,
     curPage: 1,
     onPrev: () => {},
     onNext: () => {},
+    onSubmit: {
+        success: () => {},
+        failed: () => {},
+    },
     pageType: '',
 };
 
@@ -204,4 +203,4 @@ export default connect(
             data,
         };
     },
-)(withRouter(UploadButton));
+)(StepButton);
