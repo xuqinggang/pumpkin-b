@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import StepNav from 'components/StepNav/index';
+import ConfirmDialog from 'components/ConfirmDialog/index';
+import houseLocalStorage from './houseLocalStorage';
 import StepButton from './coms/StepButton/index';
+import { isDataInput } from './coms/ValidateData/index';
 import BaseInfo from './BaseInfo/index';
 import HousePics from './HousePics/index';
 import RoomInfo from './RoomInfo/index';
 import HouseDeploy from './HouseDeploy/index';
-import { initHouseEditData, hideValidateError } from './actions';
+import { fetchHouseEditData, hideValidateError, resetState, initState } from './actions';
 import './style.less';
 
 class HouseUpload extends BaseComponent {
@@ -16,7 +19,9 @@ class HouseUpload extends BaseComponent {
         super(props);
         this.state = {
             curPage: 1,
+            dialogHide: true,
         };
+
         this.pageInfo = [
             {
                 type: 'baseInfo',
@@ -37,11 +42,16 @@ class HouseUpload extends BaseComponent {
             },
         ];
 
-        this.autoBind('handleNextStep', 'handlePrevStep');
+        this.autoBind(
+            'handleNextStep',
+            'handlePrevStep',
+            'handleDialogCancel',
+            'handleDialogConfirm',
+        );
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.houseId !== nextProps.houseId) {
-            this.props.dispatch(initHouseEditData(nextProps.houseId));
+            this.props.dispatch(fetchHouseEditData(nextProps.houseId));
         }
     }
     handleNextStep() {
@@ -62,12 +72,47 @@ class HouseUpload extends BaseComponent {
             curPage: curPage === 0 ? curPage : curPage - 1,
         });
     }
+    handleDialogCancel() {
+        houseLocalStorage.clear();
+        this.setState({
+            dialogHide: true,
+        });
+    }
+    handleDialogConfirm() {
+        this.setState({
+            dialogHide: true,
+        });
+
+        const localHouseState = houseLocalStorage.get();
+        if (localHouseState) {
+            this.props.dispatch(initState(localHouseState));
+        }
+    }
+    showDialog() {
+        this.setState({
+            dialogHide: false,
+        });
+    }
     componentDidMount() {
-        this.props.dispatch(initHouseEditData(this.props.houseId));
+        const localHouseState = houseLocalStorage.get();
+
+        if (this.props.houseId === null && localHouseState) {
+            // for new and localStorage
+            this.showDialog();
+        }
+        // 编辑请求房源数据
+        if (this.props.houseId) {
+            this.props.dispatch(fetchHouseEditData(this.props.houseId));
+        }
     }
     componentWillUnmount() {
-        // 清空数据
-        this.props.dispatch(initHouseEditData(false));
+        const houseState = this.props.houseState;
+        if (this.props.houseId === null && isDataInput(houseState)) {
+            // for new and data change
+            houseLocalStorage.set(houseState);
+        }
+        // reset redux state
+        this.props.dispatch(resetState());
     }
     render() {
         const clsPrefix = 'm-house-edit';
@@ -99,6 +144,13 @@ class HouseUpload extends BaseComponent {
                         pageType={this.pageInfo[this.state.curPage - 1].type}
                     />
                 </div>
+                <ConfirmDialog
+                    hide={this.state.dialogHide}
+                    onCancel={this.handleDialogCancel}
+                    onConfirm={this.handleDialogConfirm}
+                >
+                    你之前有未保存的数据，是否加载这些数据？
+                </ConfirmDialog>
             </div>
         );
     }
@@ -111,4 +163,8 @@ HouseUpload.propTypes = {
     houseId: PropTypes.number,
 };
 
-export default connect()(HouseUpload);
+export default connect(
+    state => ({
+        houseState: state.houseUpload,
+    }),
+)(HouseUpload);

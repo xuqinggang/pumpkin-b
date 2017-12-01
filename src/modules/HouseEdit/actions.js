@@ -23,17 +23,21 @@ export const initState = state => ({
     type: 'house-upload.initState',
 });
 
-export const initHouseEditData = houseId => (dispatch) => {
+export const resetState = () => (dispatch) => {
+    const state = {
+        baseInfo: initData('baseInfo'),
+        roomInfo: initData('roomInfo'),
+        chamberInfo: initData('chamberInfo'),
+        commonInfo: initData('commonInfo'),
+        validateError: initData('validateError'),
+        houseId: null,
+    };
+    dispatch(initState(state));
+};
+
+export const fetchHouseEditData = houseId => (dispatch) => {
     if (!houseId) {
-        const state = {
-            baseInfo: initData('baseInfo'),
-            roomInfo: initData('roomInfo'),
-            chamberInfo: initData('chamberInfo'),
-            commonInfo: initData('commonInfo'),
-            validateError: initData('validateError'),
-            houseId: null,
-        };
-        dispatch(initState(state));
+        dispatch(resetState());
     } else {
         axios.get(`/v1/houses/${houseId}`)
             .then((res) => {
