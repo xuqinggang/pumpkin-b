@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
+import houseLocalStorage from '../../houseLocalStorage';
 import { nextStep, showValidateError } from '../../actions';
 import { switchRoomExpand } from '../../RoomInfo/actions';
 import validateData from '../ValidateData/index';
@@ -126,6 +127,9 @@ class UploadButton extends BaseComponent {
                         this.props.history.push({
                             pathname: '/house-manage',
                         });
+
+                        // clear localStorage about house info
+                        houseLocalStorage.clear();
                     }
                 });
             }

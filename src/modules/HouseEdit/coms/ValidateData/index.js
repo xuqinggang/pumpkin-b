@@ -7,6 +7,23 @@ const itemError = ({ type = '', error = false, message = '' } = {}) => ({
     sub: {},
 });
 
+const isDataInput = (data) => {
+    const baseInfo = data.baseInfo;
+    return (
+        baseInfo.rentalType ||
+        baseInfo.houseTypeImgUrl ||
+        (baseInfo.houseTypeImgUrl) ||
+        (baseInfo.houseFloor.curFloor || baseInfo.houseFloor.totalFloor) ||
+        (baseInfo.village.value || baseInfo.village.text) ||
+        (baseInfo.houseType.room !== 1 ||
+            baseInfo.houseType.saloon || baseInfo.houseType.toilet) ||
+        (baseInfo.houseAddress.buildNo ||
+            baseInfo.houseAddress.unitNo || baseInfo.houseAddress.houseNo) ||
+        (baseInfo.keeperInfo.name ||
+            baseInfo.keeperInfo.phone || baseInfo.keeperInfo.imgUrl)
+    );
+};
+
 const validateBaseInfo = {
     village: (data) => {
         const error = itemError({ type: 'village' });
@@ -232,6 +249,7 @@ export {
     validateBaseInfo,
     validateRoomInfo,
     itemError,
+    isDataInput,
 };
 
 export default validateData;
