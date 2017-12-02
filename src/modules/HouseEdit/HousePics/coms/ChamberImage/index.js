@@ -101,10 +101,21 @@ class ChamberImage extends BaseComponent {
                             forAdd
                             onAdd={this.handleAddImage}
                         >
-                            {`上传${setTitle(
+                            <div>{`上传${setTitle(
                                 name,
                                 index,
-                                suffix)}照片`}
+                                suffix)}照片`}</div>
+                            <div>{
+                                (this.props.rentalType === 0 &&
+                                    name === 'rooms' &&
+                                    index === 0 &&
+                                    pics.length === 0
+                                ) ||
+                                (this.props.rentalType === 1 &&
+                                    name === 'rooms' &&
+                                    pics.length === 0
+                                ) ? '第一张图片将作为App的头图' : null
+                            }</div>
                         </AddImage>
                     }
                 </div>
@@ -145,9 +156,12 @@ export default connect(
             housePicsError.chamberIndex === index) {
             error = housePicsError;
         }
+
+        const rentalType = state.houseUpload.baseInfo.rentalType;
         return {
             error,
             pics,
+            rentalType,
         };
     },
 )(ChamberImage);
