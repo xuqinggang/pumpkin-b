@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter, Prompt } from 'react-router';
 import BaseComponent from 'components/BaseComponent/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
+import houseLocalStorage from '../../houseLocalStorage';
 
 class LeavePrompt extends BaseComponent {
     constructor(props) {
@@ -40,6 +41,8 @@ class LeavePrompt extends BaseComponent {
                     pathname: location.pathname,
                 });
             });
+            // 需求，确定离开就清除localStorage
+            houseLocalStorage.clear();
         };
         return false;
     }
@@ -55,7 +58,8 @@ class LeavePrompt extends BaseComponent {
                     onCancel={this.handleCancel}
                     onConfirm={this.handleConfirm}
                 >
-                    确定离开本页面吗？
+                    <div>确定离开当前页面吗？</div>
+                    <div>您有未保存的房源信息</div>
                 </ConfirmDialog>
             </div>
         );

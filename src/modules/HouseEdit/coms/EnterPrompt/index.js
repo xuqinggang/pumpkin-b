@@ -44,7 +44,8 @@ class EnterPrompt extends BaseComponent {
                     onCancel={this.handleCancel}
                     onConfirm={this.handleConfirm}
                 >
-                    你之前有未保存的数据，是否加载这些数据？
+                    <div>您有未保存的房源</div>
+                    <div>是否要进行继续编辑？</div>
                 </ConfirmDialog>
             </div>
         );
