@@ -81,7 +81,6 @@ const validateBaseInfo = {
         error.sub = {
             name: itemError({ type: 'name', error: false }),
             phone: itemError({ type: 'phone', error: false }),
-            imgUrl: itemError({ type: 'imgUrl', error: false }),
         };
         if (!data.name) {
             error.sub.name = {
@@ -106,15 +105,7 @@ const validateBaseInfo = {
             };
         }
 
-        if (!data.imgUrl) {
-            error.sub.imgUrl = {
-                ...error.sub.imgUrl,
-                error: true,
-                message: '请上传管家照片',
-            };
-        }
-
-        error.error = error.sub.name.error || error.sub.phone.error || error.sub.imgUrl.error;
+        error.error = error.sub.name.error || error.sub.phone.error;
         return error;
     },
 };
