@@ -29,7 +29,7 @@ class HouseTypeImage extends BaseComponent {
                     onSelect={this.handleSelect}
                 >
                     <i className={`${clsPrefix}--indicator icon-add`} />
-                    <div className={`${clsPrefix}--text`}>上传房源户型图片</div>
+                    <div className={`${clsPrefix}--text`}>上传房源户型图片（选填）</div>
                 </UploadImage>
             </div>
         );
