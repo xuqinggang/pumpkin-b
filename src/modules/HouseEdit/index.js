@@ -52,6 +52,7 @@ class HouseUpload extends BaseComponent {
             'handleDialogCancel',
             'handleDialogConfirm',
             'handleSubmitSuccess',
+            'handlePageUnmount',
         );
     }
     componentWillReceiveProps(nextProps) {
@@ -100,6 +101,12 @@ class HouseUpload extends BaseComponent {
         const tip = '系统可能不会保存您所做的更改';
         e.returnValue = tip;
 
+        // 离开页面保存数据
+        const houseState = this.props.houseState;
+        if (this.props.houseId === null && isDataInput(houseState)) {
+            // for new and data change
+            houseLocalStorage.set(houseState);
+        }
         return tip;
     }
     handleInitPage() {
@@ -114,23 +121,15 @@ class HouseUpload extends BaseComponent {
             this.props.dispatch(fetchHouseEditData(this.props.houseId));
         }
     }
-    handleLeavePage() {
-        const houseState = this.props.houseState;
-        if (this.props.houseId === null && isDataInput(houseState)) {
-            // for new and data change
-            houseLocalStorage.set(houseState);
-        }
-        // reset redux state
-        this.props.dispatch(resetState());
-    }
+
     componentDidMount() {
         this.handleInitPage();
 
+        // 只在离开页面时保存数据
         window.addEventListener('beforeunload', this.handlePageUnmount);
     }
     componentWillUnmount() {
-        this.handleLeavePage();
-
+        this.props.dispatch(resetState());
         window.removeEventListener('beforeunload', this.handlePageUnmount);
     }
     render() {
