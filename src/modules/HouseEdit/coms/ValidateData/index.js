@@ -219,7 +219,7 @@ const validate = {
     },
     houseDeploy: {
         fn: validateChamberInfo('deploys'),
-        seq: ['rooms', 'saloons', 'toilets'],
+        seq: ['rooms', 'toilets'],
     },
 };
 
