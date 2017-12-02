@@ -23,7 +23,7 @@ class Header extends BaseComponent {
         return (
             <div className={clsPrefix}>
                 <div className={`${clsPrefix}--login icon-user`}>
-                    <div style={{ paddingTop: '20px' }}>
+                    <div className={`${clsPrefix}--board-wrap`}>
                         <div className={`${clsPrefix}--board`}>
                             <button
                                 className={`${clsPrefix}--item`}

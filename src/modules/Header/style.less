@@ -14,21 +14,26 @@
         color: #f38d39;
 
         &:hover {
-            .c-header--board {
+            .c-header--board-wrap {
                 display: inline-block;
             }
         }
     }
 
-    &--board {
-        position: absolute;
-        right: 0;
-        top: 32px;
-        background: #fff;
+    &--board-wrap {
+        padding-top: 32px;
         width: 176px;
+        right: 0;
+        top: 0;
+        position: absolute;
+        display: none;
+    }
+
+    &--board {
+        width: 100%;
+        background: #fff;
         box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
         border-radius: 4px;
-        display: none;
         font-size: 12px;
         color: #8a8a8a;
     }
