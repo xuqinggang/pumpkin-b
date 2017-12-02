@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import BaseComponent from 'components/BaseComponent/index';
@@ -10,17 +9,20 @@ class Sidebar extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            curPageIndex: -1,
+            curPageUrl: '',
         };
         this.pages = [{
             url: 'house-manage',
             title: '房源管理',
+            contain: ['house-manage', 'house-modify'],
         }, {
             url: 'house-upload',
             title: '房源上传',
+            contain: ['house-upload'],
         }, {
             url: 'profile',
             title: '个人中心',
+            contain: ['profile'],
         }];
     }
     handleTurnPage(index) {
@@ -32,8 +34,15 @@ class Sidebar extends BaseComponent {
     }
 
     initPage(pathname) {
-        this.setState({
-            curPageIndex: this.pages.map(item => (pageUrl(item.url))).indexOf(pathname),
+        this.pages.some((item) => {
+            const urlContain = item.contain.map(i => (pageUrl(i)));
+            if (urlContain.indexOf(pathname) !== -1) {
+                this.setState({
+                    curPageUrl: item.url,
+                });
+                return true;
+            }
+            return false;
         });
     }
     componentDidMount() {
@@ -58,7 +67,7 @@ class Sidebar extends BaseComponent {
                                 className={`${clsPrefix}--nav-item`}
                             >
                                 {
-                                    this.state.curPageIndex === index
+                                    this.state.curPageUrl === item.url
                                     ? <i className={`${clsPrefix}--nav-item-indicator`} />
                                     : null
                                 }
