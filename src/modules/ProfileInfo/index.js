@@ -87,7 +87,7 @@ class ProfileInfo extends BaseComponent {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={6}>绑定手机号: {phone}</Col>
+                    <Col span={6}>绑定手机号: {String(phone).replace(/(^.{3}).*(.{4}$)/, '$1****$2')}</Col>
                     <Col span={3}>
                         <span
                             role="button"
@@ -110,16 +110,13 @@ class ProfileInfo extends BaseComponent {
                         onConfirm={this.handleConfirmModifyPasswd}
                     />
                 }
-                {
-                    this.state.modifyPhoneHide ? null :
-                    <ModifyPhoneModal
-                        hide={this.state.modifyPhoneHide}
-                        onCancel={this.handleCancelModifyPhone}
-                        onConfirmBind={this.handleConfirmBindPhone}
-                        onConfirmUnbind={this.handleConfirmUnbindPhone}
-                        type={this.state.bindAction}
-                    />
-                }
+                <ModifyPhoneModal
+                    hide={this.state.modifyPhoneHide}
+                    onCancel={this.handleCancelModifyPhone}
+                    onConfirmBind={this.handleConfirmBindPhone}
+                    onConfirmUnbind={this.handleConfirmUnbindPhone}
+                    type={this.state.bindAction}
+                />
             </div>
         );
     }
@@ -135,4 +132,14 @@ ProfileInfo.propTypes = {
     phone: PropTypes.string,
 };
 
-export default connect()(ProfileInfo);
+export default connect(
+    (state) => {
+        const userInfo = state.passport.userInfo;
+        if (userInfo) {
+            return {
+                nick: userInfo.username,
+                phone: userInfo.phone,
+            };
+        }
+    },
+)(ProfileInfo);
