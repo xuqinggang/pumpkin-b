@@ -17,6 +17,7 @@ class StepButton extends BaseComponent {
         this.state = {
             dialogHide: true,
         };
+        this.isSubmiting = false;
         this.autoBind('handlePrev', 'handleNext', 'handleDialogConfirm', 'handleDialogCancel');
     }
     handleDialogConfirm() {
@@ -107,6 +108,10 @@ class StepButton extends BaseComponent {
                 this.props.dispatch(showValidateError({ pageType, error }));
                 return;
             }
+
+            if (this.isSubmiting) return;
+
+            this.isSubmiting = true;
             if (data.houseId) {
                 // 修改
                 axios.put(`/v1/houses/${data.houseId}`, fe2beAdapter(data))
@@ -114,6 +119,9 @@ class StepButton extends BaseComponent {
                     if (res.data.code === 200) {
                         this.props.onSubmit.success({ type: 'MODIFY' });
                     }
+                })
+                .then(() => {
+                    this.isSubmiting = false;
                 });
             } else {
                 // 新建
@@ -122,6 +130,9 @@ class StepButton extends BaseComponent {
                     if (res.data.code === 200) {
                         this.props.onSubmit.success({ type: 'NEW' });
                     }
+                })
+                .then(() => {
+                    this.isSubmiting = false;
                 });
             }
             break;
