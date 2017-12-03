@@ -64,13 +64,13 @@ class ModifyPhoneModal extends BaseComponent {
 
     handleSendVcode() {
         // 判断当前手机号是否合法
-        if (!this.state.errorPhone) {
-            // ajax 发送验证码
-            axios.post('/v1/user/phone/verificationCode', {
-                phoneNumber: this.state.phoneNumber,
-            });
-            this.countDown();
-        }
+        if (this.handleVilidatePhone(this.state.phoneNumber)) return;
+
+        // ajax 发送验证码
+        axios.post('/v1/user/phone/verificationCode', {
+            phoneNumber: this.state.phoneNumber,
+        });
+        this.countDown();
     }
 
     handlePhoneChange({ value }) {
@@ -89,25 +89,25 @@ class ModifyPhoneModal extends BaseComponent {
         });
     }
 
+    handleVilidatePhone(phoneNo) {
+        let error = false;
+        let message = '';
+        if (!phoneNo) {
+            error = true;
+            message = '手机号不能为空';
+        } else if (!isPhoneNo(phoneNo)) {
+            error = true;
+            message = '手机号不合法';
+        }
+        this.setState({
+            errorPhone: message,
+        });
+        return error;
+    }
+
     handlePhoneBlur({ value }) {
         // 手机输入框blur
-        if (!value) {
-            this.setState({
-                errorPhone: '手机号不能为空',
-            });
-            return;
-        }
-
-        if (!isPhoneNo(value)) {
-            this.setState({
-                errorPhone: '手机号不合法',
-            });
-            return;
-        }
-
-        this.setState({
-            errorPhone: '',
-        });
+        this.handleVilidatePhone(value);
     }
 
     handleVcodeBlur({ value }) {
@@ -145,6 +145,10 @@ class ModifyPhoneModal extends BaseComponent {
             canSend: false,
             countDownSecond: this.state.countDownSecond - 1,
         });
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
     }
 
     render() {
