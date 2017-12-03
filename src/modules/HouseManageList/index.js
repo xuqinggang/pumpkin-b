@@ -11,6 +11,7 @@ import HouseStatusManage from 'modules/HouseStatusManage/index';
 import HouseManageFilter from 'modules/HouseManageFilter/index';
 import RoomStatusDialog from 'modules/RoomStatusDialog/index';
 import HouseManageListPager from 'modules/HouseManageListPager/index';
+import EmptyHouseNote from 'modules/EmptyHouseNote/index';
 import { timeSignBy, timeFormat } from 'utils/index';
 import { hideStatusChangeDialog, deleteHouse, fetchHouseManageList } from './actions';
 import './style.less';
@@ -129,6 +130,7 @@ class HouseManageList extends BaseComponent {
                     })
                 }
                 <HouseManageListPager />
+                <EmptyHouseNote />
                 <RoomStatusDialog
                     type={this.props.dialogType}
                     hide={this.props.dialogHide}
@@ -155,12 +157,14 @@ export default connect(
 
         const houseList = state.houseManage.houseList;
         const isSortByTime = state.houseManage.filter.isSortByTime;
+        const filter = state.houseManage.filter;
         return {
             dialogType: type,
             dialogHide: hide,
             dialogOnConfirm: onConfirm,
             houseList,
             isSortByTime,
+            filter,
         };
     },
 )(withRouter(HouseManageList));

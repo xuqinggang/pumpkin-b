@@ -138,8 +138,9 @@ export default connect(
         if (userInfo) {
             return {
                 nick: userInfo.username,
-                phone: userInfo.phone,
+                phone: String(userInfo.phone),
             };
         }
+        return {};
     },
 )(ProfileInfo);
