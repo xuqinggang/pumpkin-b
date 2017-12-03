@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withRouter, Prompt } from 'react-router';
 import BaseComponent from 'components/BaseComponent/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
 import houseLocalStorage from '../../houseLocalStorage';
+import { isDataInput } from '../ValidateData/index';
 
 class LeavePrompt extends BaseComponent {
     constructor(props) {
@@ -28,6 +30,10 @@ class LeavePrompt extends BaseComponent {
     }
     handlePrompt(location) {
         if (window.location.pathname === location.pathname) return;
+
+        if (!isDataInput(this.props.houseState)) {
+            return true;
+        }
 
         this.setState({
             hide: false,
@@ -74,4 +80,8 @@ LeavePrompt.defaultProps = {
     when: true,
 };
 
-export default withRouter(LeavePrompt);
+export default connect(
+    state => ({
+        houseState: state.houseUpload,
+    }),
+)(withRouter(LeavePrompt));
