@@ -9,7 +9,7 @@ const itemError = ({ type = '', error = false, message = '' } = {}) => ({
 
 const isDataInput = (data) => {
     const baseInfo = data.baseInfo;
-    return (
+    return !!(
         baseInfo.rentalType ||
         baseInfo.houseTypeImgUrl ||
         (baseInfo.houseTypeImgUrl) ||
