@@ -11,13 +11,16 @@ class UploadImage extends BaseComponent {
         this.autoBind(
             'handleClick',
             'handleFileChange',
+            'handleImageDel',
         );
     }
 
     handleClick() {
         this.inputFile.click();
     }
-
+    handleImageDel() {
+        this.props.onDel();
+    }
     handleFileChange() {
         const { files } = this.inputFile;
         if (files.length === 0) {
@@ -40,26 +43,38 @@ class UploadImage extends BaseComponent {
         return (
             <div
                 className={cls}
-                role="presentation"
-                onClick={this.handleClick}
             >
-                <input
-                    type="file"
-                    style={{ display: 'none' }}
-                    ref={this.storeRef('inputFile')}
-                    name="apic"
-                    accept="image/x-png,image/gif,image/jpeg"
-                    multiple
-                    onChange={this.handleFileChange}
-                />
-                {
-                    picUrl ?
-                        <img height="100%" width="100%" alt="pic" src={picUrl} /> :
-                        <div className={`${clsPrefix}--note`}>
-                            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-                                {this.props.children}
+                <div
+                    className={`${cls}--select`}
+                    role="presentation"
+                    onClick={this.handleClick}
+                >
+                    <input
+                        type="file"
+                        style={{ display: 'none' }}
+                        ref={this.storeRef('inputFile')}
+                        name="apic"
+                        accept="image/x-png,image/gif,image/jpeg"
+                        multiple
+                        onChange={this.handleFileChange}
+                    />
+                    {
+                        picUrl ?
+                            <img height="100%" width="100%" alt="pic" src={picUrl} /> :
+                            <div className={`${clsPrefix}--note`}>
+                                <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                                    {this.props.children}
+                                </div>
                             </div>
-                        </div>
+                    }
+                </div>
+                { this.props.picUrl ?
+                    <div
+                        role="presentation"
+                        className={`${cls}--del`}
+                        onClick={this.handleImageDel}
+                    ><i className={`${cls}--del-note icon-delete`} /></div>
+                    : null
                 }
             </div>
         );
@@ -70,6 +85,7 @@ UploadImage.defaultProps = {
     name: '',
     picUrl: '',
     onSelect: () => {},
+    onDel: () => {},
     error: false,
     children: null,
 };
@@ -78,6 +94,7 @@ UploadImage.propTypes = {
     name: PropTypes.string,
     picUrl: PropTypes.string,
     onSelect: PropTypes.func,
+    onDel: PropTypes.func,
     error: PropTypes.bool,
     children: PropTypes.node,
 };

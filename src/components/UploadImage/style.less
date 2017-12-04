@@ -2,18 +2,24 @@
 
 .@{className} {
     position: relative;
-    box-sizing: border-box;
     height: 128px;
     width: 220px;
-    background: #fcfcfc;
-    border: 1px solid #e0dfe7;
-    border-radius: 4px;
-    transition: background 0.2s;
-    text-align: center;
-    cursor: pointer;
-    line-height: 2;
 
-    &:hover {
+    &--select {
+        position: relative;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+        background: #fcfcfc;
+        border: 1px solid #e0dfe7;
+        border-radius: 4px;
+        transition: background 0.2s;
+        text-align: center;
+        cursor: pointer;
+        line-height: 2;
+    }
+
+    &--select:hover {
         background: rgba(254, 250, 246, 0.63);
         border: 1px solid #f38d39;
 
@@ -43,6 +49,38 @@
             display: inline-block;
             height: 100%;
             vertical-align: middle;
+        }
+    }
+
+    &:hover {
+        .@{className}--del {
+            display: block;
+        }
+    }
+
+    &--del {
+        display: none;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+        top: 0;
+        background-color: rgba(51, 51, 51, 0.65);
+        text-align: center;
+        color: #fff;
+        cursor: pointer;
+
+        &::after {
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        }
+
+        &-note {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 18px;
         }
     }
 }
