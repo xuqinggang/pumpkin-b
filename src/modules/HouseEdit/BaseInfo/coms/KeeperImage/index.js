@@ -10,7 +10,7 @@ import './style.less';
 class KeeperImage extends BaseComponent {
     constructor(props) {
         super(props);
-        this.autoBind('handleSelect');
+        this.autoBind('handleSelect', 'handleDel');
     }
     handleSelect(name, file) {
         const data = new FormData();
@@ -20,6 +20,9 @@ class KeeperImage extends BaseComponent {
             const imgUrl = res.data.data.url;
             this.props.onChange({ name: this.props.name, value: imgUrl });
         });
+    }
+    handleDel() {
+        this.props.onDel();
     }
     render() {
         const clsPrefix = 'c-keeper-image';
@@ -31,6 +34,7 @@ class KeeperImage extends BaseComponent {
                 <UploadImage
                     picUrl={this.props.value}
                     onSelect={this.handleSelect}
+                    onDel={this.handleDel}
                 >
                     <i className={`${clsPrefix}--indicator icon-add`} />
                     <div className={`${clsPrefix}--text`}>上传管家图片（选填）</div>
@@ -44,6 +48,7 @@ KeeperImage.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
+    onDel: PropTypes.func,
     error: errorType,
 };
 
@@ -51,6 +56,7 @@ KeeperImage.defaultProps = {
     name: '',
     value: '',
     onChange: () => {},
+    onDel: () => {},
     error: {
         error: false,
         message: '',
