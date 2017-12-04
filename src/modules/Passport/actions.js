@@ -34,20 +34,6 @@ export const passportModifyPhone = ({
         });
 };
 
-/* export const passportModifyPassword = ({
- *     oldPassword,
- *     newPassword,
- * }) => () => {
- *     axios.post('url', {
- *         params: {
- *             oldPassword,
- *             newPassword,
- *         },
- *     })
- *         .then((res) => {
- *             console.log(res);
- *         });
- * }; */
 export const passportStatus = ({ onLine, offLine } = {
     onLine: () => {},
     offLine: () => {},
@@ -73,6 +59,7 @@ export const passportStatus = ({ onLine, offLine } = {
             }));
             onLine();
         } else {
+            dispatch(passportOffline());
             offLine();
         }
     });
