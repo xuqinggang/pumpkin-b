@@ -1,34 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import BaseComponent from 'components/BaseComponent/index';
-import { withRouter } from 'react-router';
 import { passportStatus } from 'modules/Passport/actions';
 
 export default function checkAuthenticated(PageComponent) {
     class AuthenticatedRoute extends BaseComponent {
         componentDidMount() {
-            let onLine = () => {};
-            if (window.location.pathname === '/login') {
-                onLine = () => {
-                    this.props.history.replace({
-                        pathname: '/house-manage',
-                    });
-                };
-            }
-            this.props.dispatch(passportStatus({
-                onLine,
-                offLine: () => {
-                    this.props.history.replace({
-                        pathname: '/login',
-                    });
-                },
-            }));
+            this.props.dispatch(passportStatus());
         }
         render() {
             return (
-                <PageComponent {...this.props} />
+                this.props.isOnline
+                ? <PageComponent {...this.props} />
+                : <Redirect to="/login" />
             );
         }
     }
-    return connect()(withRouter(AuthenticatedRoute));
+    return connect(
+        state => ({
+            isOnline: state.passport.isOnline,
+        }),
+    )(AuthenticatedRoute);
 }
