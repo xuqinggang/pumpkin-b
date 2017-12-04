@@ -12,7 +12,7 @@ class EmptyHouseNote extends BaseComponent {
         this.autoBind('handleClick');
     }
     handleClick() {
-        this.props.history.push('house-upload');
+        this.props.history.push('/house-upload');
     }
     render() {
         return !this.props.hide ?

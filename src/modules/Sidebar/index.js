@@ -28,7 +28,7 @@ class Sidebar extends BaseComponent {
     handleTurnPage(index) {
         return () => {
             this.props.history.push({
-                pathname: this.pages[index].url,
+                pathname: pageUrl(this.pages[index].url),
             });
         };
     }
