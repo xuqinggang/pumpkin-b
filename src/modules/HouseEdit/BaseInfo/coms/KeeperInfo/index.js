@@ -22,7 +22,7 @@ class KeeperInfo extends BaseComponent {
                 },
             },
         };
-        this.autoBind('handleChange', 'handleBlur');
+        this.autoBind('handleChange', 'handleBlur', 'handleImageDel');
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.error.error !== this.props.error.error && nextProps.error.error) {
@@ -47,6 +47,10 @@ class KeeperInfo extends BaseComponent {
         });
         this.props.dispatch(setKeeperInfo({ name, value }));
         this.props.dispatch(hideValidateError({ pageType: 'baseInfo' }));
+    }
+    handleImageDel() {
+        // del image
+        this.props.dispatch(setKeeperInfo({ name: 'imgUrl', value: '' }));
     }
     handleBlur({ name, value }) {
         const error = validateBaseInfo.keeperInfo({
@@ -112,6 +116,7 @@ class KeeperInfo extends BaseComponent {
                     value={imgUrl}
                     error={error.sub.imgUrl}
                     onChange={this.handleChange}
+                    onDel={this.handleImageDel}
                 />
             </FormItem>
         );
