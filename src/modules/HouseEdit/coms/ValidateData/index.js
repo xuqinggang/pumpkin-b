@@ -40,15 +40,21 @@ const validateBaseInfo = {
         const error = itemError({ type: 'houseAddress' });
         error.sub = {
             buildNo: itemError({ type: 'buildNo', error: false }),
+            unitNo: itemError({ type: 'unitNo', error: false }),
             houseNo: itemError({ type: 'houseNo', error: false }),
         };
 
         if (!isNaturalNum(data.buildNo)) {
             error.sub.buildNo.error = true;
         }
+        if (!isNaturalNum(data.unitNo)) {
+            error.sub.unitNo.error = true;
+        }
         if (!isNaturalNum(data.houseNo)) {
             error.sub.houseNo.error = true;
         }
+
+        // 不校验单元Number
         error.error = error.sub.buildNo.error || error.sub.houseNo.error;
         return error;
     },
