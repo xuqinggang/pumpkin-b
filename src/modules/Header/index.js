@@ -9,14 +9,24 @@ import './style.less';
 class Header extends BaseComponent {
     constructor(props) {
         super(props);
-        this.autoBind('handleGoProfile', 'handleLoginOut');
+        this.autoBind('handleGoProfile', 'handleLogout');
     }
     handleGoProfile() {
         this.props.history.push('/profile');
     }
-    handleLoginOut() {
-        this.props.dispatch(logout());
-        // this.props.history.push('/login');
+    handleLogout() {
+        // this.props.dispatch(logout());
+        this.props.history.replace('/login', { for: 'logout' });
+    }
+    componentDidMount() {
+        this.unlisten = this.props.history.listen((location) => {
+            if (location.pathname === '/login' && location.state.for === 'logout') {
+                this.props.dispatch(logout());
+            }
+        });
+    }
+    componentWillUnmount() {
+        this.unlisten();
     }
     render() {
         const clsPrefix = 'c-header';
@@ -31,7 +41,7 @@ class Header extends BaseComponent {
                             >个人中心</button>
                             <button
                                 className={`${clsPrefix}--item`}
-                                onClick={this.handleLoginOut}
+                                onClick={this.handleLogout}
                             >退出登录</button>
                         </div>
                     </div>
