@@ -44,20 +44,13 @@ class AddImage extends BaseComponent {
                 <UploadImage
                     picUrl={this.props.picUrl}
                     onSelect={this.handleImageSelect}
+                    onDel={this.handleImageDel}
                 >
                     <i className={`${clsPrefix}--indicator icon-add`} />
                     <div>
                         {this.props.children}
                     </div>
                 </UploadImage>
-                { this.props.picUrl ?
-                    <div
-                        role="presentation"
-                        className={`${cls}--del-wrap`}
-                        onClick={this.handleImageDel}
-                    ><i className={`${cls}--del-note icon-delete`} /></div>
-                    : null
-                }
             </div>
         );
     }
