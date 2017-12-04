@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import PageHeader from 'components/PageHeader/index';
 import HouseEdit from 'modules/HouseEdit/index';
@@ -41,7 +40,7 @@ class HouseModify extends BaseComponent {
                         onClick={this.handleBack}
                     >房源管理</button>
                     <span className={`${clsPrefix}--gap`}> / </span>
-                    <span className={`${clsPrefix}--title`}>房源编辑 (房源ID: {this.props.houseId})</span>
+                    <span className={`${clsPrefix}--title`}>房源编辑 (房源ID: {this.state.houseId})</span>
                 </div>
                 <PageHeader className={`${clsPrefix}--page-title`}>房源编辑</PageHeader>
                 {
@@ -53,13 +52,5 @@ class HouseModify extends BaseComponent {
         );
     }
 }
-
-HouseModify.propTypes = {
-    houseId: PropTypes.number,
-};
-
-HouseModify.defaultProps = {
-    houseId: null,
-};
 
 export default withRouter(HouseModify);
