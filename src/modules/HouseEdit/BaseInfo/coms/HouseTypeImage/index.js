@@ -9,7 +9,7 @@ import './style.less';
 class HouseTypeImage extends BaseComponent {
     constructor(props) {
         super(props);
-        this.autoBind('handleSelect');
+        this.autoBind('handleSelect', 'handleDel');
     }
     handleSelect(dump, file) {
         const data = new FormData();
@@ -20,6 +20,9 @@ class HouseTypeImage extends BaseComponent {
             this.props.dispatch(setHouseTypeImgUrl(imgUrl));
         });
     }
+    handleDel() {
+        this.props.dispatch(setHouseTypeImgUrl(''));
+    }
     render() {
         const clsPrefix = 'c-house-type-image';
         return (
@@ -27,6 +30,7 @@ class HouseTypeImage extends BaseComponent {
                 <UploadImage
                     picUrl={this.props.houseTypeImgUrl}
                     onSelect={this.handleSelect}
+                    onDel={this.handleDel}
                 >
                     <i className={`${clsPrefix}--indicator icon-add`} />
                     <div className={`${clsPrefix}--text`}>上传房源户型图片（选填）</div>
