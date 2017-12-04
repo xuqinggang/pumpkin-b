@@ -28,7 +28,7 @@ class LeavePrompt extends BaseComponent {
             hide: true,
         });
     }
-    handlePrompt(location) {
+    handlePrompt(location, action) {
         if (window.location.pathname === location.pathname) return;
 
         if (!isDataInput(this.props.houseState)) {
@@ -43,9 +43,7 @@ class LeavePrompt extends BaseComponent {
             this.setState({
                 leaveBlock: false,
             }, () => {
-                this.props.history.push({
-                    pathname: location.pathname,
-                });
+                this.props.history[action.toLowerCase()](location);
             });
             // 需求，确定离开就清除localStorage
             houseLocalStorage.clear();
