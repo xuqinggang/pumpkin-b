@@ -26,6 +26,10 @@ class HouseManageFilter extends BaseComponent {
     fetchVillageList() {
         axios.get('/v1/blocks')
         .then((res) => {
+            if (res.data.code !== 200) {
+                // fetch data error
+                return;
+            }
             const villageList = res.data.data;
             const villageOptions = villageList.map(item => ({
                 text: item.name,

@@ -72,6 +72,11 @@ export const fetchHouseManageList = (
         params,
     })
     .then((res) => {
+        if (res.data.code !== 200) {
+            // fetch data error
+            return;
+        }
+
         const { total, houses } = res.data.data;
 
         // transform be to fe

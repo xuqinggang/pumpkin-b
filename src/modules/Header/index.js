@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { logout } from 'modules/Passport/actions';
 import { withRouter } from 'react-router-dom';
 import BaseComponent from 'components/BaseComponent/index';
 import PropTypes from 'prop-types';
@@ -13,10 +15,8 @@ class Header extends BaseComponent {
         this.props.history.push('/profile');
     }
     handleLoginOut() {
-        document.cookie.split(';').forEach((c) => {
-            document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=' + ${new Date().toUTCString()};path=/`);
-        });
-        this.props.history.push('/login');
+        this.props.dispatch(logout());
+        // this.props.history.push('/login');
     }
     render() {
         const clsPrefix = 'c-header';
@@ -49,4 +49,4 @@ Header.propTypes = {
     name: PropTypes.string,
 };
 
-export default withRouter(Header);
+export default withRouter(connect()(Header));

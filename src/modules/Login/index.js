@@ -1,10 +1,9 @@
-// import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { withRouter } from 'react-router';
 import BaseComponent from 'components/BaseComponent';
 import Input from 'components/Input';
+import { login } from 'modules/Passport/actions';
 import './style.less';
 
 class Login extends BaseComponent {
@@ -59,9 +58,9 @@ class Login extends BaseComponent {
         .then((res) => {
             switch (res.data.code) {
             case 200: {
-                this.props.history.push({
-                    pathname: '/house-manage',
-                });
+                // TODO
+                // 不用手动更改url
+                this.props.dispatch(login());
                 break;
             }
             case 1101: {
@@ -233,8 +232,4 @@ Login.defaultProps = {};
 Login.propTypes = {};
 
 
-export default connect(
-    state => ({
-        isOnline: state.passport.isOnline,
-    }),
-)(withRouter(Login));
+export default connect()(Login);

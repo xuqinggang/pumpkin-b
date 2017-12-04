@@ -1,6 +1,6 @@
-import { connect } from 'react-redux';
 import Login from 'modules/Login';
 import BaseComponent from 'components/BaseComponent';
+import checkAuthenticated from 'base/checkAuthenticated';
 import './style.less';
 
 class LoginPage extends BaseComponent {
@@ -14,4 +14,4 @@ class LoginPage extends BaseComponent {
     }
 }
 
-export default connect()(LoginPage);
+export default checkAuthenticated(LoginPage);

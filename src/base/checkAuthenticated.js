@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Redirect, withRouter } from 'react-router';
 import BaseComponent from 'components/BaseComponent/index';
 import { passportStatus } from 'modules/Passport/actions';
 
@@ -10,16 +10,22 @@ export default function checkAuthenticated(PageComponent) {
             this.props.dispatch(passportStatus());
         }
         render() {
-            return (
-                this.props.isOnline
-                ? <PageComponent {...this.props} />
-                : <Redirect to="/login" />
-            );
+            const { location } = this.props;
+            if (this.props.onlineStatus === 'ON' && location.pathname === '/login') {
+                return <Redirect to="/house-manage" />;
+            }
+            if (this.props.onlineStatus === 'OFF' && location.pathname !== '/login') {
+                return <Redirect to="/login" />;
+            }
+            if (this.props.onlineStatus === 'UNSET') {
+                return null;
+            }
+            return <PageComponent {...this.props} />;
         }
     }
     return connect(
         state => ({
-            isOnline: state.passport.isOnline,
+            onlineStatus: state.passport.onlineStatus,
         }),
-    )(AuthenticatedRoute);
+    )(withRouter(AuthenticatedRoute));
 }
