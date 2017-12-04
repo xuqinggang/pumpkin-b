@@ -4,6 +4,7 @@ import ProfileInfo from 'modules/ProfileInfo';
 import Content from 'components/Content';
 import BaseComponent from 'components/BaseComponent';
 import PageHeader from 'components/PageHeader';
+import checkAuthenticated from 'base/checkAuthenticated';
 import './style.less';
 
 class ProfilePage extends BaseComponent {
@@ -24,4 +25,4 @@ class ProfilePage extends BaseComponent {
     }
 }
 
-export default connect()(ProfilePage);
+export default checkAuthenticated(connect()(ProfilePage));

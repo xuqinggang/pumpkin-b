@@ -2,6 +2,7 @@ import React from 'react';
 import MainLayout from 'layouts/MainLayout';
 import BaseComponent from 'components/BaseComponent/index';
 import HouseManageList from 'modules/HouseManageList/index';
+import checkAuthenticated from 'base/checkAuthenticated';
 import './style.less';
 
 class HouseManagePage extends BaseComponent {
@@ -18,4 +19,4 @@ class HouseManagePage extends BaseComponent {
     }
 }
 
-export default HouseManagePage;
+export default checkAuthenticated(HouseManagePage);

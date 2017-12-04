@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import MainLayout from 'layouts/MainLayout';
 import BaseComponent from 'components/BaseComponent/index';
 import HouseModify from 'modules/HouseModify/index';
+import checkAuthenticated from 'base/checkAuthenticated';
 import './style.less';
 
 class HouseModifyPage extends BaseComponent {
@@ -19,4 +20,4 @@ class HouseModifyPage extends BaseComponent {
     }
 }
 
-export default withRouter(HouseModifyPage);
+export default checkAuthenticated(withRouter(HouseModifyPage));

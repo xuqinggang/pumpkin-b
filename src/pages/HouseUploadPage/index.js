@@ -3,6 +3,7 @@ import MainLayout from 'layouts/MainLayout';
 import BaseComponent from 'components/BaseComponent/index';
 import PageHeader from 'components/PageHeader/index';
 import HouseEdit from 'modules/HouseEdit/index';
+import checkAuthenticated from 'base/checkAuthenticated';
 import './style.less';
 
 class HouseUploadPage extends BaseComponent {
@@ -21,4 +22,4 @@ class HouseUploadPage extends BaseComponent {
     }
 }
 
-export default HouseUploadPage;
+export default checkAuthenticated(HouseUploadPage);
