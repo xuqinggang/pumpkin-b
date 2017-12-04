@@ -92,6 +92,8 @@ class HouseAddress extends BaseComponent {
                     <Input
                         name="unitNo"
                         value={unitNo}
+                        onBlur={this.handleBlur}
+                        onChange={this.handleChange}
                     />
                     <NoteWord>单元</NoteWord>
                     <Input
