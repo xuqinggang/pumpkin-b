@@ -1,5 +1,5 @@
 const initialState = {
-    isOnline: true,
+    onlineStatus: 'UNSET',
     userInfo: null,
 };
 
@@ -8,14 +8,24 @@ const passportReducer = (state = initialState, action) => {
     case 'passport.online': {
         return {
             ...state,
-            isOnline: true,
-            userInfo: action.userInfo,
+            onlineStatus: 'ON',
         };
     }
     case 'passport.offline': {
         return {
             ...state,
-            isOnline: false,
+            onlineStatus: 'OFF',
+        };
+    }
+    case 'passport.passportInfo': {
+        return {
+            ...state,
+            userInfo: action.userInfo,
+        };
+    }
+    case 'passport.clearPassportInfo': {
+        return {
+            ...state,
             userInfo: null,
         };
     }

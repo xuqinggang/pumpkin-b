@@ -4,9 +4,17 @@ export const passportOffline = () => ({
     type: 'passport.offline',
 });
 
-export const passportOnline = userInfo => ({
-    userInfo,
+export const passportOnline = () => ({
     type: 'passport.online',
+});
+
+export const passportInfo = userInfo => ({
+    userInfo,
+    type: 'passport.passportInfo',
+});
+
+export const clearPassportInfo = () => ({
+    type: 'passport.clearPassportInfo',
 });
 
 export const passportSetPhone = ({
@@ -24,14 +32,21 @@ export const passportModifyPhone = ({
         phone,
         vcode,
     })
-        .then((res) => {
-            // TODO
-            if (res.code === 200) {
-                dispatch(passportSetPhone(phone));
-            } else {
-                alert(res.msg);
-            }
-        });
+    .then((res) => {
+        // TODO
+        if (res.code === 200) {
+            dispatch(passportSetPhone(phone));
+        }
+    });
+};
+
+export const login = () => (dispatch) => {
+    dispatch(passportOnline());
+};
+
+export const logout = () => (dispatch) => {
+    dispatch(passportOffline());
+    dispatch(clearPassportInfo());
 };
 
 export const passportStatus = ({ onLine, offLine } = {
@@ -47,7 +62,8 @@ export const passportStatus = ({ onLine, offLine } = {
                 isCentralizedOwner,
                 apartment,
             } = res.data.data;
-            dispatch(passportOnline({
+            dispatch(login());
+            dispatch(passportInfo({
                 username,
                 phone,
                 isCentralizedOwner,
@@ -59,7 +75,7 @@ export const passportStatus = ({ onLine, offLine } = {
             }));
             onLine();
         } else {
-            dispatch(passportOffline());
+            dispatch(logout());
             offLine();
         }
     });
