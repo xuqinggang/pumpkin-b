@@ -10,6 +10,8 @@ class Input extends BaseComponent {
         this.state = {
             value: props.value,
         };
+
+        this.maxTextLength = 100;
         this.autoBind('handleChange', 'handleKeyPress', 'handleBlur', 'toFocus', 'handleClick');
     }
 
@@ -29,9 +31,10 @@ class Input extends BaseComponent {
         }
     }
     handleChange(event) {
-        this.setState({ value: event.target.value });
+        const parseValue = event.target.value.substr(0, this.maxTextLength);
+        this.setState({ value: parseValue });
         if (this.props.onChange) {
-            this.props.onChange({ value: event.target.value, name: this.props.name });
+            this.props.onChange({ value: parseValue, name: this.props.name });
         }
     }
 
