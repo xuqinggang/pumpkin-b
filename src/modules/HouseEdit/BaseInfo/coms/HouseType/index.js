@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import { FormItem } from 'components/Form/index';
 import Select from 'components/Select/index';
+import ConfirmDialog from 'components/ConfirmDialog/index';
 import HouseTypeImage from '../HouseTypeImage/index';
 import { setHouseType } from '../../actions';
 
@@ -39,10 +40,35 @@ const initHouseTypeOptions = (type) => {
 class HouseType extends BaseComponent {
     constructor(props) {
         super(props);
-        this.autoBind('handleSelectChange');
+        this.state = {
+            dialogHide: true,
+        };
+        this.autoBind(
+            'handleSelectChange',
+            'handleConfirm',
+            'handleCancel',
+        );
     }
     handleSelectChange({ name, select }) {
-        this.props.dispatch(setHouseType(name, select.value));
+        const { lastHouseType } = this.props;
+        if (lastHouseType[name] !== null && lastHouseType[name] !== select.value) {
+            this.setState({
+                dialogHide: false,
+            });
+            this.handleConfirm = () => {
+                this.setState({
+                    dialogHide: true,
+                });
+                this.props.dispatch(setHouseType(name, select.value));
+            };
+        } else {
+            this.props.dispatch(setHouseType(name, select.value));
+        }
+    }
+    handleCancel() {
+        this.setState({
+            dialogHide: true,
+        });
     }
     render() {
         const clsPrefix = 'c-house-type';
@@ -84,6 +110,14 @@ class HouseType extends BaseComponent {
                     />
                 </div>
                 <HouseTypeImage />
+                <ConfirmDialog
+                    hide={this.state.dialogHide}
+                    onConfirm={this.handleConfirm}
+                    onCancel={this.handleCancel}
+                >
+                    <div>确定修改房源户型吗</div>
+                    <div>信息将清空重新编辑</div>
+                </ConfirmDialog>
             </FormItem>
         );
     }
@@ -92,6 +126,7 @@ class HouseType extends BaseComponent {
 export default connect(
     state => ({
         houseType: state.houseUpload.baseInfo.houseType,
+        lastHouseType: state.houseUpload.commonInfo.houseType,
         isCreate: state.houseUpload.houseId === null,
     }),
 )(HouseType);
