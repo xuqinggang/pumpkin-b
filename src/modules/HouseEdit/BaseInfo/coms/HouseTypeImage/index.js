@@ -20,11 +20,10 @@ class HouseTypeImage extends BaseComponent {
         return (
             <div className={clsPrefix}>
                 <HouseUploadImage
-                    defaultText="上传房源户型图片（选填）"
                     imgUrl={this.props.houseTypeImgUrl}
                     onSelect={this.handleSelect}
                     onDel={this.handleDel}
-                />
+                >上传房源户型图片（选填）</HouseUploadImage>
             </div>
         );
     }
