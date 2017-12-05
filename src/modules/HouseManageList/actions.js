@@ -96,7 +96,7 @@ export const fetchHouseManageList = (
                 id: unitItem.id,
                 status: unitItem.status,
             })),
-            createTime: item.createTime,
+            updateTime: item.updateTime,
         }));
         dispatch(sortListByTime(isSortByTime));
         dispatch(filterListBy('village', village));
