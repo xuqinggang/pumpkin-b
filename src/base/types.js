@@ -37,5 +37,5 @@ export const houseType = PropTypes.shape({
         unitNo: PropTypes.number,
         houseNo: PropTypes.number,
     }),
-    createTime: PropTypes.number,
+    updateTime: PropTypes.number,
 });
