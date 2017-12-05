@@ -90,7 +90,7 @@ class ChamberImage extends BaseComponent {
                                 name={name}
                                 coords={[index, picIndex]}
                                 onDel={this.handleDelImage}
-                                picUrl={picItem}
+                                imgUrl={picItem}
                             />
                         ))
                     }
