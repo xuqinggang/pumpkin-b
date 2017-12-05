@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
+import LoadingBar from 'components/LoadingBar/index';
 import './style.less';
 
 class UploadImage extends BaseComponent {
@@ -37,6 +38,8 @@ class UploadImage extends BaseComponent {
             clsPrefix,
             {
                 [`${clsPrefix}__error`]: this.props.error,
+                [`${clsPrefix}__loading`]: this.props.loading.isLoading,
+
             },
         );
 
@@ -45,7 +48,7 @@ class UploadImage extends BaseComponent {
                 className={cls}
             >
                 <div
-                    className={`${cls}--select`}
+                    className={`${clsPrefix}--select`}
                     role="presentation"
                     onClick={this.handleClick}
                 >
@@ -71,10 +74,22 @@ class UploadImage extends BaseComponent {
                 { this.props.picUrl ?
                     <div
                         role="presentation"
-                        className={`${cls}--del`}
+                        className={`${clsPrefix}--del`}
                         onClick={this.handleImageDel}
-                    ><i className={`${cls}--del-note icon-delete`} /></div>
+                    ><i className={`${clsPrefix}--del-content icon-delete`} /></div>
                     : null
+                }
+                {
+                    this.props.loading.isLoading ?
+                        <div
+                            className={`${clsPrefix}--loading`}
+                        >
+                            <LoadingBar
+                                className={`${clsPrefix}--del-content`}
+                                percent={this.props.loading.percent}
+                            />
+                        </div>
+                        : null
                 }
             </div>
         );
@@ -88,6 +103,10 @@ UploadImage.defaultProps = {
     onDel: () => {},
     error: false,
     children: null,
+    loading: {
+        isLoading: false,
+        percent: 0,
+    },
 };
 
 UploadImage.propTypes = {
@@ -97,6 +116,10 @@ UploadImage.propTypes = {
     onDel: PropTypes.func,
     error: PropTypes.bool,
     children: PropTypes.node,
+    loading: PropTypes.shape({
+        isLoading: PropTypes.bool,
+        percent: PropTypes.number,
+    }),
 };
 
 export default UploadImage;
