@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
-import ConfirmDialog from 'components/ConfirmDialog/index';
 import { nextStep, showValidateError } from '../../actions';
 import { switchRoomExpand } from '../../RoomInfo/actions';
 import validateData from '../ValidateData/index';
@@ -18,20 +17,7 @@ class StepButton extends BaseComponent {
             dialogHide: true,
         };
         this.isSubmiting = false;
-        this.autoBind('handlePrev', 'handleNext', 'handleDialogConfirm', 'handleDialogCancel');
-    }
-    handleDialogConfirm() {
-        this.setState({
-            dialogHide: true,
-        }, () => {
-            this.props.dispatch(nextStep(this.props.pageType));
-            this.props.onNext();
-        });
-    }
-    handleDialogCancel() {
-        this.setState({
-            dialogHide: true,
-        });
+        this.autoBind('handlePrev', 'handleNext');
     }
     handlePrev() {
         this.props.onPrev();
@@ -48,25 +34,9 @@ class StepButton extends BaseComponent {
                 this.props.dispatch(showValidateError({ pageType, error }));
                 return;
             }
-            // 更改redux state
-            const curHouseType = data[pageType].houseType;
-            const curRentalType = data[pageType].rentalType;
 
-            const lastHouseType = data.commonInfo.houseType;
-            const lastRentalType = data.commonInfo.rentalType;
-
-            if (lastRentalType !== null &&
-                (curRentalType !== lastRentalType ||
-                    curHouseType.room !== lastHouseType.room ||
-                    curHouseType.saloon !== lastHouseType.saloon ||
-                    curHouseType.toilet !== lastHouseType.toilet)) {
-                this.setState({
-                    dialogHide: false,
-                });
-            } else {
-                this.props.dispatch(nextStep(this.props.pageType));
-                this.props.onNext();
-            }
+            this.props.dispatch(nextStep(this.props.pageType));
+            this.props.onNext();
             break;
         }
         case 'roomInfo': {
@@ -170,14 +140,6 @@ class StepButton extends BaseComponent {
                 >
                     {`${curPage === totalPage ? finalBtnText : '下一步'}`}
                 </Button>
-                <ConfirmDialog
-                    hide={this.state.dialogHide}
-                    onConfirm={this.handleDialogConfirm}
-                    onCancel={this.handleDialogCancel}
-                >
-                    <div>确定修改房源户型吗</div>
-                    <div>信息将清空重新编辑</div>
-                </ConfirmDialog>
             </div>
         );
     }
