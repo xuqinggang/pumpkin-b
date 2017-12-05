@@ -1,7 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import classNames from 'classnames';
-import UploadImage from 'components/UploadImage/index';
+import HouseUploadImage from 'modules/HouseUploadImage/index';
 import BaseComponent from 'components/BaseComponent/index';
 import PropTypes from 'prop-types';
 import './style.less';
@@ -11,20 +10,14 @@ class AddImage extends BaseComponent {
         super(props);
         this.autoBind('handleImageSelect', 'handleImageDel');
     }
-    handleImageSelect(dump, file) {
+    handleImageSelect(imgUrl) {
         const {
             name,
             coords,
         } = this.props;
 
         if (this.props.forAdd) {
-            const data = new FormData();
-            data.append('file', file);
-            axios.post('/v1/common/pics', data)
-            .then((res) => {
-                const imgUrl = res.data.data.url;
-                this.props.onAdd({ name, coords, value: imgUrl });
-            });
+            this.props.onAdd({ name, coords, value: imgUrl });
         }
     }
     handleImageDel() {
@@ -41,16 +34,15 @@ class AddImage extends BaseComponent {
         });
         return (
             <div className={cls}>
-                <UploadImage
-                    picUrl={this.props.picUrl}
+                <HouseUploadImage
+                    imgUrl={this.props.imgUrl}
                     onSelect={this.handleImageSelect}
                     onDel={this.handleImageDel}
                 >
-                    <i className={`${clsPrefix}--indicator icon-add`} />
                     <div>
                         {this.props.children}
                     </div>
-                </UploadImage>
+                </HouseUploadImage>
             </div>
         );
     }
@@ -58,7 +50,7 @@ class AddImage extends BaseComponent {
 
 AddImage.propTypes = {
     name: PropTypes.string,
-    picUrl: PropTypes.string,
+    imgUrl: PropTypes.string,
     coords: PropTypes.arrayOf(PropTypes.number),
     error: PropTypes.bool,
     forAdd: PropTypes.bool,
@@ -68,7 +60,7 @@ AddImage.propTypes = {
 
 AddImage.defaultProps = {
     name: '',
-    picUrl: '',
+    imgUrl: '',
     coords: [0, 0],
     error: false,
     forAdd: false,
