@@ -90,10 +90,13 @@ class HouseUpload extends BaseComponent {
                     ))
                 }
                 {
-                    isEntireRent ? null :
-                    <AddRoomButton
-                        onClick={this.handleAddRoom}
-                    />
+                    (isEntireRent || this.props.houseType.room <= this.props.roomIds.length)
+                        ? null
+                        : (
+                            <AddRoomButton
+                                onClick={this.handleAddRoom}
+                            />
+                        )
                 }
                 <ConfirmDialog
                     hide={this.state.dialogHide}
@@ -134,12 +137,13 @@ export default connect(
             }
             return false;
         });
-        const rentalType = state.houseUpload.commonInfo.rentalType;
+        const { rentalType, houseType } = state.houseUpload.commonInfo;
         return {
             error,
             roomIds,
             expandRoomId,
             rentalType,
+            houseType,
         };
     },
 )(HouseUpload);
