@@ -33,7 +33,7 @@ class UploadImage extends BaseComponent {
 
     render() {
         const clsPrefix = 'c-upload-image';
-        const { picUrl } = this.props;
+        const { imgUrl } = this.props;
         const cls = classNames(
             clsPrefix,
             {
@@ -62,8 +62,8 @@ class UploadImage extends BaseComponent {
                         onChange={this.handleFileChange}
                     />
                     {
-                        picUrl ?
-                            <img height="100%" width="100%" alt="pic" src={picUrl} /> :
+                        imgUrl ?
+                            <img height="100%" width="100%" alt="pic" src={imgUrl} /> :
                             <div className={`${clsPrefix}--note`}>
                                 <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                                     {this.props.children}
@@ -71,7 +71,7 @@ class UploadImage extends BaseComponent {
                             </div>
                     }
                 </div>
-                { this.props.picUrl ?
+                { this.props.imgUrl ?
                     <div
                         role="presentation"
                         className={`${clsPrefix}--del`}
@@ -85,7 +85,7 @@ class UploadImage extends BaseComponent {
                             className={`${clsPrefix}--loading`}
                         >
                             <LoadingBar
-                                className={`${clsPrefix}--del-content`}
+                                className={`${clsPrefix}--loading-content`}
                                 percent={this.props.loading.percent}
                             />
                         </div>
@@ -98,7 +98,7 @@ class UploadImage extends BaseComponent {
 
 UploadImage.defaultProps = {
     name: '',
-    picUrl: '',
+    imgUrl: '',
     onSelect: () => {},
     onDel: () => {},
     error: false,
@@ -111,7 +111,7 @@ UploadImage.defaultProps = {
 
 UploadImage.propTypes = {
     name: PropTypes.string,
-    picUrl: PropTypes.string,
+    imgUrl: PropTypes.string,
     onSelect: PropTypes.func,
     onDel: PropTypes.func,
     error: PropTypes.bool,
