@@ -102,7 +102,7 @@ class HouseUploadImage extends BaseComponent {
                         {
                             this.state.error.isError
                                 ? this.state.error.message
-                                : this.props.defaultText
+                                : this.props.children
                         }
                     </div>
                 </UploadImage>
@@ -112,14 +112,14 @@ class HouseUploadImage extends BaseComponent {
 }
 
 HouseUploadImage.defaultProps = {
-    defaultText: '上传图片',
+    children: null,
     imgUrl: '',
     onSelect: () => {},
     onDel: () => {},
 };
 
 HouseUploadImage.propTypes = {
-    defaultText: PropTypes.string,
+    children: PropTypes.node,
     imgUrl: PropTypes.string,
     onSelect: PropTypes.func,
     onDel: PropTypes.func,
