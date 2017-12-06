@@ -42,7 +42,7 @@ export const getNewState = (value, name, prevState) => {
 
         // 如果第二个新密码输入框不为空，则需要判断两次密码输入是否一致
         if (prevState.passwdNewSecond && prevState.passwdNewSecond !== value) {
-            newState.passwdNewSecond = errorsMap.passwdNotEqual;
+            newState.errorNewSecond = errorsMap.passwdNotEqual;
         }
         newState[curPasswdKey] = value;
         newState[curErrorKey] = '';

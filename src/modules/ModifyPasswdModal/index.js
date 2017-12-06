@@ -22,8 +22,8 @@ class ModifyPasswdModal extends BaseComponent {
     }
 
     handleConfirm() {
-        const { errorOld, passwdNewFirst, passwdNewSecond } = this.state;
-        if (!errorOld || passwdNewFirst !== passwdNewSecond) {
+        const { passwdOld, passwdNewFirst, passwdNewSecond } = this.state;
+        if (!passwdOld || passwdNewFirst !== passwdNewSecond) {
             return;
         }
         this.checkPasswd();
@@ -60,9 +60,8 @@ class ModifyPasswdModal extends BaseComponent {
     }
 
     handleChange({ name, value }) {
-        const changedKey = passwdNameMap[name];
         this.setState({
-            [changedKey]: value,
+            [passwdNameMap[name]]: value,
         });
     }
 
@@ -107,7 +106,8 @@ class ModifyPasswdModal extends BaseComponent {
                             value={this.state.passwdOld}
                             placeholder="请输入旧密码"
                             onBlur={this.handleBlur}
-                            onChange={this.handleChagne}
+                            onChange={this.handleChange}
+                            error={!!errorOld}
                         />
                         <div className={`${clsPrefix}--tip`}>{errorOld}</div>
                     </div>
@@ -120,6 +120,7 @@ class ModifyPasswdModal extends BaseComponent {
                             placeholder="请输入新密码"
                             onBlur={this.handleBlur}
                             onChange={this.handleChange}
+                            error={!!errorNewFirst}
                         />
                         <div className={`${clsPrefix}--tip`}>{errorNewFirst}</div>
                     </div>
@@ -131,7 +132,8 @@ class ModifyPasswdModal extends BaseComponent {
                             value={this.state.passwdNewSecond}
                             placeholder="请再次输入新密码"
                             onBlur={this.handleBlur}
-                            onChange={this.handleChagne}
+                            onChange={this.handleChange}
+                            error={!!errorNewSecond}
                         />
                         <div className={`${clsPrefix}--tip`}>{errorNewSecond}</div>
                     </div>
