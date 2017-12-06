@@ -159,6 +159,7 @@ class PriceInput extends BaseComponent {
                         value={values[this.names[0]]}
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
+                        placeholder={this.props.name === 'season' ? '必填' : ''}
                     />
                     <NoteWord>元／月</NoteWord>
                 </FormItem>
@@ -173,6 +174,7 @@ class PriceInput extends BaseComponent {
                         value={values[this.names[1]]}
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
+                        placeholder={this.props.name === 'season' ? '必填' : ''}
                     />
                     <NoteWord>元／月</NoteWord>
                 </FormItem>
