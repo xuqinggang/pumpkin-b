@@ -5,6 +5,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import { FormItem } from 'components/Form/index';
 import Input from 'components/Input/index';
+import { isFloatNum } from 'utils/index';
 import NoteWord from '../../../coms/NoteWord/index';
 import { setRoomArea } from '../../actions';
 import { hideValidateError } from '../../../actions';
@@ -42,7 +43,9 @@ class RoomArea extends BaseComponent {
             // 保留一位小数
             this.props.dispatch(
                 setRoomArea(this.props.roomId, {
-                    value: Number(value).toFixed(1),
+                    value: isFloatNum(value, true)
+                        ? Number(value).toFixed(1)
+                        : Number(value).toString(),
                 }),
             );
         }
