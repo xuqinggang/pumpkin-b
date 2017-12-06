@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import errorNote from 'base/errorNote';
 import BaseComponent from 'components/BaseComponent/index';
+import { showMessage } from 'modules/Message/actions';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import { splitArrayWithIndex } from 'utils/index';
 import { rentUnitType } from 'base/types';
@@ -63,14 +65,20 @@ class RoomStatusManage extends BaseComponent {
                             this.props.houseId,
                             this.props.renUnit.id,
                             type));
+                    } else {
+                        this.props.dispatch(showMessage(res.data.msg));
                     }
                 })
                 .catch((e) => {
-                    console.log(e);
+                    const response = e.response;
+                    let msg = errorNote.OTHER_ERR;
+                    if (!response) {
+                        msg = errorNote.NETWORK_ERR;
+                    } else {
+                        msg = errorNote[response.status];
+                    }
+                    this.props.dispatch(showMessage(msg));
                 });
-
-                console.log(type);
-                console.log(value);
             }));
         };
     }

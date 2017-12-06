@@ -63,7 +63,7 @@ class UploadImage extends BaseComponent {
                     />
                     {
                         imgUrl ?
-                            <img height="100%" width="100%" alt="pic" src={imgUrl} /> :
+                            <img height="100%" alt="pic" src={imgUrl} /> :
                             <div className={`${clsPrefix}--note`}>
                                 <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                                     {this.props.children}
