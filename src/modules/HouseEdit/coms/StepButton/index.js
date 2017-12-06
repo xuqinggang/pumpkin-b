@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
+import errorNote from 'base/errorNote';
+import { showMessage } from 'modules/Message/actions';
 import { nextStep, showValidateError } from '../../actions';
 import { switchRoomExpand } from '../../RoomInfo/actions';
 import validateData from '../ValidateData/index';
@@ -18,6 +20,39 @@ class StepButton extends BaseComponent {
         };
         this.isSubmiting = false;
         this.autoBind('handlePrev', 'handleNext');
+    }
+    handleSubmit(type) {
+        if (this.isSubmiting) return;
+
+        const data = this.props.data;
+
+        let url = '/v1/houses/';
+        if (type === 'MODIFY') {
+            url = `/v1/houses/${data.houseId}`;
+        }
+
+        this.isSubmiting = true;
+        axios.put(url, fe2beAdapter(data))
+        .then((res) => {
+            if (res.data.code === 200) {
+                this.props.onSubmit.success({ type });
+            } else {
+                this.props.dispatch(showMessage(res.data.msg));
+            }
+        })
+        .catch((e) => {
+            const response = e.response;
+            let msg = '';
+            if (!response) {
+                msg = errorNote.NETWORK_ERR;
+            } else {
+                msg = errorNote[response.status];
+            }
+            this.props.dispatch(showMessage(msg));
+        })
+        .then(() => {
+            this.isSubmiting = false;
+        });
     }
     handlePrev() {
         this.props.onPrev();
@@ -72,38 +107,18 @@ class StepButton extends BaseComponent {
             break;
         }
         case 'houseDeploy': {
-            // TODO
             const error = validateData({ type: pageType }, data.chamberInfo);
             if (error.error) {
                 this.props.dispatch(showValidateError({ pageType, error }));
                 return;
             }
 
-            if (this.isSubmiting) return;
-
-            this.isSubmiting = true;
             if (data.houseId) {
                 // 修改
-                axios.put(`/v1/houses/${data.houseId}`, fe2beAdapter(data))
-                .then((res) => {
-                    if (res.data.code === 200) {
-                        this.props.onSubmit.success({ type: 'MODIFY' });
-                    }
-                })
-                .then(() => {
-                    this.isSubmiting = false;
-                });
+                this.handleSubmit('MODIFY');
             } else {
                 // 新建
-                axios.post('/v1/houses/', fe2beAdapter(data))
-                .then((res) => {
-                    if (res.data.code === 200) {
-                        this.props.onSubmit.success({ type: 'NEW' });
-                    }
-                })
-                .then(() => {
-                    this.isSubmiting = false;
-                });
+                this.handleSubmit('NEW');
             }
             break;
         }
