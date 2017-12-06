@@ -43,7 +43,7 @@ class StepButton extends BaseComponent {
         })
         .catch((e) => {
             const response = e.response;
-            let msg = '';
+            let msg = errorNote.OTHER_ERR;
             if (!response) {
                 msg = errorNote.NETWORK_ERR;
             } else {
