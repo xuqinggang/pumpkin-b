@@ -44,6 +44,12 @@ class VillageInfo extends BaseComponent {
                     text: item.name,
                 })),
             });
+        })
+        .catch(() => {
+            // 清空
+            this.setState({
+                options: [],
+            });
         });
     }
     handleSearch({ search }) {
@@ -82,6 +88,7 @@ class VillageInfo extends BaseComponent {
                     options={this.state.options}
                     onBlur={this.handleBlur}
                     placeholder="输入小区名称搜索..."
+                    error={this.state.error.error}
                 />
             </FormItem>
         );
