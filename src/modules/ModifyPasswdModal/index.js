@@ -23,7 +23,7 @@ class ModifyPasswdModal extends BaseComponent {
 
     handleConfirm() {
         const { passwdOld, passwdNewFirst, passwdNewSecond } = this.state;
-        if (!passwdOld || passwdNewFirst !== passwdNewSecond) {
+        if (!passwdOld || passwdNewFirst !== passwdNewSecond || passwdNewFirst.length < 8) {
             return;
         }
         this.checkPasswd();

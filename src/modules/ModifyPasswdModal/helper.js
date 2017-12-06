@@ -14,6 +14,7 @@ export const errorsMap = {
     noEmpty: '密码不能空',
     passwdWrong: '密码错误',
     passwdNotEqual: '两次输入密码不一致',
+    passwdIsLess: '密码至少为8字',
 };
 
 export const getNewState = (value, name, prevState) => {
@@ -37,6 +38,12 @@ export const getNewState = (value, name, prevState) => {
         // 为空
         if (!value) {
             newState[curErrorKey] = errorsMap.noEmpty;
+            break;
+        }
+
+        // 密码至少8字
+        if (value.length < 8) {
+            newState[curErrorKey] = errorsMap.passwdIsLess;
             break;
         }
 
