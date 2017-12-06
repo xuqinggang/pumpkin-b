@@ -178,7 +178,7 @@ class Login extends BaseComponent {
                                 onKeyPress={this.handleKeyPress}
                                 onChange={this.handleAccountChange}
                                 onBlur={this.handleAccountBlur}
-                                error={accountError === ''}
+                                error={accountError !== ''}
                             />
                             {
                                 showAccountStatus ?
@@ -203,7 +203,7 @@ class Login extends BaseComponent {
                                 onKeyPress={this.handleKeyPress}
                                 onChange={this.handlePasswdChange}
                                 onBlur={this.handlePasswdBlur}
-                                error={passwordError === ''}
+                                error={passwordError !== ''}
                             />
                             {
                                 showPasswordStatus ?
