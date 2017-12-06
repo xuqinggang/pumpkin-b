@@ -43,7 +43,10 @@ class HouseStatusManage extends BaseComponent {
                 <i className={`${clsPrefix}--indicator`} />
                 <div className={`${clsPrefix}--info`}>
                     <div className={`${clsPrefix}--info--title`}>
-                        <span className={`${clsPrefix}--info--name`}>
+                        <span
+                            className={`${clsPrefix}--info--name`}
+                            title={block.name}
+                        >
                             {block.name}
                         </span>
                         <div className={`${clsPrefix}--info--btn`}>
