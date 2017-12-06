@@ -93,7 +93,7 @@ class HouseStatusManage extends BaseComponent {
                 </div>
                 {
                     rentUnits.length > 5
-                    ? <Arrow down={this.state.expand} className={`${clsPrefix}--arrow`} onClick={this.handleSwitchExpand} />
+                    ? <Arrow down={!this.state.expand} className={`${clsPrefix}--arrow`} onClick={this.handleSwitchExpand} />
                     : null
                 }
             </div>
