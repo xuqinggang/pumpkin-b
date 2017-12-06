@@ -69,6 +69,7 @@ class RoomArea extends BaseComponent {
                         value={this.props.roomArea}
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
+                        error={this.state.error.error}
                     />
                     <NoteWord>平米</NoteWord>
                 </FormItem>
