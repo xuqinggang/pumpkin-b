@@ -141,7 +141,7 @@ const initData = (type, extra = {}) => {
                 text: '智能门锁',
             }, {
                 value: 'PAY_MONTHLY',
-                text: '支出月付',
+                text: '支持月付',
             }, {
                 value: 'SHORT_TERM',
                 text: '支持短租',
