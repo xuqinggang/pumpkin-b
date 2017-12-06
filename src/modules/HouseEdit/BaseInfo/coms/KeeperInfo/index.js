@@ -96,6 +96,7 @@ class KeeperInfo extends BaseComponent {
                             value={name}
                             onChange={this.handleChange}
                             onBlur={this.handleBlur}
+                            error={error.sub.name.error}
                         />
                     </FormItem>
                     <FormItem
@@ -108,6 +109,7 @@ class KeeperInfo extends BaseComponent {
                             value={phone}
                             onChange={this.handleChange}
                             onBlur={this.handleBlur}
+                            error={error.sub.phone.error}
                         />
                     </FormItem>
                 </Form>
