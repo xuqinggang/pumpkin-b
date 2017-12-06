@@ -4,6 +4,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import Header from 'modules/Header/index';
 import Sidebar from 'modules/Sidebar/index';
 import PageTitle from 'modules/PageTitle/index';
+import Message from 'modules/Message/index';
 import './style.less';
 
 class MainLayout extends BaseComponent {
@@ -21,6 +22,7 @@ class MainLayout extends BaseComponent {
                         {this.props.children}
                     </div>
                 </div>
+                <Message />
             </div>
         );
     }
