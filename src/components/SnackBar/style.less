@@ -1,0 +1,27 @@
+.c-snack-bar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    text-align: center;
+    z-index: 10000;
+    pointer-events: none;
+
+    &--content {
+        display: inline-block;
+        height: 48px;
+        line-height: 48px;
+        min-width: 400px;
+        font-size: 14px;
+        padding: 0 32px;
+        background-color: #484848;
+        color: #fff;
+        text-align: left;
+        vertical-align: top;
+        transition: height 0.3s;
+        pointer-events: all;
+
+        &__hide {
+            height: 0;
+        }
+    }
+}
