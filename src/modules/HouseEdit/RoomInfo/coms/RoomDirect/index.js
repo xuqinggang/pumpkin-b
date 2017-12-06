@@ -11,8 +11,8 @@ class RoomDirect extends BaseComponent {
         super(props);
         this.optionValues = [
             'EAST', 'SOUTH', 'WEST', 'NORTH',
-            'NORTHEAST', 'SOUTHEAST', 'NORTHWEST',
-            'WESTEAST', 'NORTHSOUTH',
+            'NORTHEAST', 'SOUTHEAST', 'SOUTHWEST',
+            'NORTHWEST', 'WESTEAST', 'NORTHSOUTH',
         ];
         this.autoBind('handleChange');
     }
