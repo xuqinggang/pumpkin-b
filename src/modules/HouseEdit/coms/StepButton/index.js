@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import errorNote from 'base/errorNote';
-import { notSingleNum } from 'utils/index';
+import { expandSingleNum } from 'utils/index';
 import { showMessage } from 'modules/Message/actions';
 import { nextStep, showValidateError } from '../../actions';
 import { switchRoomExpand } from '../../RoomInfo/actions';
@@ -92,7 +92,7 @@ class StepButton extends BaseComponent {
                     this.props.dispatch(switchRoomExpand(curRoomInfo.roomId));
 
                     if (error.type === 'roomTag') {
-                        this.props.dispatch(showMessage(`请完善卧室${notSingleNum(i + 1)}房源标签`));
+                        this.props.dispatch(showMessage(`请完善卧室${expandSingleNum(i + 1)}房源标签`));
                     }
                     return;
                 }
