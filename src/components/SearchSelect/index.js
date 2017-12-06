@@ -163,6 +163,7 @@ class SearchSelect extends BaseComponent {
                     onChange={this.handleInputChange}
                     onClick={this.handleInputClick}
                     value={search.text}
+                    error={this.props.error}
                 />
                 <div
                     className={
@@ -199,6 +200,7 @@ SearchSelect.defaultProps = {
     onChange: null,
     className: '',
     onBlur: null,
+    error: false,
 };
 
 SearchSelect.propTypes = {
@@ -212,6 +214,7 @@ SearchSelect.propTypes = {
     onChange: PropTypes.func,
     className: PropTypes.string,
     onBlur: PropTypes.func,
+    error: PropTypes.bool,
 };
 
 export default SearchSelect;
