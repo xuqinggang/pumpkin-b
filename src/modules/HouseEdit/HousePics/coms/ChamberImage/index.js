@@ -95,28 +95,32 @@ class ChamberImage extends BaseComponent {
                         ))
                     }
                     {
-                        <AddImage
-                            name={name}
-                            coords={[index, null]} // for add
-                            forAdd
-                            onAdd={this.handleAddImage}
-                        >
-                            <div>{`上传${setTitle(
-                                name,
-                                index,
-                                suffix)}照片`}</div>
-                            <div>{
-                                (this.props.rentalType === 0 &&
-                                    name === 'rooms' &&
-                                    index === 0 &&
-                                    pics.length === 0
-                                ) ||
-                                (this.props.rentalType === 1 &&
-                                    name === 'rooms' &&
-                                    pics.length === 0
-                                ) ? '第一张图片将作为App的头图' : null
-                            }</div>
-                        </AddImage>
+                        pics.length >= 5
+                            ? null
+                            : (
+                                <AddImage
+                                    name={name}
+                                    coords={[index, null]} // for add
+                                    forAdd
+                                    onAdd={this.handleAddImage}
+                                >
+                                    <div>{`上传${setTitle(
+                                        name,
+                                        index,
+                                        suffix)}照片`}</div>
+                                    <div>{
+                                        (this.props.rentalType === 0 &&
+                                            name === 'rooms' &&
+                                            index === 0 &&
+                                            pics.length === 0
+                                        ) ||
+                                        (this.props.rentalType === 1 &&
+                                            name === 'rooms' &&
+                                            pics.length === 0
+                                        ) ? '第一张图片将作为App的头图' : null
+                                    }</div>
+                                </AddImage>
+                            )
                     }
                 </div>
             </FormItem>
