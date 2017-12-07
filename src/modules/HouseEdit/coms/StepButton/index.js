@@ -27,15 +27,19 @@ class StepButton extends BaseComponent {
 
         const data = this.props.data;
 
-        let url = '/v1/houses/';
-        let method = 'post';
-        if (type === 'MODIFY') {
-            url = `/v1/houses/${data.houseId}`;
-            method = 'put';
-        }
+        const submitConfig = {
+            NEW: {
+                url: '/v1/houses/',
+                method: 'post',
+            },
+            MODIFY: {
+                url: `/v1/houses/${data.houseId}`,
+                method: 'put',
+            },
+        };
 
         this.isSubmiting = true;
-        axios[method](url, fe2beAdapter(data))
+        axios[submitConfig[type].method](submitConfig[type].url, fe2beAdapter(data))
         .then((res) => {
             if (res.data.code === 200) {
                 this.props.onSubmit.success({ type });
