@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
-import { FormItem } from 'components/Form/index';
+import Form, { FormItem } from 'components/Form/index';
 import Select from 'components/Select/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
 import HouseTypeImage from '../HouseTypeImage/index';
@@ -83,32 +83,36 @@ class HouseType extends BaseComponent {
                 className={clsPrefix}
                 layout="top"
             >
-                <div>
-                    <Select
-                        name="room"
-                        value={room}
-                        className={`${clsPrefix}--select`}
-                        onChange={this.handleSelectChange}
-                        options={initHouseTypeOptions('room')}
-                        disabled={!this.props.isCreate}
-                    />
-                    <Select
-                        name="saloon"
-                        value={saloon}
-                        className={`${clsPrefix}--select`}
-                        onChange={this.handleSelectChange}
-                        options={initHouseTypeOptions('saloon')}
-                        disabled={!this.props.isCreate}
-                    />
-                    <Select
-                        name="toilet"
-                        value={toilet}
-                        onChange={this.handleSelectChange}
-                        className={`${clsPrefix}--select`}
-                        options={initHouseTypeOptions('toilet')}
-                        disabled={!this.props.isCreate}
-                    />
-                </div>
+                <Form layout="horizontal">
+                    <FormItem
+                        labelType="minor"
+                    >
+                        <Select
+                            name="room"
+                            value={room}
+                            className={`${clsPrefix}--select`}
+                            onChange={this.handleSelectChange}
+                            options={initHouseTypeOptions('room')}
+                            disabled={!this.props.isCreate}
+                        />
+                        <Select
+                            name="saloon"
+                            value={saloon}
+                            className={`${clsPrefix}--select`}
+                            onChange={this.handleSelectChange}
+                            options={initHouseTypeOptions('saloon')}
+                            disabled={!this.props.isCreate}
+                        />
+                        <Select
+                            name="toilet"
+                            value={toilet}
+                            onChange={this.handleSelectChange}
+                            className={`${clsPrefix}--select`}
+                            options={initHouseTypeOptions('toilet')}
+                            disabled={!this.props.isCreate}
+                        />
+                    </FormItem>
+                </Form>
                 <HouseTypeImage />
                 <ConfirmDialog
                     hide={this.state.dialogHide}

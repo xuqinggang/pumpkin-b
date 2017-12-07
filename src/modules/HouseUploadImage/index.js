@@ -89,29 +89,29 @@ class HouseUploadImage extends BaseComponent {
     render() {
         const clsPrefix = 'c-house-upload-image';
         return (
-            <div className={clsPrefix}>
-                <UploadImage
-                    imgUrl={this.props.imgUrl}
-                    onSelect={this.handleSelect}
-                    onDel={this.handleDel}
-                    loading={this.state.loading}
-                    error={this.state.error.isError}
-                >
-                    <i className={`${clsPrefix}--indicator icon-add`} />
-                    <div className={`${clsPrefix}--text`}>
-                        {
-                            this.state.error.isError
-                                ? this.state.error.message
-                                : this.props.children
-                        }
-                    </div>
-                </UploadImage>
-            </div>
+            <UploadImage
+                imgUrl={this.props.imgUrl}
+                onSelect={this.handleSelect}
+                onDel={this.handleDel}
+                loading={this.state.loading}
+                error={this.state.error.isError}
+                className={`${clsPrefix} ${this.props.className}`}
+            >
+                <i className={`${clsPrefix}--indicator icon-add`} />
+                <div className={`${clsPrefix}--text`}>
+                    {
+                        this.state.error.isError
+                            ? this.state.error.message
+                            : this.props.children
+                    }
+                </div>
+            </UploadImage>
         );
     }
 }
 
 HouseUploadImage.defaultProps = {
+    className: '',
     children: null,
     imgUrl: '',
     onSelect: () => {},
@@ -119,6 +119,7 @@ HouseUploadImage.defaultProps = {
 };
 
 HouseUploadImage.propTypes = {
+    className: PropTypes.string,
     children: PropTypes.node,
     imgUrl: PropTypes.string,
     onSelect: PropTypes.func,

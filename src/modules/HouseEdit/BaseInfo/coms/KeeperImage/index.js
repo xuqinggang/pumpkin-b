@@ -23,11 +23,14 @@ class KeeperImage extends BaseComponent {
             [`${clsPrefix}__error`]: this.props.error,
         });
         return (
-            <div className={cls}>
+            <div
+                className={cls}
+            >
                 <HouseUploadImage
                     imgUrl={this.props.value}
                     onSelect={this.handleSelect}
                     onDel={this.handleDel}
+                    className={`${clsPrefix}--uploader`}
                 >上传管家图片（选填）</HouseUploadImage>
                 <div className={`${clsPrefix}--note`}><span>{this.props.error.message}</span></div>
             </div>

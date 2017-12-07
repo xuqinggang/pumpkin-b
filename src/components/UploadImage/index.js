@@ -37,6 +37,7 @@ class UploadImage extends BaseComponent {
         const cls = classNames(
             clsPrefix,
             {
+                [this.props.className]: true,
                 [`${clsPrefix}__error`]: this.props.error,
                 [`${clsPrefix}__loading`]: this.props.loading.isLoading,
 
@@ -97,6 +98,7 @@ class UploadImage extends BaseComponent {
 }
 
 UploadImage.defaultProps = {
+    className: '',
     name: '',
     imgUrl: '',
     onSelect: () => {},
@@ -110,6 +112,7 @@ UploadImage.defaultProps = {
 };
 
 UploadImage.propTypes = {
+    className: PropTypes.string,
     name: PropTypes.string,
     imgUrl: PropTypes.string,
     onSelect: PropTypes.func,
