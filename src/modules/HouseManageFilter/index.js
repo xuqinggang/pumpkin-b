@@ -59,13 +59,6 @@ class HouseManageFilter extends BaseComponent {
         const clsPrefix = 'm-house-manage-filter';
         return (
             <div className={clsPrefix}>
-                <div className={`${clsPrefix}--left`}>
-                    <Checkbox
-                        className={`${clsPrefix}--time-order`}
-                        checked={this.props.isSortByTime}
-                        onChange={this.handleChangeSortByTime}
-                    >按时间展示</Checkbox>
-                </div>
                 <div className={`${clsPrefix}--right`}>
                     <Select
                         value={this.props.village}
@@ -118,6 +111,13 @@ class HouseManageFilter extends BaseComponent {
                             },
                         ]}
                     />
+                </div>
+                <div className={`${clsPrefix}--left`}>
+                    <Checkbox
+                        className={`${clsPrefix}--time-order`}
+                        checked={this.props.isSortByTime}
+                        onChange={this.handleChangeSortByTime}
+                    >按时间展示</Checkbox>
                 </div>
             </div>
         );
