@@ -46,7 +46,7 @@ class StepButton extends BaseComponent {
             let msg = errorNote.OTHER_ERR;
             if (!response) {
                 msg = errorNote.NETWORK_ERR;
-            } else {
+            } else if (errorNote[response.status]) {
                 msg = errorNote[response.status];
             }
             this.props.dispatch(showMessage(msg));
