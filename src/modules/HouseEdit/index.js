@@ -30,19 +30,19 @@ class HouseUpload extends BaseComponent {
         this.pageInfo = [
             {
                 type: 'baseInfo',
-                component: BaseInfo,
+                component: initPage(BaseInfo),
                 describe: '基本信息',
             }, {
                 type: 'roomInfo',
-                component: RoomInfo,
+                component: initPage(RoomInfo),
                 describe: '房间信息',
             }, {
                 type: 'housePics',
-                component: HousePics,
+                component: initPage(HousePics),
                 describe: '房源照片',
             }, {
                 type: 'houseDeploy',
-                component: HouseDeploy,
+                component: initPage(HouseDeploy),
                 describe: '房源配置',
             },
         ];
@@ -151,7 +151,7 @@ class HouseUpload extends BaseComponent {
                     className={`${clsPrefix}--subPage`}
                 >
                     {
-                        React.createElement(initPage(itemComponent.component), {
+                        React.createElement(itemComponent.component, {
                             title: itemComponent.describe,
                         })
                     }
