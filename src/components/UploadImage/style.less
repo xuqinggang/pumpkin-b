@@ -17,6 +17,15 @@
         text-align: center;
         cursor: pointer;
         line-height: 2;
+        overflow: hidden;
+    }
+
+    &--image {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(0, -50%);
     }
 
     &--select:hover {
@@ -78,7 +87,7 @@
 
     &--loading {
         &-content {
-            width: 178px;
+            width: 90%;
         }
     }
 
