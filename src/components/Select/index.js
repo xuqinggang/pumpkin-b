@@ -90,13 +90,13 @@ class Select extends BaseComponent {
                 onBlur={this.handleBlur}
             >
                 <div className={`${clsPrefix}--selected`}>
-                    <span>
+                    <div className={`${clsPrefix}--selected--text`}>
                         {
                             this.state.select.blank
                             ? this.props.defaultText
                             : this.state.select.text
                         }
-                    </span>
+                    </div>
                     <i className={`${clsPrefix}--selected--icon icon-pull-down`} />
                 </div>
                 <EventBlackHole captureEvents={['click']}>

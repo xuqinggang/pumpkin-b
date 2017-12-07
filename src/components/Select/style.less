@@ -18,14 +18,21 @@
         border: 1px solid #e0dfe7;
         border-radius: 3px;
         line-height: 30px;
-        padding: 0 8px;
+        padding: 0 30px 0 8px;
         box-sizing: border-box;
         position: relative;
+
+        &--text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
         &--icon {
             position: absolute;
             right: 10px;
             line-height: 30px;
+            top: 0;
         }
     }
 
