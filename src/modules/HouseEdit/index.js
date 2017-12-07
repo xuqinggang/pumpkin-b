@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import initPage from 'base/initPage';
 import { withRouter } from 'react-router-dom';
 import BaseComponent from 'components/BaseComponent/index';
 import StepNav from 'components/StepNav/index';
@@ -150,7 +151,7 @@ class HouseUpload extends BaseComponent {
                     className={`${clsPrefix}--subPage`}
                 >
                     {
-                        React.createElement(itemComponent.component, {
+                        React.createElement(initPage(itemComponent.component), {
                             title: itemComponent.describe,
                         })
                     }
