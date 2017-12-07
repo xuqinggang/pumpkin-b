@@ -110,9 +110,6 @@ const initData = (type, extra = {}) => {
         return {
             maxActiveTagNum: 4,
             allTag: [{
-                value: 'DEPOSIT_FREE',
-                text: '免押金',
-            }, {
                 value: 'FIRST_RENTAL',
                 text: '首次出租',
             }, {
@@ -135,22 +132,16 @@ const initData = (type, extra = {}) => {
                 text: '有电梯',
             }, {
                 value: 'HOUSEKEEPING',
-                text: '免费家政清理',
+                text: '免费保洁',
             }, {
                 value: 'ELECTRONIC_LOCKER',
                 text: '智能门锁',
-            }, {
-                value: 'PAY_MONTHLY',
-                text: '支持月付',
             }, {
                 value: 'SHORT_TERM',
                 text: '支持短租',
             }, {
                 value: 'CENTRALIZED',
                 text: '集中式公寓',
-            }, {
-                value: 'QUEENSIZEBED',
-                text: '加大双人床',
             }],
         };
     }
