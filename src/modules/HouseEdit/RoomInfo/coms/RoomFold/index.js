@@ -60,11 +60,13 @@ class RoomFold extends BaseComponent {
                     {this.priceType.map((item, index) => (
                         <div key={index} className={`${clsPrefix}--price-item`}>
                             {`${this.priceNames[index]}：`}
-                            <span className={`${clsPrefix}--price-value`}>
+                            <span
+                                className={`${clsPrefix}--price-price`}
+                            >
                                 {switchReturn(this.props.priceInfo[item].price, '—')}
                             </span>
                             {'元／月； 押金：'}
-                            <span className={`${clsPrefix}--price-value`}>
+                            <span className={`${clsPrefix}--price-deposit`}>
                                 {switchReturn(this.props.priceInfo[item].deposit, '—')}
                             </span>
                             {'元'}
