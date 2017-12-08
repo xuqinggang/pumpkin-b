@@ -18,6 +18,21 @@
         margin-bottom: 30px;
         line-height: 32px;
 
+        > label {
+            color: #333;
+            font-size: 14px;
+            display: inline-block;
+            text-align: right;
+        }
+
+        &__disabled {
+            color: #dcdcdc;
+
+            > label {
+                color: #dcdcdc;
+            }
+        }
+
         &__primary {
             > label {
                 margin-right: 28px;
@@ -52,13 +67,6 @@
             > label {
                 vertical-align: middle;
             }
-        }
-
-        > label {
-            color: #333;
-            font-size: 14px;
-            display: inline-block;
-            text-align: right;
         }
 
         &--cell {

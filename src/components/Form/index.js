@@ -12,6 +12,7 @@ class FormItem extends BaseComponent {
             [this.props.className]: true,
             [`${clsPrefix}__${this.props.layout}`]: true,
             [`${clsPrefix}__${this.props.labelType}`]: true,
+            [`${clsPrefix}__disabled`]: this.props.disabled,
         });
         return (
             <div className={cls} style={this.props.style}>
@@ -34,6 +35,7 @@ FormItem.propTypes = {
     label: PropTypes.string,
     labelType: PropTypes.oneOf(['primary', 'minor']),
     error: errorType,
+    disabled: PropTypes.bool,
     layout: PropTypes.oneOf(['top', 'middle']),
     className: PropTypes.string,
     style: PropTypes.shape({}),
@@ -47,6 +49,7 @@ FormItem.defaultProps = {
         error: false,
         message: '',
     },
+    disabled: false,
     layout: 'middle',
     className: '',
     style: {},
