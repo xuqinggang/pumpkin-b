@@ -18,18 +18,23 @@ const be2feAdapter = (data) => {
             month: {
                 price: num2Str(unitData.priceMonth),
                 deposit: num2Str(unitData.depositMonth),
+                checked: !!unitData.priceMonth,
             },
             season: {
                 price: num2Str(unitData.priceSeason),
                 deposit: num2Str(unitData.depositSeason),
+                checked: !!unitData.priceSeason,
             },
             halfYear: {
                 price: num2Str(unitData.priceHalfYear),
                 deposit: num2Str(unitData.depositHalfYear),
+                checked: !!unitData.priceHalfYear,
+
             },
             year: {
                 price: num2Str(unitData.priceYear),
                 deposit: num2Str(unitData.depositYear),
+                checked: !!unitData.priceYear,
             },
         },
         roomTag: {
@@ -133,17 +138,33 @@ const fe2beAdapter = (data) => {
             area: str2Num(rentsData.roomArea),
             direct: rentsData.direct,
 
-            priceMonth: str2Num(priceInfo.month.price),
-            depositMonth: str2Num(priceInfo.month.deposit),
+            priceMonth: priceInfo.month.checked
+                ? str2Num(priceInfo.month.price)
+                : null,
+            depositMonth: priceInfo.month.checked
+                ? str2Num(priceInfo.month.deposit)
+                : null,
 
-            priceSeason: str2Num(priceInfo.season.price),
-            depositSeason: str2Num(priceInfo.season.deposit),
+            priceSeason: priceInfo.season.checked
+                ? str2Num(priceInfo.season.price)
+                : null,
+            depositSeason: priceInfo.season.checked
+                ? str2Num(priceInfo.season.deposit)
+                : null,
 
-            priceHalfYear: str2Num(priceInfo.halfYear.price),
-            depositHalfYear: str2Num(priceInfo.halfYear.deposit),
+            priceHalfYear: priceInfo.halfYear.checked
+                ? str2Num(priceInfo.halfYear.price)
+                : null,
+            depositHalfYear: priceInfo.halfYear.checked
+                ? str2Num(priceInfo.halfYear.deposit)
+                : null,
 
-            priceYear: str2Num(priceInfo.year.price),
-            depositYear: str2Num(priceInfo.year.deposit),
+            priceYear: priceInfo.year.checked
+                ? str2Num(priceInfo.year.price)
+                : null,
+            depositYear: priceInfo.year.checked
+                ? str2Num(priceInfo.year.deposit)
+                : null,
 
             tags: rentsData.roomTag.active,
 
