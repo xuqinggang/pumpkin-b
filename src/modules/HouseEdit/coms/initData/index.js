@@ -17,22 +17,22 @@ const initRentalUnit = (data = {}) => {
         priceInfo: {
             month: {
                 price: '',
-                deposit: '',
+                deposit: '0',
                 checked: false,
             },
             season: {
                 price: '',
-                deposit: '',
+                deposit: '0',
                 checked: true,
             },
             halfYear: {
                 price: '',
-                deposit: '',
+                deposit: '0',
                 checked: false,
             },
             year: {
                 price: '',
-                deposit: '',
+                deposit: '0',
                 checked: false,
             },
         },
