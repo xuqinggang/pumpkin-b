@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import Tag, { TagPlaceholder } from 'components/Tag/index';
+import PriceDisplay from '../PriceDisplay';
+import DepositDisplay from '../DepositDisplay';
 import { switchRoomExpand } from '../../actions';
 import directMap from '../../directMap';
 import './style.less';
-
-const switchReturn = (value, returnValue) => {
-    if (!value) return returnValue;
-    return value;
-};
 
 const notSingleNum = (num) => {
     if (num >= 0 && num <= 9) {
@@ -31,8 +28,8 @@ const creatNDimArray = (num, value) => {
 class RoomFold extends BaseComponent {
     constructor(props) {
         super(props);
-        this.priceType = ['month', 'season', 'halfYear', 'year'];
-        this.priceNames = ['月付价', '季付价', '半年价', '年付价'];
+        this.priceType = ['season', 'month', 'halfYear', 'year'];
+        this.priceNames = ['季付价', '月付价', '半年价', '年付价'];
         this.autoBind('handleEditClick', 'handleDelClick');
     }
     handleEditClick() {
@@ -60,15 +57,25 @@ class RoomFold extends BaseComponent {
                     {this.priceType.map((item, index) => (
                         <div key={index} className={`${clsPrefix}--price-item`}>
                             {`${this.priceNames[index]}：`}
-                            <span
+                            <div
                                 className={`${clsPrefix}--price-price`}
                             >
-                                {switchReturn(this.props.priceInfo[item].price, '—')}
-                            </span>
+                                <PriceDisplay
+                                    empty={!this.props.priceInfo[item].checked
+                                    || this.props.priceInfo[item].price === ''}
+                                >
+                                    {this.props.priceInfo[item].price}
+                                </PriceDisplay>
+                            </div>
                             {'元／月； 押金：'}
-                            <span className={`${clsPrefix}--price-deposit`}>
-                                {switchReturn(this.props.priceInfo[item].deposit, '—')}
-                            </span>
+                            <div className={`${clsPrefix}--price-deposit`}>
+                                <DepositDisplay
+                                    empty={!this.props.priceInfo[item].checked
+                                    || this.props.priceInfo[item].deposit === ''}
+                                >
+                                    {this.props.priceInfo[item].deposit}
+                                </DepositDisplay>
+                            </div>
                             {'元'}
                         </div>
                     ))}
@@ -77,7 +84,11 @@ class RoomFold extends BaseComponent {
                     {
                         tagValues.map((tagVal, index) => (
                             <Tag key={index} className={`${clsPrefix}--tags-tag`}>
-                                {allTag[allTagValues.indexOf(tagVal)].text}
+                                {
+                                    allTagValues.indexOf(tagVal) === -1
+                                    ? '未知标签'
+                                    : allTag[allTagValues.indexOf(tagVal)].text
+                                }
                             </Tag>
                         ))
                     }
