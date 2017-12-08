@@ -23,7 +23,7 @@ const be2feAdapter = (data) => {
             season: {
                 price: num2Str(unitData.priceSeason),
                 deposit: num2Str(unitData.depositSeason),
-                checked: !!unitData.priceSeason,
+                checked: true,
             },
             halfYear: {
                 price: num2Str(unitData.priceHalfYear),
