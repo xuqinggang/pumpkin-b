@@ -51,7 +51,13 @@ class RoomTag extends BaseComponent {
                                     erasable
                                     status="active"
                                     onClick={this.handleRemoveActiveTags}
-                                >{this.props.tags[tagValues.indexOf(tagValue)].text}</Tag>
+                                >
+                                    {
+                                        tagValues.indexOf(tagValue) === -1
+                                        ? '未知标签'
+                                        : this.props.tags[tagValues.indexOf(tagValue)].text
+                                    }
+                                </Tag>
                             ))
                         }
                         {
