@@ -34,12 +34,12 @@ class SingleRoomInfo extends BaseComponent {
                     >
                         <div style={{ marginBottom: '-30px' }}>
                             <PriceInput
-                                label="月付价"
-                                name="month"
-                            />
-                            <PriceInput
                                 label="季付价"
                                 name="season"
+                            />
+                            <PriceInput
+                                label="月付价"
+                                name="month"
                             />
                             <PriceInput
                                 label="半年价"
