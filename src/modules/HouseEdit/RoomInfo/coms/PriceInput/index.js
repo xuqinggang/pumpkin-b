@@ -5,10 +5,12 @@ import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import Input from 'components/Input/index';
+import Checkbox from 'components/Checkbox/index';
 import NoteWord from '../../../coms/NoteWord/index';
 import { changeRoomPrice } from '../../actions';
 import { hideValidateError } from '../../../actions';
 import { validateRoomInfo } from '../../../coms/ValidateData';
+import './style.less';
 
 const defaultValues = (names) => {
     const values = {};
@@ -23,31 +25,31 @@ class PriceInput extends BaseComponent {
         super(props);
         this.names = ['price', 'deposit'];
         const values = props.values || defaultValues(this.names);
-        this.state = {
-            values,
-            expand: !!values[this.names[1]],
-            error: {
-                error: false,
-                message: '',
-                sub: {
-                    price: {
-                        error: false,
-                        message: '',
-                    },
-                    deposit: {
-                        error: false,
-                        message: '',
-                    },
+
+        this.resetError = () => ({
+            error: false,
+            message: '',
+            sub: {
+                price: {
+                    error: false,
+                    message: '',
+                },
+                deposit: {
+                    error: false,
+                    message: '',
                 },
             },
+        });
+        this.state = {
+            values,
+            error: this.resetError(),
         };
-        this.autoBind('handleChange', 'handleBlur');
+        this.autoBind('handleChange', 'handleBlur', 'handleCheckChange');
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.values !== this.props.values) {
             this.setState({
                 values: nextProps.values,
-                expand: !!nextProps.values[this.names[1]],
             });
         }
         if (nextProps.error.error !== this.props.error.error && nextProps.error.error) {
@@ -63,60 +65,51 @@ class PriceInput extends BaseComponent {
             [name]: value,
         }, { priceType: this.props.name });
         // 只修改对应表单数据error
+        // 只显示checked表单的错误信息
         this.setState({
-            error: {
-                ...this.state.error,
-                error: error.error,
-                sub: {
-                    ...this.state.error.sub,
-                    [name]: {
-                        ...error.sub[name],
+            error: this.state.values.checked
+                ? {
+                    ...this.state.error,
+                    error: error.error,
+                    sub: {
+                        ...this.state.error.sub,
+                        [name]: {
+                            ...error.sub[name],
+                        },
                     },
-                },
-            },
+                }
+                : this.resetError(),
         });
-        // 非法string 置空
+        // 非法string 置空，押金置0
         if (error.sub[name].error) {
             this.props.dispatch(changeRoomPrice(this.props.roomId, {
                 priceType: this.props.name,
                 values: {
                     ...this.state.values,
-                    [name]: '',
+                    [name]: name === 'deposit' ? '0' : '',
                 },
             }));
-            return;
         }
+    }
+    handleCheckChange({ name, checked }) {
+        const val = {
+            ...this.state.values,
+            checked,
+        };
+        this.props.dispatch(changeRoomPrice(this.props.roomId, {
+            priceType: name,
+            values: val,
+        }));
 
-        switch (name) {
-        case this.names[0]: {
-            if (!this.state.expand) {
-                const val = {
-                    ...this.state.values,
-                    [this.names[1]]: this.state.values[name],
-                };
-                this.setState({
-                    expand: true,
-                    values: val,
-                    error: {
-                        ...this.state.error,
-                        sub: {
-                            ...this.state.error.sub,
-                            [this.names[1]]: {
-                                error: false,
-                            },
-                        },
-                    },
-                });
-
-                this.props.dispatch(changeRoomPrice(this.props.roomId, {
-                    priceType: this.props.name,
-                    values: val,
-                }));
-            }
-            break;
-        }
-        default:
-        }
+        // 改变状态
+        this.setState({
+            values: val,
+            error: (
+                checked
+                ? validateRoomInfo.priceInfo(val, { priceType: this.props.name })
+                : this.resetError()
+            ),
+        });
     }
     handleChange({ name, value }) {
         const val = {
@@ -145,20 +138,28 @@ class PriceInput extends BaseComponent {
     }
     render() {
         const { values } = this.state;
+        const clsPrefix = 'c-price-input';
         return (
             <Form
                 layout="horizontal"
             >
+                <Checkbox
+                    name={this.props.name}
+                    className={`${clsPrefix}--checkbox`}
+                    onChange={this.handleCheckChange}
+                    checked={this.state.values.checked}
+                >{this.props.label}</Checkbox>
                 <FormItem
-                    label={this.props.label}
+                    label="租金"
                     labelType="minor"
-                    error={this.props.name === 'season' ? this.state.error.sub[this.names[0]] : { error: false }}
+                    error={this.state.error.sub[this.names[0]]}
                 >
                     <Input
                         name={this.names[0]}
                         value={values[this.names[0]]}
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
+                        error={this.state.error.sub[this.names[0]].error}
                         placeholder={this.props.name === 'season' ? '必填' : ''}
                     />
                     <NoteWord>元／月</NoteWord>
@@ -166,8 +167,6 @@ class PriceInput extends BaseComponent {
                 <FormItem
                     label="押金"
                     labelType="minor"
-                    style={!this.state.expand ? { display: 'none' } : null}
-                    error={this.props.name === 'season' ? this.state.error.sub[this.names[1]] : { error: false }}
                 >
                     <Input
                         name={this.names[1]}
@@ -176,7 +175,7 @@ class PriceInput extends BaseComponent {
                         onBlur={this.handleBlur}
                         placeholder={this.props.name === 'season' ? '必填' : ''}
                     />
-                    <NoteWord>元／月</NoteWord>
+                    <NoteWord>元</NoteWord>
                 </FormItem>
             </Form>
         );
