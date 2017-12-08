@@ -5,6 +5,7 @@ import Form, { FormItem } from 'components/Form/index';
 import RoomArea from './coms/RoomArea/index';
 import RoomBrief from './coms/RoomBrief/index';
 import RoomTag from './coms/RoomTag/index';
+import RoomHeader from './coms/RoomHeader/index';
 import PriceInput from './coms/PriceInput/index';
 import RoomDirect from './coms/RoomDirect/index';
 import './style.less';
@@ -13,12 +14,28 @@ class SingleRoomInfo extends BaseComponent {
     getChildContext() {
         return { roomId: this.props.roomId };
     }
+    componentDidMount() {
+        this.singleRoom.scrollIntoView();
+    }
     render() {
         const clsPrefix = 'c-house-info';
         const clsItem = `${clsPrefix}--item`;
 
         return (
-            <div className={clsPrefix}>
+            <div
+                className={clsPrefix}
+                ref={this.storeRef('singleRoom')}
+            >
+                {
+                    this.props.showHeader
+                    ? (
+                        <RoomHeader
+                            roomId={this.props.roomId}
+                            onDel={this.props.onDel}
+                        />
+                    )
+                    : null
+                }
                 <RoomArea />
                 <Form>
                     <FormItem
@@ -67,10 +84,14 @@ class SingleRoomInfo extends BaseComponent {
 
 SingleRoomInfo.propTypes = {
     roomId: PropTypes.number.isRequired,
+    onDel: PropTypes.func,
+    showHeader: PropTypes.bool,
 };
 
 SingleRoomInfo.defaultProps = {
     roomId: PropTypes.number,
+    onDel: () => {},
+    showHeader: true,
 };
 
 SingleRoomInfo.childContextTypes = {

@@ -7,7 +7,6 @@ import ConfirmDialog from 'components/ConfirmDialog/index';
 import UploadHeader from '../coms/UploadHeader/index';
 import SingleRoomInfo from './SingleRoomInfo';
 import AddRoomButton from './coms/AddRoomButton/index';
-import RoomHeader from './coms/RoomHeader/index';
 import RoomFold from './coms/RoomFold/index';
 import { delRoomInfo, addRoomInfo } from './actions';
 import './style.less';
@@ -29,21 +28,23 @@ class HouseUpload extends BaseComponent {
     handleAddRoom() {
         this.props.dispatch(addRoomInfo());
     }
-    handleDel(roomId) {
-        this.setState({
-            dialogHide: false,
-        });
-        this.handleDialogConfirm = () => {
+    handleDel(roomStatus) {
+        return (roomId) => {
             this.setState({
-                dialogHide: true,
-                delRoomId: roomId,
+                dialogHide: false,
             });
-            window.setTimeout(() => {
+            this.handleDialogConfirm = () => {
                 this.setState({
-                    delRoomId: -1,
+                    dialogHide: true,
+                    delRoomId: roomId,
                 });
-                this.props.dispatch(delRoomInfo(roomId));
-            }, 500);
+                window.setTimeout(() => {
+                    this.setState({
+                        delRoomId: -1,
+                    });
+                    this.props.dispatch(delRoomInfo(roomId));
+                }, roomStatus === 'fold' ? 500 : 0);
+            };
         };
     }
     handleDialogCancel() {
@@ -69,21 +70,18 @@ class HouseUpload extends BaseComponent {
                             key={roomId}
                         >
                             <div className={`${clsSingleRoom}--expand`}>
-                                {
-                                    isEntireRent ? null :
-                                    <RoomHeader
-                                        roomId={roomId}
-                                        onDel={this.handleDel}
-                                    />
-                                }
-                                <SingleRoomInfo roomId={roomId} />
+                                <SingleRoomInfo
+                                    roomId={roomId}
+                                    showHeader={!isEntireRent}
+                                    onDel={this.handleDel('expand')}
+                                />
                             </div>
                             <div
                                 className={`${clsSingleRoom}--fold ${this.state.delRoomId === roomId ? `${clsSingleRoom}--fold__del` : ''}`}
                             >
                                 <RoomFold
                                     roomId={roomId}
-                                    onDel={this.handleDel}
+                                    onDel={this.handleDel('fold')}
                                 />
                             </div>
                         </div>
