@@ -21,7 +21,7 @@ const singleRoomInfo = (state, action) => {
             ...state,
             priceInfo: {
                 ...state.priceInfo,
-                [priceType]: values,
+                ...(values ? { [priceType]: values } : {}),
             },
         };
     }

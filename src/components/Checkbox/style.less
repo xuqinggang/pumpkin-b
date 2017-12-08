@@ -75,21 +75,21 @@
 
     &__disabled {
         cursor: not-allowed;
-        color: rgba(168, 168, 168, 1);
+        color: #333;
 
         .c-checkbox {
             &--indicator {
-                background-color: rgba(237, 236, 240, 1);
+                background-color: #c9ccd0;
                 border-color: #ccc;
             }
+        }
+    }
 
-            &__checked,
-            &__partial-checked {
-                .c-checkbox--indicator {
-                    background-color: #f38d39;
-                    border-color: #f38d39;
-                }
-            }
+    &__disabled&__checked,
+    &__disabled&__partial-checked {
+        .c-checkbox--indicator {
+            background-color: #c9ccd0;
+            border-color: #c9ccd0;
         }
     }
 }

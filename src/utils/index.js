@@ -9,7 +9,7 @@ export const isFloatNum = (str, exact) => {
     if (exact) {
         return /^[+-]?\d{0,}[.]{1}\d{1,}$/.test(str);
     }
-    return !isNaN(Number(str)) && Number(str) > 0;
+    return str !== '' && !isNaN(Number(str)) && Number(str) >= 0;
 };
 
 export const isPhoneNo = phone => (/^1[34578]\d{9}$/.test(phone));

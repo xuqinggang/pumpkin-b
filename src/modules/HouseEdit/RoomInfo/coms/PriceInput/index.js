@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
@@ -139,19 +140,26 @@ class PriceInput extends BaseComponent {
     render() {
         const { values } = this.state;
         const clsPrefix = 'c-price-input';
+
+        const cls = classNames(clsPrefix, {
+            [`${clsPrefix}__disabled`]: !this.state.checked,
+        });
         return (
             <Form
                 layout="horizontal"
+                className={cls}
             >
                 <Checkbox
                     name={this.props.name}
                     className={`${clsPrefix}--checkbox`}
                     onChange={this.handleCheckChange}
                     checked={this.state.values.checked}
+                    disabled={this.props.name === 'season'}
                 >{this.props.label}</Checkbox>
                 <FormItem
                     label="租金"
                     labelType="minor"
+                    disabled={!this.props.values.checked}
                     error={this.state.error.sub[this.names[0]]}
                 >
                     <Input
@@ -160,20 +168,21 @@ class PriceInput extends BaseComponent {
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
                         error={this.state.error.sub[this.names[0]].error}
-                        placeholder={this.props.name === 'season' ? '必填' : ''}
+                        disabled={!this.props.values.checked}
                     />
                     <NoteWord>元／月</NoteWord>
                 </FormItem>
                 <FormItem
                     label="押金"
                     labelType="minor"
+                    disabled={!this.props.values.checked}
                 >
                     <Input
                         name={this.names[1]}
                         value={values[this.names[1]]}
                         onChange={this.handleChange}
                         onBlur={this.handleBlur}
-                        placeholder={this.props.name === 'season' ? '必填' : ''}
+                        disabled={!this.props.values.checked}
                     />
                     <NoteWord>元</NoteWord>
                 </FormItem>
