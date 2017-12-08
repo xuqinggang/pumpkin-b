@@ -119,7 +119,10 @@ const validateBaseInfo = {
 const validateRoomInfo = {
     roomArea: (data) => {
         const error = itemError({ type: 'roomArea' });
-        if (!isFloatNum(data)) {
+        if (data === '') {
+            error.error = true;
+            error.message = '房间面积不能为空';
+        } else if (!isFloatNum(data)) {
             error.error = true;
             error.message = '请输入有效数字';
         }
@@ -150,17 +153,26 @@ const validateRoomInfo = {
             error.message = error.sub.price.message || error.sub.deposit.message;
             return error;
         };
+
+        // 暴露给其他组件使用，校验单条数据
         if (priceType) {
             // 如果存在指定的priceType，则data对应该priceType
             return validateItemPrice(data, priceType);
         }
 
         const error = itemError({ type: 'priceInfo' });
-        const seasonError = validateItemPrice(data.season, 'season');
-        if (seasonError.error) {
-            error.error = true;
-            error.sub.season = seasonError;
-        }
+
+        ['month', 'season', 'halfYear', 'year'].forEach((itemPriceType) => {
+            if (data[itemPriceType].checked) {
+                // 最终错误只校验checked数据的租金
+                const subItemError = validateItemPrice(data[itemPriceType], itemPriceType);
+                if (subItemError.error) {
+                    error.error = true;
+                    error.sub[itemPriceType] = subItemError;
+                }
+            }
+        });
+
         return error;
     },
     roomTag: (data) => {
