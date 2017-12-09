@@ -33,7 +33,7 @@ EmptyHouseNote.propTypes = {
     hide: PropTypes.bool,
 };
 
-EmptyHouseNote.defaultPropTypes = {
+EmptyHouseNote.defaultProps = {
     hide: true,
 };
 
@@ -42,9 +42,12 @@ export default connect(
         let hide = true;
         const filter = state.houseManage.filter;
         const houseList = state.houseManage.houseList;
+        const isLoading = state.houseManage.fetchLoading;
         if (filter.rentalType === 'ALL' &&
             filter.village === 'ALL' &&
             filter.roomStatus === 'ALL' &&
+            filter.curPage === 1 &&
+            !isLoading &&
             houseList.length === 0) {
             hide = false;
         }
