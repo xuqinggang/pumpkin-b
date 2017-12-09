@@ -10,6 +10,15 @@ export const hideStatusChangeDialog = () => ({
     type: 'houseManage-hideStatusChangeDialog',
 });
 
+export const showShareLinkDialog = url => ({
+    url,
+    type: 'houseManage-showShareLinkDialog',
+});
+
+export const hideShareLinkDialog = () => ({
+    type: 'houseManage-hideShareLinkDialog',
+});
+
 export const sortListByTime = value => ({
     value,
     type: 'houseManage-sortListByTime',

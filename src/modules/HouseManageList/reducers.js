@@ -23,6 +23,24 @@ const roomStatusDialog = (state = initRoomStatusDialogState, action) => {
     }
 };
 
+const shareLinkDialog = (state = { hide: true }, action) => {
+    switch (action.type) {
+    case 'houseManage-showShareLinkDialog': {
+        return {
+            url: action.url,
+            hide: false,
+        };
+    }
+    case 'houseManage-hideShareLinkDialog': {
+        return {
+            hide: true,
+        };
+    }
+    default:
+        return state;
+    }
+};
+
 const initFilterState = {
     isSortByTime: true,
     village: 'ALL',
@@ -108,4 +126,5 @@ export default combineReducers({
     houseList,
     filter,
     roomStatusDialog,
+    shareLinkDialog,
 });

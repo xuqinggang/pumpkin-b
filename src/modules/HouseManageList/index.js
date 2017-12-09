@@ -9,6 +9,7 @@ import PageHeader from 'components/PageHeader/index';
 import ConfirmDialog from 'components/ConfirmDialog/index';
 import HouseStatusManage from 'modules/HouseStatusManage/index';
 import HouseManageFilter from 'modules/HouseManageFilter/index';
+import ShareLinkDialog from 'modules/ShareLinkDialog/index';
 import RoomStatusDialog from 'modules/RoomStatusDialog/index';
 import HouseManageListPager from 'modules/HouseManageListPager/index';
 import EmptyHouseNote from 'modules/EmptyHouseNote/index';
@@ -142,6 +143,7 @@ class HouseManageList extends BaseComponent {
                     onConfirm={this.handleDeleteDialogConfirm}
                     onCancel={this.handleDeleteDialogCancel}
                 >确定删除该房源吗？</ConfirmDialog>
+                <ShareLinkDialog />
             </div>
         );
     }

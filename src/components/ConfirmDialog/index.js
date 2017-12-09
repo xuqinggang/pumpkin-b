@@ -31,7 +31,7 @@ class ConfirmDialog extends BaseDialog {
                     <Button
                         type="confirm"
                         onClick={this.handleConfirm}
-                    >确认</Button>
+                    >{this.props.confirmText}</Button>
                 </div>
             </BaseDialog>
         );
@@ -43,6 +43,7 @@ ConfirmDialog.propTypes = {
     onConfirm: PropTypes.func,
     hide: PropTypes.bool,
     children: PropTypes.node,
+    confirmText: PropTypes.string,
 };
 
 ConfirmDialog.defaultProps = {
@@ -50,6 +51,7 @@ ConfirmDialog.defaultProps = {
     onConfirm: () => {},
     hide: true,
     children: null,
+    confirmText: '确认',
 };
 
 export default ConfirmDialog;
