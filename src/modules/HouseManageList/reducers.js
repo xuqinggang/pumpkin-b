@@ -122,9 +122,24 @@ const houseList = (state = initListState, action) => {
         return state;
     }
 };
+
+const fetchLoading = (state = true, action) => {
+    switch (action.type) {
+    case 'houseManage-openFetchListLoading': {
+        return true;
+    }
+    case 'houseManage-closeFetchListLoading': {
+        return false;
+    }
+    default:
+        return state;
+    }
+};
+
 export default combineReducers({
     houseList,
     filter,
     roomStatusDialog,
     shareLinkDialog,
+    fetchLoading,
 });

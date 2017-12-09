@@ -53,6 +53,14 @@ export const deleteHouse = houseId => ({
     type: 'houseManage-deleteHouse',
 });
 
+export const openFetchListLoading = () => ({
+    type: 'houseManage-openFetchListLoading',
+});
+
+export const closeFetchListLoading = () => ({
+    type: 'houseManage-closeFetchListLoading',
+});
+
 export const fetchHouseManageList = (
 {
     village,
@@ -70,6 +78,9 @@ export const fetchHouseManageList = (
         offset: (curPage - 1) * prePage,
         limit: prePage,
     };
+
+    dispatch(updateHouseManageList([]));
+    dispatch(openFetchListLoading());
 
     // blockId int: 选传，社区ID
     // type enum : 选传，出租类型
@@ -113,5 +124,8 @@ export const fetchHouseManageList = (
         dispatch(filterListBy('roomStatus', roomStatus));
         dispatch(changePage(curPage, Math.ceil(total / prePage)));
         dispatch(updateHouseManageList(houseCorrList));
+    })
+    .then(() => {
+        dispatch(closeFetchListLoading());
     });
 };

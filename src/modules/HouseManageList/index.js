@@ -13,6 +13,7 @@ import ShareLinkDialog from 'modules/ShareLinkDialog/index';
 import RoomStatusDialog from 'modules/RoomStatusDialog/index';
 import HouseManageListPager from 'modules/HouseManageListPager/index';
 import EmptyHouseNote from 'modules/EmptyHouseNote/index';
+import LoadingHouseNote from 'modules/LoadingHouseNote/index';
 import { timeSignBy, timeFormat } from 'utils/index';
 import { hideStatusChangeDialog, deleteHouse, fetchHouseManageList } from './actions';
 import './style.less';
@@ -130,8 +131,9 @@ class HouseManageList extends BaseComponent {
                         );
                     })
                 }
-                <HouseManageListPager />
+                <LoadingHouseNote />
                 <EmptyHouseNote />
+                <HouseManageListPager />
                 <RoomStatusDialog
                     type={this.props.dialogType}
                     hide={this.props.dialogHide}
