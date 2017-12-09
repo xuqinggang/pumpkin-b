@@ -8,7 +8,12 @@ import { showMessage } from 'modules/Message/actions';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import { splitArrayWithIndex } from 'utils/index';
 import { rentUnitType } from 'base/types';
-import { showStatusChangeDialog, updateRentalUnitStatus } from '../HouseManageList/actions';
+import config from 'base/config';
+import {
+    showStatusChangeDialog,
+    updateRentalUnitStatus,
+    showShareLinkDialog,
+} from '../HouseManageList/actions';
 import './style.less';
 
 class RoomStatusManage extends BaseComponent {
@@ -28,8 +33,10 @@ class RoomStatusManage extends BaseComponent {
                 // 目前需求不做
                 type: 'DELETE',
                 text: '删除',
-            },
-        ];
+            }, {
+                type: 'SHARE',
+                text: '分享',
+            }];
         this.statusMapOperates = {
             FINISHED: {
                 text: '待发布',
@@ -37,7 +44,7 @@ class RoomStatusManage extends BaseComponent {
             },
             PUBLISHED: {
                 text: '已发布',
-                operates: splitArrayWithIndex(this.operates, 1, 2),
+                operates: splitArrayWithIndex(this.operates, 1, 2, 4),
             },
             OCCUPIED: {
                 text: '已入住',
@@ -53,6 +60,10 @@ class RoomStatusManage extends BaseComponent {
     }
     handleClick(type) {
         return () => {
+            if (type === 'SHARE') {
+                this.props.dispatch(showShareLinkDialog(`${config.rentalUnitLink}?rentUnitId=${this.props.renUnit.id}`));
+                return;
+            }
             this.props.dispatch(showStatusChangeDialog(type, ({ value }) => {
                 // TODO: 针对不同的type发送请求
                 axios.put(`/v1/rentUnits/${this.props.renUnit.id}/houseStatus`, {
