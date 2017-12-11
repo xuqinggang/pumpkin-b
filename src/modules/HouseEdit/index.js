@@ -15,7 +15,6 @@ import HousePics from './HousePics/index';
 import RoomInfo from './RoomInfo/index';
 import HouseDeploy from './HouseDeploy/index';
 import { fetchHouseEditData, hideValidateError, resetState } from './actions';
-import './style.less';
 
 class HouseUpload extends BaseComponent {
     constructor(props) {
@@ -79,13 +78,18 @@ class HouseUpload extends BaseComponent {
             curPage: curPage === 0 ? curPage : curPage - 1,
         });
     }
-    handleSubmitSuccess({ type }) {
+    handleSubmitSuccess({ type, houseId }) {
+        const { isAllPublished } = this.props.houseState;
         this.setState({
             leaveBlock: false,
         }, () => {
-            this.props.history.push({
-                pathname: '/house-manage',
+            this.props.onNext({
+                houseId,
+                isAllPublished,
             });
+            // this.props.history.push({
+            //     pathname: '/house-manage',
+            // });
         });
 
         // clear localStorage about house info
@@ -147,9 +151,7 @@ class HouseUpload extends BaseComponent {
                     />
                 }
 
-                <div
-                    className={`${clsPrefix}--subPage`}
-                >
+                <div>
                     {
                         React.createElement(itemComponent.component, {
                             title: itemComponent.describe,
@@ -173,9 +175,11 @@ class HouseUpload extends BaseComponent {
 
 HouseUpload.defaultProps = {
     houseId: null,
+    onNext: () => {},
 };
 HouseUpload.propTypes = {
     houseId: PropTypes.number,
+    onNext: PropTypes.func,
 };
 
 export default connect(

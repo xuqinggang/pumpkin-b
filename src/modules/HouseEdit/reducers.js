@@ -52,6 +52,8 @@ const roomDeploys = (
 
 const houseId = (state = null) => (state);
 
+const isAllPublished = (state = false) => (state);
+
 export default reduceReducers(
     combineReducers({
         ...RoomInfoReducers,
@@ -62,6 +64,7 @@ export default reduceReducers(
         roomDeploys,
         validateError,
         houseId,
+        isAllPublished,
     }),
     // cross-cutting concerns because here `state` is the whole state tree
     (state, action) => {
