@@ -46,7 +46,7 @@ class StepButton extends BaseComponent {
         axios[submitConfig[type].method](submitConfig[type].url, fe2beAdapter(data))
         .then((res) => {
             if (res.data.code === 200) {
-                submitSuccess({ type });
+                submitSuccess({ type, houseId: res.data.data.houseId });
             } else {
                 this.props.dispatch(showMessage(res.data.msg));
                 submitFailed({ type });
