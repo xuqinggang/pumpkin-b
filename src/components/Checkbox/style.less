@@ -22,7 +22,7 @@
         margin-right: 8px;
     }
 
-    &:hover {
+    &:not(&__disabled):hover {
         .c-checkbox {
             &--indicator {
                 border-color: #f38d39;
@@ -75,12 +75,12 @@
 
     &__disabled {
         cursor: not-allowed;
-        color: #333;
+        color: #dcdcdc;
 
         .c-checkbox {
             &--indicator {
-                background-color: #c9ccd0;
-                border-color: #ccc;
+                background-color: #fff;
+                border-color: #ededed;
             }
         }
     }

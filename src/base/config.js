@@ -1,3 +1,3 @@
 export default {
-    rentalUnitLink: 'http://www.nanguazufang.com/rental-unit',
+    rentalUnitLink: 'http://m.nanguazufang.com',
 };
