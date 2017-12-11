@@ -52,7 +52,11 @@ const be2feAdapter = (data) => {
             deploys: chamberItem.furniture || [],
         }))
     );
+    const isAllPublished = rentalUnits => (
+        rentalUnits.every(item => (item.status === 'PUBLISHED'))
+    );
     return {
+        isAllPublished: isAllPublished(data.rentUnits),
         baseInfo: {
             rentalType: rentalTypeMap[data.rentalType],
             houseType: {
