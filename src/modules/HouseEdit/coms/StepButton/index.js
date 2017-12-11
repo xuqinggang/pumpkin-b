@@ -25,6 +25,10 @@ class StepButton extends BaseComponent {
     handleSubmit(type) {
         if (this.isSubmiting) return;
 
+        const {
+            success: submitSuccess = () => {},
+            failed: submitFailed = () => {},
+        } = this.props.onSubmit;
         const data = this.props.data;
 
         const submitConfig = {
@@ -42,9 +46,10 @@ class StepButton extends BaseComponent {
         axios[submitConfig[type].method](submitConfig[type].url, fe2beAdapter(data))
         .then((res) => {
             if (res.data.code === 200) {
-                this.props.onSubmit.success({ type });
+                submitSuccess({ type });
             } else {
                 this.props.dispatch(showMessage(res.data.msg));
+                submitFailed({ type });
             }
         })
         .catch((e) => {
@@ -56,6 +61,7 @@ class StepButton extends BaseComponent {
                 msg = errorNote[response.status];
             }
             this.props.dispatch(showMessage(msg));
+            submitFailed({ type });
         })
         .then(() => {
             this.isSubmiting = false;
@@ -114,7 +120,7 @@ class StepButton extends BaseComponent {
                 this.props.dispatch(showValidateError({ pageType, error }));
                 return;
             }
-            this.props.onNext();
+            this.props.onNext({ houseId: data.houseId, isAllPublished: data.isAllPublished });
             break;
         }
         case 'houseDeploy': {
