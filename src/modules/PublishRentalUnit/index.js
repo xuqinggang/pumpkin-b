@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Content from 'components/Content';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import BaseComponent from 'components/BaseComponent/index';
@@ -100,7 +101,7 @@ class PublishRentalUnit extends BaseComponent {
     render() {
         const clsPrefix = 'm-publish-rental-unit';
         return (
-            <div>
+            <Content>
                 <div className={`${clsPrefix}--titles`}>
                     <h2 className={`${clsPrefix}--title`}>房源{this.props.title}</h2>
                     <span className={`${clsPrefix}--subTitle`}>你可以去{this.props.subTitle}啦~ </span>
@@ -134,7 +135,7 @@ class PublishRentalUnit extends BaseComponent {
                         onClick={this.handleReturnBack}
                     >返回房源管理</Button>
                 </div>
-            </div>
+            </Content>
         );
     }
 }

@@ -3,7 +3,6 @@ import MainLayout from 'layouts/MainLayout';
 import BaseComponent from 'components/BaseComponent/index';
 import PageHeader from 'components/PageHeader/index';
 import HouseEdit from 'modules/HouseEdit/index';
-import Content from 'components/Content';
 import PublishRentalUnit from 'modules/PublishRentalUnit/index';
 import ShareRentalUnit from 'modules/ShareRentalUnit/index';
 import checkAuthenticated from 'base/checkAuthenticated';
@@ -57,16 +56,14 @@ class HouseUploadPage extends BaseComponent {
             >
                 <div className={clsPrefix}>
                     <PageHeader>房源上传</PageHeader>
-                    <Content>
-                        {
-                            React.createElement(subPage.component, {
-                                houseId: this.houseId,
-                                title: this.state.curTitle,
-                                subTitle: subPage.title,
-                                onNext: subPage.onNext,
-                            })
-                        }
-                    </Content>
+                    {
+                        React.createElement(subPage.component, {
+                            houseId: this.houseId,
+                            title: this.state.curTitle,
+                            subTitle: subPage.title,
+                            onNext: subPage.onNext,
+                        })
+                    }
                 </div>
             </MainLayout>
         );

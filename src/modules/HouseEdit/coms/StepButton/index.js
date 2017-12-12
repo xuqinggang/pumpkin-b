@@ -18,12 +18,12 @@ class StepButton extends BaseComponent {
         super(props);
         this.state = {
             dialogHide: true,
+            isSubmiting: false,
         };
-        this.isSubmiting = false;
         this.autoBind('handlePrev', 'handleNext');
     }
     handleSubmit(type) {
-        if (this.isSubmiting) return;
+        if (this.state.isSubmiting) return;
 
         const {
             success: submitSuccess = () => {},
@@ -42,15 +42,27 @@ class StepButton extends BaseComponent {
             },
         };
 
-        this.isSubmiting = true;
+        this.setState({
+            isSubmiting: true,
+        });
+
         axios[submitConfig[type].method](submitConfig[type].url, fe2beAdapter(data))
         .then((res) => {
             if (res.data.code === 200) {
-                submitSuccess({ type, houseId: res.data.data.houseId });
-            } else {
-                this.props.dispatch(showMessage(res.data.msg));
-                submitFailed({ type });
+                return new Promise((resolve) => {
+                    resolve({
+                        submitStatus: 'SUCCESS',
+                        data: { type, houseId: res.data.data.houseId },
+                    });
+                });
             }
+            this.props.dispatch(showMessage(res.data.msg));
+            return new Promise((resolve) => {
+                resolve({
+                    submitStatus: 'FAILED',
+                    data: { type },
+                });
+            });
         })
         .catch((e) => {
             const response = e.response;
@@ -61,10 +73,29 @@ class StepButton extends BaseComponent {
                 msg = errorNote[response.status];
             }
             this.props.dispatch(showMessage(msg));
-            submitFailed({ type });
+            return new Promise((resolve) => {
+                resolve({
+                    submitStatus: 'FAILED',
+                    data: { type },
+                });
+            });
         })
-        .then(() => {
-            this.isSubmiting = false;
+        .then(res => (
+            new Promise((resolve) => {
+                this.setState({
+                    isSubmiting: false,
+                }, () => {
+                    resolve(res);
+                });
+            })
+        ))
+        .then((res) => {
+            if (res.submitStatus === 'SUCCESS') {
+                submitSuccess(res.data);
+            }
+            if (res.submitStatus === 'FAILED') {
+                submitFailed(res.data);
+            }
         });
     }
     handlePrev() {
@@ -169,6 +200,7 @@ class StepButton extends BaseComponent {
                     className={`${clsPrefix}--button ${clsPrefix}--button-last`}
                     onClick={this.handleNext}
                     type="confirm"
+                    disabled={curPage === totalPage && this.state.isSubmiting}
                 >
                     {`${curPage === totalPage ? finalBtnText : '下一步'}`}
                 </Button>

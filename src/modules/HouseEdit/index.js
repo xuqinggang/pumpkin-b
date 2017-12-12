@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import initPage from 'base/initPage';
 import { withRouter } from 'react-router-dom';
+import Content from 'components/Content';
 import BaseComponent from 'components/BaseComponent/index';
 import StepNav from 'components/StepNav/index';
 import houseLocalStorage from './houseLocalStorage';
@@ -151,21 +152,23 @@ class HouseUpload extends BaseComponent {
                     />
                 }
 
-                <div>
-                    {
-                        React.createElement(itemComponent.component, {
-                            title: itemComponent.describe,
-                        })
-                    }
-                    <StepButton
-                        curPage={this.state.curPage}
-                        totalPage={this.pageInfo.length}
-                        onNext={this.handleNextStep}
-                        onPrev={this.handlePrevStep}
-                        onSubmit={{ success: this.handleSubmitSuccess }}
-                        pageType={this.pageInfo[this.state.curPage - 1].type}
-                    />
-                </div>
+                <Content>
+                    <div>
+                        {
+                            React.createElement(itemComponent.component, {
+                                title: itemComponent.describe,
+                            })
+                        }
+                        <StepButton
+                            curPage={this.state.curPage}
+                            totalPage={this.pageInfo.length}
+                            onNext={this.handleNextStep}
+                            onPrev={this.handlePrevStep}
+                            onSubmit={{ success: this.handleSubmitSuccess }}
+                            pageType={this.pageInfo[this.state.curPage - 1].type}
+                        />
+                    </div>
+                </Content>
                 <EnterPrompt when={this.state.enterBlock} />
                 <LeavePrompt when={this.state.leaveBlock} />
             </div>

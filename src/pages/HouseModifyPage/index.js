@@ -4,7 +4,6 @@ import MainLayout from 'layouts/MainLayout';
 import BaseComponent from 'components/BaseComponent/index';
 import HouseModifyHeader from 'modules/HouseModifyHeader/index';
 import HouseEdit from 'modules/HouseEdit/index';
-import Content from 'components/Content';
 import PublishRentalUnit from 'modules/PublishRentalUnit/index';
 import ShareRentalUnit from 'modules/ShareRentalUnit/index';
 import { decodeQuerySting } from 'utils/index';
@@ -59,16 +58,14 @@ class HouseModifyPage extends BaseComponent {
             >
                 <div className="p-house-modify">
                     <HouseModifyHeader houseId={this.houseId} />
-                    <Content>
-                        {
-                            React.createElement(subPage.component, {
-                                houseId: this.houseId,
-                                title: this.state.curTitle,
-                                subTitle: subPage.title,
-                                onNext: subPage.onNext,
-                            })
-                        }
-                    </Content>
+                    {
+                        React.createElement(subPage.component, {
+                            houseId: this.houseId,
+                            title: this.state.curTitle,
+                            subTitle: subPage.title,
+                            onNext: subPage.onNext,
+                        })
+                    }
                 </div>
             </MainLayout>
         );

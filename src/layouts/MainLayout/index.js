@@ -15,12 +15,10 @@ class MainLayout extends BaseComponent {
         return (
             <div className="l-main">
                 <PageTitle title={this.props.title} />
-                <Header />
-                <div>
-                    <Sidebar />
-                    <div className="l-main--content">
-                        {this.props.children}
-                    </div>
+                <Sidebar />
+                <div className="l-main--content">
+                    <Header />
+                    {this.props.children}
                 </div>
                 <Message />
             </div>

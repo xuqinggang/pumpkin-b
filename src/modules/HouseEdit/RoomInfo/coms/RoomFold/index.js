@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
-import Tag, { TagPlaceholder } from 'components/Tag/index';
+import Tag from 'components/Tag/index';
 import PriceDisplay from '../PriceDisplay';
 import DepositDisplay from '../DepositDisplay';
 import { switchRoomExpand } from '../../actions';
@@ -15,14 +15,6 @@ const notSingleNum = (num) => {
         return `0${num}`;
     }
     return `${num}`;
-};
-
-const creatNDimArray = (num, value) => {
-    const arr = [];
-    for (let i = 0; i < num; i += 1) {
-        arr.push(value);
-    }
-    return arr;
 };
 
 class RoomFold extends BaseComponent {
@@ -41,7 +33,7 @@ class RoomFold extends BaseComponent {
     }
     render() {
         const clsPrefix = 'c-room-fold';
-        const { allTag, maxActiveTagNum, tagValues } = this.props;
+        const { allTag, tagValues } = this.props;
         const allTagValues = allTag.map(item => (item.value));
         return (
             <div className={clsPrefix}>
@@ -92,12 +84,6 @@ class RoomFold extends BaseComponent {
                             </Tag>
                         ))
                     }
-                    {
-                        creatNDimArray(maxActiveTagNum - tagValues.length, null).map(
-                            (item, index) => (
-                                <TagPlaceholder key={index} />
-                            ))
-                    }
                 </div>
                 <div className={`${clsPrefix}--operate`}>
                     <Button type="confirm" onClick={this.handleEditClick}>编辑</Button>
@@ -140,7 +126,7 @@ export default connect(
         } = roomInfo[roomIndex];
         const roomNum = roomIds.length;
 
-        const { allTag, maxActiveTagNum } = state.houseUpload.roomTags;
+        const { allTag } = state.houseUpload.roomTags;
         return {
             priceInfo,
             brief,
@@ -150,7 +136,6 @@ export default connect(
             roomNum,
             roomIndex,
             allTag,
-            maxActiveTagNum,
             tagValues: roomTag.active,
         };
     },

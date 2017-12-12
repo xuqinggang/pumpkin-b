@@ -3,6 +3,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import config from 'base/config';
+import Content from 'components/Content';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import { expandSingleNum } from 'utils';
@@ -39,7 +40,7 @@ class ShareRentalUnit extends BaseComponent {
     render() {
         const clsPrefix = 'm-share-rental-unit';
         return (
-            <div>
+            <Content>
                 <div className={`${clsPrefix}--titles`}>
                     <h2 className={`${clsPrefix}--title`}>房源{this.props.title}</h2>
                     <span className={`${clsPrefix}--subTitle`}>你可以去{this.props.subTitle}啦~ </span>
@@ -62,7 +63,7 @@ class ShareRentalUnit extends BaseComponent {
                         size="huge"
                     >返回房源管理</Button>
                 </div>
-            </div>
+            </Content>
         );
     }
 }
