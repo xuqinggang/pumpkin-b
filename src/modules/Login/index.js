@@ -14,9 +14,6 @@ class Login extends BaseComponent {
             'handleSubmit',
             'handlePasswdChange',
             'handleAccountChange',
-            'handlePasswdBlur',
-            'handleAccountBlur',
-            'handleLoginFailure',
             'handleChange',
             'handleKeyPress',
         );
@@ -24,12 +21,14 @@ class Login extends BaseComponent {
         this.state = {
             account: '',
             password: '',
-            isAccountCorrect: true,
-            isPasswordCorrect: false,
-            accountError: '',
-            passwordError: '',
-            showAccountStatus: false,
-            showPasswordStatus: false,
+            accountStatus: {
+                type: 'UNSET',
+                message: '',
+            },
+            passwordStatus: {
+                type: 'UNSET',
+                message: '',
+            },
         };
     }
 
@@ -38,16 +37,20 @@ class Login extends BaseComponent {
 
         if (!account) {
             this.setState({
-                isAccountCorrect: false,
-                accountError: '用户名不能为空',
+                accountStatus: {
+                    type: 'ERROR',
+                    message: '用户名不能为空',
+                },
             });
             return;
         }
 
         if (!password) {
             this.setState({
-                isPasswordCorrect: false,
-                passwordError: '密码不能为空',
+                passwordStatus: {
+                    type: 'ERROR',
+                    message: '密码不能为空',
+                },
             });
             return;
         }
@@ -58,22 +61,28 @@ class Login extends BaseComponent {
         .then((res) => {
             switch (res.data.code) {
             case 200: {
-                // TODO
                 // 不用手动更改url
                 this.props.dispatch(login());
                 break;
             }
             case 1101: {
                 this.setState({
-                    isAccountCorrect: false,
-                    accountError: res.data.msg,
+                    accountStatus: {
+                        type: 'ERROR',
+                        message: res.data.msg,
+                    },
                 });
                 break;
             }
             case 1102: {
                 this.setState({
-                    isPasswordCorrect: false,
-                    passwordError: res.data.msg,
+                    accountStatus: {
+                        type: 'CORRECT',
+                    },
+                    passwordStatus: {
+                        type: 'ERROR',
+                        message: res.data.msg,
+                    },
                 });
                 break;
             }
@@ -82,39 +91,23 @@ class Login extends BaseComponent {
         });
     }
 
-    handleLoginFailure(err) {
-        this.setState({
-            passwordError: err,
-            isPasswordCorrect: false,
-        });
-    }
-
     handlePasswdChange({ value }) {
         this.setState({
             password: value,
-            isPasswordCorrect: true,
-            passwordError: '',
-        });
-    }
 
-    handlePasswdBlur() {
-        // 若有输入密码，则认为是正确的密码，显示status, 在ajax提交之后再处理密码实际正确性
-        if (this.state.account) {
-            this.setState({
-                showPasswordStatus: true,
-            });
-            return;
-        }
-
-        this.setState({
-            isPasswordCorrect: false,
-            showPasswordStatus: true,
+            passwordStatus: {
+                type: 'UNSET',
+            },
         });
     }
 
     handleAccountChange({ value }) {
         this.setState({
             account: value,
+
+            accountStatus: {
+                type: 'UNSET',
+            },
         });
     }
 
@@ -123,44 +116,23 @@ class Login extends BaseComponent {
             this.handleSubmit();
         }
     }
-    handleAccountBlur() {
-        // 若有输入账号，则认为是正确的账号，显示status
-        if (this.state.account) {
-            this.setState({
-                isAccountCorrect: true,
-                showAccountStatus: true,
-                accountError: '',
-            });
-            return;
-        }
-
-        this.setState({
-            isAccountCorrect: false,
-            showAccountStatus: true,
-        });
-    }
-
     render() {
         const clsPrefix = 'm-login';
         const {
-            isAccountCorrect,
-            isPasswordCorrect,
-            accountError,
-            passwordError,
-            showAccountStatus,
-            showPasswordStatus,
+            accountStatus,
+            passwordStatus,
         } = this.state;
         const accountStatusCls = classNames(`${clsPrefix}--status`, {
-            'icon-right-login': isAccountCorrect,
-            [`${clsPrefix}--status__correct`]: isAccountCorrect,
-            'icon-error-login': !isAccountCorrect,
-            [`${clsPrefix}--status__error`]: !isAccountCorrect,
+            'icon-right-login': accountStatus.type === 'CORRECT',
+            [`${clsPrefix}--status__correct`]: accountStatus.type === 'CORRECT',
+            'icon-error-login': accountStatus.type === 'ERROR',
+            [`${clsPrefix}--status__error`]: accountStatus.type === 'ERROR',
         });
         const passwordStatusCls = classNames(`${clsPrefix}--status`, {
-            'icon-right-login': isPasswordCorrect,
-            [`${clsPrefix}--status__correct`]: isPasswordCorrect,
-            'icon-error-login': !isPasswordCorrect,
-            [`${clsPrefix}--status__error`]: !isPasswordCorrect,
+            'icon-right-login': passwordStatus.type === 'CORRECT',
+            [`${clsPrefix}--status__correct`]: passwordStatus.type === 'CORRECT',
+            'icon-error-login': passwordStatus.type === 'ERROR',
+            [`${clsPrefix}--status__error`]: passwordStatus.type === 'ERROR',
         });
         return (
             <div className={clsPrefix}>
@@ -177,18 +149,17 @@ class Login extends BaseComponent {
                                 name="account"
                                 onKeyPress={this.handleKeyPress}
                                 onChange={this.handleAccountChange}
-                                onBlur={this.handleAccountBlur}
-                                error={accountError !== ''}
+                                error={accountStatus.type === 'ERROR'}
                             />
                             {
-                                showAccountStatus ?
+                                accountStatus.type !== 'UNSET' ?
                                     <div className={accountStatusCls} />
                                     : null
                             }
                         </div>
                         {
-                            accountError ?
-                                <div className={`${clsPrefix}--error`}>{accountError}</div>
+                            accountStatus.type === 'ERROR' && accountStatus.message
+                                ? <div className={`${clsPrefix}--error`}>{accountStatus.message}</div>
                                 : null
                         }
                     </div>
@@ -202,18 +173,17 @@ class Login extends BaseComponent {
                                 name="password"
                                 onKeyPress={this.handleKeyPress}
                                 onChange={this.handlePasswdChange}
-                                onBlur={this.handlePasswdBlur}
-                                error={passwordError !== ''}
+                                error={passwordStatus.type === 'ERROR'}
                             />
                             {
-                                showPasswordStatus ?
-                                    <div className={passwordStatusCls} />
+                                passwordStatus.type !== 'UNSET'
+                                    ? <div className={passwordStatusCls} />
                                     : null
                             }
                         </div>
                         {
-                            passwordError ?
-                                <div className={`${clsPrefix}--error`}>{passwordError}</div>
+                            passwordStatus.type === 'ERROR' && passwordStatus.message
+                                ? <div className={`${clsPrefix}--error`}>{passwordStatus.message}</div>
                                 : null
                         }
                     </div>
