@@ -59,7 +59,7 @@ class ShareRentalUnit extends BaseComponent {
                     <Button
                         className={`${clsPrefix}--btn`}
                         onClick={this.handleReturnBack}
-                        size="large"
+                        size="huge"
                     >返回房源管理</Button>
                 </div>
             </div>

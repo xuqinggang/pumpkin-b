@@ -120,14 +120,14 @@ class PublishRentalUnit extends BaseComponent {
                 <div className={`${clsPrefix}--btns`}>
                     <Button
                         type="confirm"
-                        size="large"
+                        size="huge"
                         className={`${clsPrefix}--btn`}
                         onClick={this.handlePublish}
                         disabled={this.state.isPublishLoading}
                     >一键发布</Button>
                     <Button
                         className={`${clsPrefix}--btn`}
-                        size="large"
+                        size="huge"
                         onClick={this.handleReturnBack}
                     >返回房源管理</Button>
                 </div>
