@@ -1,3 +1,3 @@
 export default {
-    rentalUnitLink: 'http://m.nanguazufang.com',
+    rentalUnitLink: unitId => (`http://m.nanguazufang.com/detail/${unitId}`),
 };

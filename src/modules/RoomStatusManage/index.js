@@ -61,7 +61,9 @@ class RoomStatusManage extends BaseComponent {
     handleClick(type) {
         return () => {
             if (type === 'SHARE') {
-                this.props.dispatch(showShareLinkDialog(`${config.rentalUnitLink}?rentUnitId=${this.props.renUnit.id}`));
+                this.props.dispatch(
+                    showShareLinkDialog(config.rentalUnitLink(this.props.renUnit.id),
+                ));
                 return;
             }
             this.props.dispatch(showStatusChangeDialog(type, ({ value }) => {

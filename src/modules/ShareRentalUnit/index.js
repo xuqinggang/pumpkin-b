@@ -50,7 +50,7 @@ class ShareRentalUnit extends BaseComponent {
                             <RentalUnitQRCode
                                 key={item.id}
                                 title={`卧室${expandSingleNum(index + 1)}`}
-                                url={`${config.rentalUnitLink}?rentUnitId=${item.id}`}
+                                url={config.rentalUnitLink(item.id)}
                             />
                         ))
                     }
