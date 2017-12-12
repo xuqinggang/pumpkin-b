@@ -43,38 +43,41 @@ class PublishRentalUnit extends BaseComponent {
         this.setState({
             isPublishLoading: true,
         });
-        const resolveAfterLoaded = new Promise((resolve) => {
-            this.setState({
-                isPublishLoading: false,
-            }, () => {
-                resolve();
-            });
-        });
         axios.put('/v1/rentUnits/houseStatus',
             this.state.unitStatus.filter(value => (value.checked)).map(item => ({
                 id: item.id,
                 status: 'PUBLISHED',
             })),
         )
-        .then((res) => {
-            if (res.data.code === 200) {
-                (async () => {
-                    await resolveAfterLoaded;
+            .then((res) => {
+                if (res.data.code === 200) {
+                    return new Promise((resolve) => {
+                        resolve('SUCCESS');
+                    });
+                }
+                return new Promise((resolve) => {
+                    resolve('FAILED');
+                });
+            })
+            .catch(() => (
+                new Promise((resolve) => {
+                    resolve('FAILED');
+                })
+            ))
+            .then(netStatus => (
+                new Promise((resolve) => {
+                    this.setState({
+                        isPublishLoading: false,
+                    }, () => {
+                        resolve(netStatus);
+                    });
+                })
+            ))
+            .then((netStatus) => {
+                if (netStatus === 'SUCCESS') {
                     this.props.onNext();
-                })();
-            }
-        })
-        .catch(() => {
-            // TODO
-        })
-        .then(() => {
-            resolveAfterLoaded.then();
-            // this.setState({
-            //     isPublishLoading: false,
-            // }, () => {
-            //     // done
-            // });
-        });
+                }
+            });
     }
     handleReturnBack() {
         this.props.history.push('/house-manage');
