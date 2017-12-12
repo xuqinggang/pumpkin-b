@@ -31,7 +31,7 @@ serverRouter.all(/\/v1/, (ctx) => {
         headers: {
             host: 'console.nanguazufang.com',
         },
-    });
+    }, (e) => {});
 });
 
 server.use(compress());
