@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Pager from 'components/Pager/index';
 import { fetchHouseManageList } from '../HouseManageList/actions';
+import './style.less';
 
 class HouseManageListPager extends BaseComponent {
     constructor(props) {
@@ -27,6 +28,7 @@ class HouseManageListPager extends BaseComponent {
                             curPage={curPage}
                             totalPage={totalPage}
                             onChange={this.handlePageChange}
+                            className="m-house-manage-list-pager"
                         />
                         : null
                 }
