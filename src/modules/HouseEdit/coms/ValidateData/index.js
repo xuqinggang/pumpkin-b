@@ -46,11 +46,17 @@ const validateBaseInfo = {
 
         if (!isNaturalNum(data.buildNo)) {
             error.sub.buildNo.error = true;
+        } else if (Number(data.buildNo) < 1 || Number(data.buildNo) > 99) {
+            error.sub.buildNo.error = true;
         }
         if (!isNaturalNum(data.unitNo)) {
             error.sub.unitNo.error = true;
+        } else if (Number(data.unitNo) < 1 || Number(data.unitNo) > 99) {
+            error.sub.unitNo.error = true;
         }
         if (!isNaturalNum(data.houseNo)) {
+            error.sub.houseNo.error = true;
+        } else if (Number(data.houseNo) < 1 || Number(data.houseNo) > 9999) {
             error.sub.houseNo.error = true;
         }
 
@@ -66,8 +72,12 @@ const validateBaseInfo = {
         };
         if (!isNaturalNum(data.curFloor)) {
             error.sub.curFloor.error = true;
+        } else if (Number(data.curFloor) < 1 || Number(data.curFloor) > 99) {
+            error.sub.curFloor.error = true;
         }
         if (!isNaturalNum(data.totalFloor)) {
+            error.sub.totalFloor.error = true;
+        } else if (Number(data.totalFloor) < 1 || Number(data.totalFloor) > 99) {
             error.sub.totalFloor.error = true;
         }
 
@@ -125,6 +135,9 @@ const validateRoomInfo = {
         } else if (!isFloatNum(data)) {
             error.error = true;
             error.message = '请输入有效数字';
+        } else if (Number(data) < 0.1 || Number(data) > 999.9) {
+            error.error = true;
+            error.message = '房间面积超过限制';
         }
         return error;
     },
