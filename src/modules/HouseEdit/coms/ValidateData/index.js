@@ -126,6 +126,39 @@ const validateBaseInfo = {
     },
 };
 
+const validateSubItemPrice = (subItemPriceData, subType) => {
+    const subPriceMap = {
+        price: '价格',
+        deposit: '押金',
+    };
+    const error = itemError({ subType });
+    if (!subItemPriceData) {
+        error.error = true;
+        error.message = `请填写${subPriceMap[subType]}`;
+    } else if (!isFloatNum(subItemPriceData)) {
+        error.error = true;
+        error.message = `${subPriceMap[subType]}不是有效数字`;
+    } else if (Number(subItemPriceData) < 0 || Number(subItemPriceData) > 999999) {
+        error.error = true;
+        error.message = `${subPriceMap[subType]}超过限制`;
+    }
+    return error;
+};
+
+const validateItemPrice = (itemPriceData, type) => {
+    const error = itemError({ type });
+    const validatePriceTypeList = ['price', 'deposit'];
+    validatePriceTypeList.forEach((subItemPriceType) => {
+        error.sub[subItemPriceType] =
+            validateSubItemPrice(itemPriceData[subItemPriceType], subItemPriceType);
+        if (!error.error) {
+            error.error = error.sub[subItemPriceType].error;
+            error.message = error.sub[subItemPriceType].message;
+        }
+    });
+    return error;
+};
+
 const validateRoomInfo = {
     roomArea: (data) => {
         const error = itemError({ type: 'roomArea' });
@@ -141,38 +174,13 @@ const validateRoomInfo = {
         }
         return error;
     },
-    priceInfo: (data, { priceType } = {}) => {
-        const errorMessageMap = {
-            month: '月付价',
-            season: '季付价',
-            halfYear: '半年价',
-            year: '年付价',
-        };
-        const validateItemPrice = (itemData, type) => {
-            const error = itemError({ type: 'season' });
-            error.sub.price = itemError({ type: 'price' });
-            error.sub.deposit = itemError({ type: 'deposit' });
-            if (!itemData.price) {
-                error.sub.price = itemError({ type: 'price', error: true, message: `请填写${errorMessageMap[type]}` });
-            } else if (!isFloatNum(itemData.price)) {
-                error.sub.price = itemError({ type: 'price', error: true, message: `${errorMessageMap[type]}不是有效数字` });
-            }
-            if (!itemData.deposit) {
-                error.sub.deposit = itemError({ type: 'deposit', error: true, message: '请填写押金' });
-            } else if (!isFloatNum(itemData.deposit)) {
-                error.sub.deposit = itemError({ type: 'deposit', error: true, message: '押金不是有效数字' });
-            }
-            error.error = error.sub.price.error || error.sub.deposit.error;
-            error.message = error.sub.price.message || error.sub.deposit.message;
-            return error;
-        };
-
-        // 暴露给其他组件使用，校验单条数据
-        if (priceType) {
-            // 如果存在指定的priceType，则data对应该priceType
-            return validateItemPrice(data, priceType);
-        }
-
+    priceInfo: (data) => {
+        // const errorMessageMap = {
+        //     month: '月付价',
+        //     season: '季付价',
+        //     halfYear: '半年价',
+        //     year: '年付价',
+        // };
         const error = itemError({ type: 'priceInfo' });
 
         ['month', 'season', 'halfYear', 'year'].forEach((itemPriceType) => {
@@ -272,6 +280,8 @@ export {
     validateRoomInfo,
     itemError,
     isDataInput,
+    validateSubItemPrice,
+    validateItemPrice,
 };
 
 export default validateData;
