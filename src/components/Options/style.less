@@ -4,7 +4,7 @@
     color: #8a8a8a;
     padding: 0 8px;
 
-    &:hover,
+    &:not(&__disabled):hover,
     &__selected {
         background-color: rgba(235, 202, 107, 0.1);
     }
@@ -13,7 +13,11 @@
         color: #f38d39;
     }
 
-    &:active {
+    &__disabled {
+        color: #dcdcdc;
+    }
+
+    &:not(&__disabled):active {
         color: #f38d39;
     }
 }
