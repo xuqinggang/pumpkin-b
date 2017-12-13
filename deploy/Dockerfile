@@ -4,7 +4,7 @@ ADD ./ /pumpkin-b/
 
 WORKDIR /pumpkin-b/
 
-RUN npm install pumpkin-font-b --registry=http://10.10.126.140:4873 && \
+RUN ls -al && npm install pumpkin-font-b --registry=http://10.10.126.140:4873 && \
     npm install && \
     npm run build
 
