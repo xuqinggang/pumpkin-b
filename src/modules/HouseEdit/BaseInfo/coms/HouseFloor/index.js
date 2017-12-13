@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Input from 'components/Input/index';
 import { FormItem } from 'components/Form/index';
+import { adjustNumStr } from 'utils';
 import NoteWord from '../../../coms/NoteWord/index';
 import { setHouseFloor } from '../../actions';
 import { hideValidateError } from '../../../actions';
@@ -68,6 +69,9 @@ class HouseFloor extends BaseComponent {
         // 非法string 置空
         if (error.sub[name].error) {
             this.props.dispatch(setHouseFloor({ name, value: '' }));
+        } else {
+            // 调整数字 避免显示 02
+            this.props.dispatch(setHouseFloor({ name, value: adjustNumStr(value) }));
         }
     }
     render() {
