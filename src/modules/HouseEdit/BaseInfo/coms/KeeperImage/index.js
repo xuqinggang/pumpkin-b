@@ -31,7 +31,10 @@ class KeeperImage extends BaseComponent {
                     onSelect={this.handleSelect}
                     onDel={this.handleDel}
                     className={`${clsPrefix}--uploader`}
-                >上传管家图片（选填）</HouseUploadImage>
+                >
+                    <div>上传管家图片</div>
+                    <div>(选填）</div>
+                </HouseUploadImage>
                 <div className={`${clsPrefix}--note`}><span>{this.props.error.message}</span></div>
             </div>
         );

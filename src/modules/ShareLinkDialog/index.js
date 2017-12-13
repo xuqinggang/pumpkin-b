@@ -41,6 +41,7 @@ class ShareLinkDialog extends BaseComponent {
             <ConfirmDialog
                 hide={this.props.hide}
                 confirmText="复制"
+                onClose={this.handleCancel}
                 onCancel={this.handleCancel}
                 onConfirm={this.handleConfirm}
                 className={clsPrefix}
