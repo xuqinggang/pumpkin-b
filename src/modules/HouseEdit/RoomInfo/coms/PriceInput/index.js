@@ -46,6 +46,8 @@ class PriceInput extends BaseComponent {
             values,
             error: this.resetError(),
         };
+
+        this.defaultDepositValue = '0';
         this.autoBind('handleChange', 'handleBlur', 'handleCheckChange');
     }
     componentWillReceiveProps(nextProps) {
@@ -83,7 +85,7 @@ class PriceInput extends BaseComponent {
         let newValue = value;
         // 非法string 置空，押金置0
         if (error.error) {
-            newValue = name === 'deposit' ? '0' : '';
+            newValue = name === 'deposit' ? this.defaultDepositValue : '';
         } else {
             newValue = adjustNumStr(value);
         }
@@ -98,6 +100,7 @@ class PriceInput extends BaseComponent {
     handleCheckChange({ name, checked }) {
         const val = {
             ...this.state.values,
+            ...(checked ? { deposit: this.defaultDepositValue } : {}),
             checked,
         };
         this.props.dispatch(changeRoomPrice(this.props.roomId, {
