@@ -10,5 +10,4 @@ RUN npm install pumpkin-font-b --registry=http://10.10.126.140:4873 && \
 
 EXPOSE 80
 
-ENTRYPOINT
-    node server/index.js --port=80
+ENTRYPOINT node server/index.js --port=80
