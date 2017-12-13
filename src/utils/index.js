@@ -1,6 +1,6 @@
 export const isNaturalNum = (str) => {
     if (/^\d{1,}$/.test(str)) {
-        return Number(str) > 0;
+        return Number(str) >= 0;
     }
     return false;
 };
@@ -96,4 +96,11 @@ export const encodeQueryString = (obj) => {
         pairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
     ));
     return pairs.join('&');
+};
+
+export const adjustNumStr = (numStr) => {
+    if (isNaN(Number(numStr)) || numStr === '') {
+        return '';
+    }
+    return Number(numStr).toString();
 };
