@@ -7,10 +7,11 @@ import Form, { FormItem } from 'components/Form/index';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import Input from 'components/Input/index';
 import Checkbox from 'components/Checkbox/index';
+import { adjustNumStr } from 'utils';
 import NoteWord from '../../../coms/NoteWord/index';
 import { changeRoomPrice } from '../../actions';
 import { hideValidateError } from '../../../actions';
-import { validateRoomInfo } from '../../../coms/ValidateData';
+import { validateSubItemPrice, validateItemPrice } from '../../../coms/ValidateData';
 import './style.less';
 
 const defaultValues = (names) => {
@@ -61,36 +62,38 @@ class PriceInput extends BaseComponent {
     }
     handleBlur({ name, value }) {
         // 错误校验
-        const error = validateRoomInfo.priceInfo({
-            ...this.state.values,
-            [name]: value,
-        }, { priceType: this.props.name });
+        const error = validateSubItemPrice(value, name);
         // 只修改对应表单数据error
         // 只显示checked表单的错误信息
         this.setState({
             error: this.state.values.checked
                 ? {
                     ...this.state.error,
-                    error: error.error,
+                    ...(error.error ? { error: true } : {}),
                     sub: {
                         ...this.state.error.sub,
                         [name]: {
-                            ...error.sub[name],
+                            ...error,
                         },
                     },
                 }
                 : this.resetError(),
         });
+
+        let newValue = value;
         // 非法string 置空，押金置0
-        if (error.sub[name].error) {
-            this.props.dispatch(changeRoomPrice(this.props.roomId, {
-                priceType: this.props.name,
-                values: {
-                    ...this.state.values,
-                    [name]: name === 'deposit' ? '0' : '',
-                },
-            }));
+        if (error.error) {
+            newValue = name === 'deposit' ? '0' : '';
+        } else {
+            newValue = adjustNumStr(value);
         }
+        this.props.dispatch(changeRoomPrice(this.props.roomId, {
+            priceType: this.props.name,
+            values: {
+                ...this.state.values,
+                [name]: newValue,
+            },
+        }));
     }
     handleCheckChange({ name, checked }) {
         const val = {
@@ -107,7 +110,7 @@ class PriceInput extends BaseComponent {
             values: val,
             error: (
                 checked
-                ? validateRoomInfo.priceInfo(val, { priceType: this.props.name })
+                ? validateItemPrice(val, this.props.name)
                 : this.resetError()
             ),
         });
