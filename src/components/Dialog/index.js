@@ -60,7 +60,7 @@ class Dialog extends BaseComponent {
                             <div className={`${clsPrefix}--header`}>
                                 {title}
                                 <i
-                                    className="icon-error-login"
+                                    className={`${clsPrefix}--close icon-error-login`}
                                     onClick={onClose}
                                     role="button"
                                     tabIndex={0}
