@@ -5,9 +5,16 @@
     user-select: none;
     cursor: pointer;
 
-    span {
+    &--indicator,
+    &--children {
         display: inline-block;
         vertical-align: middle;
+    }
+
+    &:not(&__disabled):hover {
+        .c-radio--indicator {
+            border-color: #f38d39;
+        }
     }
 
     &--indicator {

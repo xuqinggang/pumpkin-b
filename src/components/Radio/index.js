@@ -12,7 +12,7 @@ export class Radio extends BaseComponent {
     }
 
     handleClick() {
-        if (this.props.onClick) {
+        if (this.props.onClick && !this.props.disabled) {
             this.props.onClick(this.props);
         }
     }
@@ -27,13 +27,12 @@ export class Radio extends BaseComponent {
         return (
             <div
                 className={cls}
-                disabled={this.props.disabled}
                 onClick={this.handleClick}
                 role="button"
                 tabIndex={0}
             >
                 <span className={`${clsPrefix}--indicator`} />
-                <span>{this.props.children}</span>
+                <span className={`${clsPrefix}--children`}>{this.props.children}</span>
             </div>
         );
     }
