@@ -29,7 +29,7 @@ serverRouter.all(/\/v1/, (ctx) => {
     proxy.web(ctx.req, ctx.res, {
         target: 'http://10.23.64.8',
         headers: {
-            host: 'console.nanguazufang.com',
+            host: 'dev.api.console.nanguazufang.cn',
         },
     }, (e) => {});
 });

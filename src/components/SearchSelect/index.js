@@ -146,6 +146,8 @@ class SearchSelect extends BaseComponent {
         const cls = classNames(clsPrefix, {
             [this.props.className]: true,
         });
+
+        const showPopup = (!this.props.selectNote.hide || options.length > 0) && expand;
         return (
             <div
                 className={cls}
@@ -169,9 +171,21 @@ class SearchSelect extends BaseComponent {
                     className={
                         classNames(
                             `${clsPrefix}--popover`,
-                            { [`${clsPrefix}--popover__hide`]: options.length === 0 || !expand },
+                            {
+                                [`${clsPrefix}--popover__hide`]: !showPopup,
+                            },
                         )}
                 >
+                    {
+                        !this.props.selectNote.hide
+                        ? (
+                            <Options
+                                disabled
+                                item={{ text: this.props.selectNote.text }}
+                            />
+                        )
+                        : null
+                    }
                     {
                         options.map((item, index) => (
                             <Options
@@ -201,6 +215,10 @@ SearchSelect.defaultProps = {
     className: '',
     onBlur: null,
     error: false,
+    selectNote: {
+        hide: true,
+        text: '',
+    },
 };
 
 SearchSelect.propTypes = {
@@ -215,6 +233,10 @@ SearchSelect.propTypes = {
     className: PropTypes.string,
     onBlur: PropTypes.func,
     error: PropTypes.bool,
+    selectNote: PropTypes.shape({
+        hide: PropTypes.bool,
+        text: PropTypes.string,
+    }),
 };
 
 export default SearchSelect;

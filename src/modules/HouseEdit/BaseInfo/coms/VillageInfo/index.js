@@ -17,6 +17,10 @@ class VillageInfo extends BaseComponent {
                 error: false,
                 message: '',
             },
+            selectNote: {
+                hide: true,
+                text: '',
+            },
             options: [],
         };
         this.autoBind('handleSelect', 'handleSearch', 'handleBlur', 'fetchSearch');
@@ -38,12 +42,19 @@ class VillageInfo extends BaseComponent {
             },
         })
         .then((res) => {
-            this.setState({
-                options: res.data.data.blocks.map(item => ({
-                    value: item.id,
-                    text: item.name,
-                })),
-            });
+            if (res.data.code === 200) {
+                const blocks = res.data.data.blocks;
+                this.setState({
+                    options: blocks.map(item => ({
+                        value: item.id,
+                        text: item.name,
+                    })),
+                    selectNote: {
+                        hide: blocks.length > 0,
+                        text: '未找到该小区',
+                    },
+                });
+            }
         })
         .catch(() => {
             // 清空
@@ -89,6 +100,7 @@ class VillageInfo extends BaseComponent {
                     onBlur={this.handleBlur}
                     placeholder="输入小区名称搜索..."
                     error={this.state.error.error}
+                    selectNote={this.state.selectNote}
                 />
             </FormItem>
         );
