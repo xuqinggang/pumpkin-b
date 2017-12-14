@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import BaseComponent from 'components/BaseComponent/index';
 import { pageUrl } from 'utils/index';
@@ -54,9 +53,7 @@ class Sidebar extends BaseComponent {
         const clsPrefix = 'c-sidebar';
         return (
             <div className={clsPrefix}>
-                <div className={`${clsPrefix}--header`}>
-                    <img src={this.props.imgUrl} alt="头像" />
-                </div>
+                <i className={`${clsPrefix}--header`} />
                 <div className={`${clsPrefix}--nav`}>
                     {
                         this.pages.map((item, index) => (
@@ -81,8 +78,4 @@ class Sidebar extends BaseComponent {
     }
 }
 
-export default connect(
-    state => ({
-        imgUrl: state.passport.userInfo ? state.passport.userInfo.apartment.image : '',
-    }),
-)(withRouter(Sidebar));
+export default withRouter(Sidebar);

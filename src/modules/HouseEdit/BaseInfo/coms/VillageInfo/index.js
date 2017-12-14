@@ -109,7 +109,7 @@ class VillageInfo extends BaseComponent {
                     onChange={this.handleSearch}
                     options={this.state.options}
                     onBlur={this.handleBlur}
-                    placeholder="输入小区名称搜索..."
+                    placeholder="输入小区名称搜索"
                     error={this.state.error.error}
                     selectNote={this.state.selectNote}
                 />
