@@ -3,6 +3,7 @@ import axios from 'axios';
 import Content from 'components/Content';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import ConfirmDialog from 'components/ConfirmDialog/index';
 import BaseComponent from 'components/BaseComponent/index';
 import Checkbox from 'components/Checkbox/index';
 import Button from 'components/Button/index';
@@ -15,6 +16,7 @@ class PublishRentalUnit extends BaseComponent {
         this.state = {
             unitStatus: [],
             isPublishLoading: false,
+            dialogHide: true,
         };
         this.canPublish = (unitStatus) => {
             const canPublishStatus = [
@@ -28,6 +30,8 @@ class PublishRentalUnit extends BaseComponent {
             'handleCheck',
             'handleReturnBack',
             'handlePublish',
+            'handleDialogConfirm',
+            'handleDialogCancel',
         );
     }
     handleCheck(item) {
@@ -80,8 +84,22 @@ class PublishRentalUnit extends BaseComponent {
                 }
             });
     }
+    handleDialogConfirm() {
+        this.setState({
+            dialogHide: true,
+        }, () => {
+            this.props.history.push('/house-manage');
+        });
+    }
+    handleDialogCancel() {
+        this.setState({
+            dialogHide: true,
+        });
+    }
     handleReturnBack() {
-        this.props.history.push('/house-manage');
+        this.setState({
+            dialogHide: false,
+        });
     }
     componentDidMount() {
         axios.get(`/v1/houses/${this.props.houseId}/houseStatus`)
@@ -136,6 +154,16 @@ class PublishRentalUnit extends BaseComponent {
                         onClick={this.handleReturnBack}
                     >返回房源管理</Button>
                 </div>
+                <ConfirmDialog
+                    hide={this.state.dialogHide}
+                    onConfirm={this.handleDialogConfirm}
+                    onCancel={this.handleDialogCancel}
+                    onClose={this.handleDialogCancel}
+                >
+                    <div
+                        className={`${clsPrefix}--dialog-content`}
+                    >您有房源未发布，用户将无法在南瓜租房上查找到，确定离开吗？</div>
+                </ConfirmDialog>
             </Content>
         );
     }
