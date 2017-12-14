@@ -35,6 +35,18 @@ class VillageInfo extends BaseComponent {
         }
     }
     fetchSearch(text) {
+        // 当无搜索内容，不发送请求
+        // 将提示和选项重置
+        if (text === '') {
+            this.setState({
+                selectNote: {
+                    hide: true,
+                    text: '',
+                },
+                options: [],
+            });
+            return;
+        }
         axios.get('/v1/common/blockSearch', {
             params: {
                 keyword: text,
