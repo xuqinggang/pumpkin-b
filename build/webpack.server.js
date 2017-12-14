@@ -68,6 +68,7 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
+            favicon:'src/images/nangua.ico', //favicon路径
             filename: 'index.html',
             template: 'src/index.html',
             hash: false,
