@@ -67,20 +67,23 @@ class PriceInput extends BaseComponent {
         const error = validateSubItemPrice(value, name);
         // 只修改对应表单数据error
         // 只显示checked表单的错误信息
-        this.setState({
-            error: this.state.values.checked
-                ? {
-                    ...this.state.error,
-                    ...(error.error ? { error: true } : {}),
-                    sub: {
-                        ...this.state.error.sub,
-                        [name]: {
-                            ...error,
+
+        if (!(name === 'deposit' && error.cause === 'EMPTY')) {
+            this.setState({
+                error: this.state.values.checked
+                    ? {
+                        ...this.state.error,
+                        ...(error.error ? { error: true } : {}),
+                        sub: {
+                            ...this.state.error.sub,
+                            [name]: {
+                                ...error,
+                            },
                         },
-                    },
-                }
-                : this.resetError(),
-        });
+                    }
+                    : this.resetError(),
+            });
+        }
 
         let newValue = value;
         // 非法string 置空，押金置0
@@ -167,6 +170,7 @@ class PriceInput extends BaseComponent {
                     labelType="minor"
                     disabled={!this.props.values.checked}
                     error={this.state.error.sub[this.names[0]]}
+                    className={`${clsPrefix}--subPrice`}
                 >
                     <Input
                         name={this.names[0]}
@@ -182,6 +186,7 @@ class PriceInput extends BaseComponent {
                     label="押金"
                     labelType="minor"
                     disabled={!this.props.values.checked}
+                    error={this.state.error.sub[this.names[1]]}
                 >
                     <Input
                         name={this.names[1]}
