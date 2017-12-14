@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import classNames from 'classnames';
 import Content from 'components/Content';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -118,6 +119,9 @@ class PublishRentalUnit extends BaseComponent {
     }
     render() {
         const clsPrefix = 'm-publish-rental-unit';
+        const unitsCls = classNames(`${clsPrefix}--units`, {
+            [`${clsPrefix}--units__center`]: this.state.unitStatus.length < 3,
+        });
         return (
             <Content>
                 <div className={`${clsPrefix}--titles`}>
@@ -125,7 +129,7 @@ class PublishRentalUnit extends BaseComponent {
                     <span className={`${clsPrefix}--subTitle`}>你可以去{this.props.subTitle}啦~ </span>
                 </div>
                 <div
-                    className={`${clsPrefix}--units`}
+                    className={unitsCls}
                 >
                     {
                         this.state.unitStatus.map((item, index) => (
