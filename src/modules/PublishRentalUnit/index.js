@@ -117,6 +117,7 @@ class PublishRentalUnit extends BaseComponent {
                                 checked={item.checked}
                                 onChange={this.handleCheck(item)}
                                 disabled={item.status === 'PUBLISHED'}
+                                title={item.status === 'PUBLISHED' ? '已发布' : ''}
                             >卧室{expandSingleNum(index + 1)}</Checkbox>
                         ))
                     }

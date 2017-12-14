@@ -54,6 +54,7 @@ class Checkbox extends BaseComponent {
                 onClick={this.handleClick}
                 role="button"
                 tabIndex={0}
+                title={this.props.title}
             >
                 <span className={`${clsPrefix}--indicator`} />
                 <span className={`${clsPrefix}--label`}>{this.props.children}</span>
@@ -63,6 +64,7 @@ class Checkbox extends BaseComponent {
 }
 
 Checkbox.defaultProps = {
+    title: '',
     size: 'normal',
     disabled: false,
     name: '',
@@ -73,6 +75,7 @@ Checkbox.defaultProps = {
 };
 
 Checkbox.propTypes = {
+    title: PropTypes.string,
     size: uiSizeType,
     disabled: PropTypes.bool,
     name: PropTypes.string,
