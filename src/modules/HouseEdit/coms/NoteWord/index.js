@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './style.less';
 
-const NoteWord = ({ children, first }) => {
+const NoteWord = ({ children, first, className }) => {
     const clsPrefix = 'c-note-word';
     const cls = classNames(
         clsPrefix,
@@ -12,16 +12,18 @@ const NoteWord = ({ children, first }) => {
         },
     );
     return (
-        <span className={cls}>{children}</span>
+        <span className={`${cls} ${className}`}>{children}</span>
     );
 };
 
 NoteWord.propTypes = {
+    className: PropTypes.string,
     children: PropTypes.node,
     first: PropTypes.bool,
 };
 
 NoteWord.defaultProps = {
+    className: '',
     children: null,
     first: false,
 };

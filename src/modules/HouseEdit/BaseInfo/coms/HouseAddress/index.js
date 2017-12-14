@@ -8,6 +8,7 @@ import NoteWord from '../../../coms/NoteWord/index';
 import { setHouseAddress } from '../../actions';
 import { validateBaseInfo, itemError } from '../../../coms/ValidateData';
 import { hideValidateError } from '../../../actions';
+import './style.less';
 
 class HouseAddress extends BaseComponent {
     constructor(props) {
@@ -95,14 +96,14 @@ class HouseAddress extends BaseComponent {
                         error={error.sub.buildNo.error}
 
                     />
-                    <NoteWord>栋</NoteWord>
+                    <NoteWord className={`${clsPrefix}--word`}>栋</NoteWord>
                     <Input
                         name="unitNo"
                         value={unitNo}
                         onBlur={this.handleBlur}
                         onChange={this.handleChange}
                     />
-                    <NoteWord>单元</NoteWord>
+                    <NoteWord className={`${clsPrefix}--word`}>单元</NoteWord>
                     <Input
                         name="houseNo"
                         value={houseNo}
@@ -110,7 +111,7 @@ class HouseAddress extends BaseComponent {
                         onBlur={this.handleBlur}
                         error={error.sub.houseNo.error}
                     />
-                    <NoteWord>号</NoteWord>
+                    <NoteWord className={`${clsPrefix}--word`}>号</NoteWord>
                 </div>
             </FormItem>
         );
