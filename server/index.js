@@ -24,14 +24,14 @@ server.use(views(__dirname + '/views', {
   }
 }));
 
-serverRouter.all(/\/v1/, (ctx) => {
+serverRouter.all(/api\/v1/, (ctx) => {
     ctx.respond = false;
     proxy.web(ctx.req, ctx.res, {
-        target: 'http://10.23.64.8',
+        target: 'http://nangua-console.kuaizhan.sohuno.com',
         headers: {
-            host: 'dev.api.console.nanguazufang.cn',
+            host: 'nangua-console.kuaizhan.sohuno.com',
         },
-    }, (e) => {});
+    }, (e) => {console.log(e);});
 });
 
 server.use(compress());
