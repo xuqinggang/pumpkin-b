@@ -71,7 +71,7 @@ class RoomTag extends BaseComponent {
                             })
                         }
                     </div>
-                    <div style={{ width: '732px', marginBottom: '-24px' }}>
+                    <div style={{ width: '732px', marginBottom: '-16px' }}>
                         {
                             this.props.tags.map((item, index) => (
                                 <Tag

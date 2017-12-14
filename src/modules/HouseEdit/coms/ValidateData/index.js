@@ -44,20 +44,34 @@ const validateBaseInfo = {
             houseNo: itemError({ type: 'houseNo', error: false }),
         };
 
-        if (!isNaturalNum(data.buildNo)) {
+        if (data.buildNo === '') {
             error.sub.buildNo.error = true;
+            error.sub.buildNo.message = '该项不能为空';
+        } else if (!isNaturalNum(data.buildNo)) {
+            error.sub.buildNo.error = true;
+            error.sub.buildNo.message = '请输入自然整数';
         } else if (Number(data.buildNo) < 1 || Number(data.buildNo) > 99) {
             error.sub.buildNo.error = true;
+            error.sub.buildNo.message = '请输入1~99的自然整数';
         }
-        if (!isNaturalNum(data.unitNo)) {
+        if (data.unitNo === '') {
+            error.sub.unitNo.error = false;
+        } else if (!isNaturalNum(data.unitNo)) {
             error.sub.unitNo.error = true;
+            error.sub.unitNo.message = '请输入自然整数';
         } else if (Number(data.unitNo) < 1 || Number(data.unitNo) > 99) {
             error.sub.unitNo.error = true;
+            error.sub.unitNo.message = '请输入1~99的自然整数';
         }
-        if (!isNaturalNum(data.houseNo)) {
+        if (data.houseNo === '') {
             error.sub.houseNo.error = true;
+            error.sub.houseNo.message = '该项不能为空';
+        } else if (!isNaturalNum(data.houseNo)) {
+            error.sub.houseNo.error = true;
+            error.sub.houseNo.message = '请输入自然整数';
         } else if (Number(data.houseNo) < 1 || Number(data.houseNo) > 9999) {
             error.sub.houseNo.error = true;
+            error.sub.houseNo.message = '请输入1~9999的自然数';
         }
 
         // 不校验单元Number
@@ -70,15 +84,25 @@ const validateBaseInfo = {
             curFloor: itemError({ type: 'curFloor', error: false }),
             totalFloor: itemError({ type: 'totalFloor', error: false }),
         };
-        if (!isNaturalNum(data.curFloor)) {
+        if (data.curFloor === '') {
             error.sub.curFloor.error = true;
+            error.sub.curFloor.message = '该项不能为空';
+        } else if (!isNaturalNum(data.curFloor)) {
+            error.sub.curFloor.error = true;
+            error.sub.curFloor.message = '请输入自然整数';
         } else if (Number(data.curFloor) < 1 || Number(data.curFloor) > 99) {
             error.sub.curFloor.error = true;
+            error.sub.curFloor.message = '请输入1～99的自然整数';
         }
-        if (!isNaturalNum(data.totalFloor)) {
+        if (data.totalFloor === '') {
             error.sub.totalFloor.error = true;
+            error.sub.totalFloor.message = '该项不能为空';
+        } else if (!isNaturalNum(data.totalFloor)) {
+            error.sub.totalFloor.error = true;
+            error.sub.totalFloor.message = '请输入自然整数';
         } else if (Number(data.totalFloor) < 1 || Number(data.totalFloor) > 99) {
             error.sub.totalFloor.error = true;
+            error.sub.totalFloor.message = '请输入1～99的自然整数';
         }
 
         error.error = error.sub.curFloor.error || error.sub.totalFloor.error;
@@ -135,12 +159,14 @@ const validateSubItemPrice = (subItemPriceData, subType) => {
     if (!subItemPriceData) {
         error.error = true;
         error.message = `请填写${subPriceMap[subType]}`;
+
+        error.cause = 'EMPTY';
     } else if (!isFloatNum(subItemPriceData)) {
         error.error = true;
         error.message = `${subPriceMap[subType]}不是有效数字`;
     } else if (Number(subItemPriceData) < 0 || Number(subItemPriceData) > 999999) {
         error.error = true;
-        error.message = `${subPriceMap[subType]}超过限制`;
+        error.message = '请输入1～999999之间的数字';
     }
     return error;
 };
@@ -170,7 +196,7 @@ const validateRoomInfo = {
             error.message = '请输入有效数字';
         } else if (Number(data) < 0.1 || Number(data) > 999.9) {
             error.error = true;
-            error.message = '房间面积超过限制';
+            error.message = '请输入0.1~999.9之间的数字';
         }
         return error;
     },

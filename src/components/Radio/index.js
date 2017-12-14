@@ -97,6 +97,7 @@ class RadioGroup extends BaseComponent {
                             value={option.value}
                             onClick={this.handleClick}
                             checked={option.value === this.state.value}
+                            disabled={this.props.disabled}
                         >
                             {option.text}
                         </Radio>

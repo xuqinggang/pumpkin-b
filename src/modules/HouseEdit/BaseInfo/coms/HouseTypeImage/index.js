@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import HouseUploadImage from 'modules/HouseUploadImage/index';
 import { setHouseTypeImgUrl } from '../../actions';
+import './style.less';
 
 class HouseTypeImage extends BaseComponent {
     constructor(props) {

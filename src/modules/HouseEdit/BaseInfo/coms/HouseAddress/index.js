@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Input from 'components/Input/index';
-import { FormItem } from 'components/Form/index';
+import Form, { FormItem } from 'components/Form/index';
 import { adjustNumStr } from 'utils';
 import NoteWord from '../../../coms/NoteWord/index';
 import { setHouseAddress } from '../../actions';
@@ -88,30 +88,47 @@ class HouseAddress extends BaseComponent {
                 className={clsPrefix}
             >
                 <div>
-                    <Input
-                        name="buildNo"
-                        value={buildNo}
-                        onChange={this.handleChange}
-                        onBlur={this.handleBlur}
-                        error={error.sub.buildNo.error}
+                    <Form layout="horizontal">
+                        <FormItem
+                            labelType="minor"
+                            error={error.sub.buildNo}
+                        >
+                            <Input
+                                name="buildNo"
+                                value={buildNo}
+                                onChange={this.handleChange}
+                                onBlur={this.handleBlur}
+                                error={error.sub.buildNo.error}
 
-                    />
-                    <NoteWord className={`${clsPrefix}--word`}>栋</NoteWord>
-                    <Input
-                        name="unitNo"
-                        value={unitNo}
-                        onBlur={this.handleBlur}
-                        onChange={this.handleChange}
-                    />
-                    <NoteWord className={`${clsPrefix}--word`}>单元</NoteWord>
-                    <Input
-                        name="houseNo"
-                        value={houseNo}
-                        onChange={this.handleChange}
-                        onBlur={this.handleBlur}
-                        error={error.sub.houseNo.error}
-                    />
-                    <NoteWord className={`${clsPrefix}--word`}>号</NoteWord>
+                            />
+                            <NoteWord className={`${clsPrefix}--word`}>栋</NoteWord>
+                        </FormItem>
+                        <FormItem
+                            labelType="minor"
+                            error={error.sub.unitNo}
+                        >
+                            <Input
+                                name="unitNo"
+                                value={unitNo}
+                                onBlur={this.handleBlur}
+                                onChange={this.handleChange}
+                            />
+                            <NoteWord className={`${clsPrefix}--word`}>单元</NoteWord>
+                        </FormItem>
+                        <FormItem
+                            labelType="minor"
+                            error={error.sub.houseNo}
+                        >
+                            <Input
+                                name="houseNo"
+                                value={houseNo}
+                                onChange={this.handleChange}
+                                onBlur={this.handleBlur}
+                                error={error.sub.houseNo.error}
+                            />
+                            <NoteWord className={`${clsPrefix}--word`}>号</NoteWord>
+                        </FormItem>
+                    </Form>
                 </div>
             </FormItem>
         );

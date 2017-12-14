@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Input from 'components/Input/index';
-import { FormItem } from 'components/Form/index';
+import Form, { FormItem } from 'components/Form/index';
 import { adjustNumStr } from 'utils';
 import NoteWord from '../../../coms/NoteWord/index';
 import { setHouseFloor } from '../../actions';
@@ -83,25 +83,35 @@ class HouseFloor extends BaseComponent {
                 label="房源楼层"
                 className={clsPrefix}
             >
-                <div>
+                <Form layout="horizontal">
                     <NoteWord first>第</NoteWord>
-                    <Input
-                        name="curFloor"
-                        value={curFloor}
-                        onChange={this.handleChange}
-                        onBlur={this.handleBlur}
-                        error={error.sub.curFloor.error}
-                    />
+                    <FormItem
+                        labelType="minor"
+                        error={error.sub.curFloor}
+                    >
+                        <Input
+                            name="curFloor"
+                            value={curFloor}
+                            onChange={this.handleChange}
+                            onBlur={this.handleBlur}
+                            error={error.sub.curFloor.error}
+                        />
+                    </FormItem>
                     <NoteWord>层／共</NoteWord>
-                    <Input
-                        name="totalFloor"
-                        value={totalFloor}
-                        onChange={this.handleChange}
-                        onBlur={this.handleBlur}
-                        error={error.sub.totalFloor.error}
-                    />
+                    <FormItem
+                        labelType="minor"
+                        error={error.sub.totalFloor}
+                    >
+                        <Input
+                            name="totalFloor"
+                            value={totalFloor}
+                            onChange={this.handleChange}
+                            onBlur={this.handleBlur}
+                            error={error.sub.totalFloor.error}
+                        />
+                    </FormItem>
                     <NoteWord>层</NoteWord>
-                </div>
+                </Form>
             </FormItem>
         );
     }
