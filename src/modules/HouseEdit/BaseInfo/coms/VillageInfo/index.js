@@ -50,7 +50,6 @@ class VillageInfo extends BaseComponent {
         axios.get('/v1/common/blockSearch', {
             params: {
                 keyword: text,
-                cityId: 1,
             },
         })
         .then((res) => {
