@@ -14,7 +14,7 @@ class Checkbox extends BaseComponent {
         };
         this.autoBind('handleClick');
     }
-    compoentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         this.setState({
             checked: nextProps.checked,
             partialChecked: nextProps.partialChecked,
@@ -50,7 +50,6 @@ class Checkbox extends BaseComponent {
         return (
             <div
                 className={cls}
-                disabled={this.props.disabled}
                 onClick={this.handleClick}
                 role="button"
                 tabIndex={0}
