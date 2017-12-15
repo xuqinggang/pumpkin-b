@@ -8,6 +8,9 @@ RUN ls -al && npm install pumpkin-font-b --registry=http://10.10.126.140:4873 &&
     npm install && \
     npm run build
 
+RUN chmod +x ./deploy_front.sh
+RUN ./deploy_front.sh
+
 EXPOSE 80
 
 ENTRYPOINT node server/index.js --port=80 --env='prod'
