@@ -5,10 +5,10 @@ mkdir -p ./public/scripts
 cp ./public/*.js ./public/scripts
 cp ./public/*.ico ./public/images
 
-for moudle in fonts css images scripts
+for module in fonts css images scripts
 
 do
-cd $project_path/public/$moudle
+cd $project_path/public/$module
 for entry in ./*
 do
     echo ${entry}
