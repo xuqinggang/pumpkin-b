@@ -26,10 +26,12 @@ class ShareRentalUnit extends BaseComponent {
         .then((res) => {
             if (res.data.code === 200) {
                 const shareUnits = res.data.data
-                .filter(value => (value.status === 'PUBLISHED'))
-                .map(item => ({
+                .map((item, index) => ({
+                    index,
                     id: item.id,
-                }));
+                    status: item.status,
+                }))
+                .filter(item => (item.status === 'PUBLISHED'));
                 this.setState({
                     shareUnits,
                 });
@@ -47,10 +49,10 @@ class ShareRentalUnit extends BaseComponent {
                 </div>
                 <div className={`${clsPrefix}--units`}>
                     {
-                        this.state.shareUnits.map((item, index) => (
+                        this.state.shareUnits.map(item => (
                             <RentalUnitQRCode
                                 key={item.id}
-                                title={`卧室${expandSingleNum(index + 1)}`}
+                                title={`卧室${expandSingleNum(item.index + 1)}`}
                                 url={config.rentalUnitLink(item.id)}
                             />
                         ))
