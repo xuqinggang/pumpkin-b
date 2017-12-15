@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node build/dev.js",
-    "build": "node build/build.js",
+    "dev": "cross-env NODE_ENV=dev node build/dev.js & nodemon server/index.js",
+    "build": "cross-env NODE_ENV=prod node build/build.js",
     "server": "nodemon server/index.js",
     "start": "node server/index.js",
     "reinstall": "npm install pumpkin-font-b --save --registry=http://10.10.126.140:4873 && npm install"

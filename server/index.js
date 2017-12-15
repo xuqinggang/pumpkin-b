@@ -9,14 +9,16 @@ const KoaStatic = require('koa-static');
 // const render = require('koa-ejs');
 const views = require('koa-views');
 const httpProxy = require('http-proxy');
-const conf = require('./conf');
+const conf = require('../config/index');
 const router = require('../dist/server');
 
 const server = new Koa();
 const proxy = httpProxy.createProxyServer();
 const serverRouter = new Router();
 
-const PORT = argv.port ? parseInt(argv.port) : conf.port;
+const PORT = argv.port ? parseInt(argv.port) : 3000;
+
+const env = argv.env ? argv.env : 'dev';
 
 server.use(views(__dirname + '/views', {
   map: {
@@ -27,9 +29,9 @@ server.use(views(__dirname + '/views', {
 serverRouter.all(/api\/v1/, (ctx) => {
     ctx.respond = false;
     proxy.web(ctx.req, ctx.res, {
-        target: 'http://nangua-console.kuaizhan.sohuno.com',
+        target: conf[env].backend.target,
         headers: {
-            host: 'nangua-console.kuaizhan.sohuno.com',
+            host: conf[env].backend.host,
         },
     }, (e) => {console.log(e);});
 });

@@ -24,8 +24,10 @@ module.exports = {
     },
 
     output: {
-        publicPath: baseConfig.prod.publicPath,
-        path: resolve(baseConfig.prod.distPath),
+        publicPath: env.NODE_ENV === 'prod'
+            ? baseConfig.prod.publicPath
+            : baseConfig.dev.publicPath,
+        path: resolve(baseConfig.server.distPath),
         filename: 'server.js',
         libraryTarget: 'commonjs2',
     },
@@ -75,12 +77,6 @@ module.exports = {
             inject: true,
         }),
     ],
-
-    devServer: {
-        port: baseConfig.dev.port,
-        host: baseConfig.dev.host,
-        proxy: baseConfig.dev.proxy,
-    },
 
     target: 'node',
     externals: [nodeExternals()],
