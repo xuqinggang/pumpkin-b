@@ -29,7 +29,9 @@ module.exports = {
     },
 
     output: {
-        publicPath: baseConfig.client.publicPath,
+        publicPath: env.NODE_ENV === 'prod'
+            ? baseConfig.prod.publicPath
+            : baseConfig.dev.publicPath,
         path: resolve(baseConfig.client.distPath),
         filename: '[name].[chunkhash:8].js',
     },
@@ -67,10 +69,4 @@ module.exports = {
             minify: false,
         }),
     ],
-
-    devServer: {
-        port: baseConfig.dev.port,
-        host: baseConfig.dev.host,
-        proxy: baseConfig.dev.proxy,
-    },
 }

@@ -9,14 +9,16 @@ const KoaStatic = require('koa-static');
 // const render = require('koa-ejs');
 const views = require('koa-views');
 const httpProxy = require('http-proxy');
-const conf = require('./conf');
+const conf = require('../config/index');
 const router = require('../dist/server');
 
 const server = new Koa();
 const proxy = httpProxy.createProxyServer();
 const serverRouter = new Router();
 
-const PORT = argv.port ? parseInt(argv.port) : conf.port;
+const PORT = argv.port ? parseInt(argv.port) : 3000;
+
+const env = argv.env ? argv.env : 'dev';
 
 server.use(views(__dirname + '/views', {
   map: {
@@ -24,14 +26,14 @@ server.use(views(__dirname + '/views', {
   }
 }));
 
-serverRouter.all(/\/v1/, (ctx) => {
+serverRouter.all(/api\/v1/, (ctx) => {
     ctx.respond = false;
     proxy.web(ctx.req, ctx.res, {
-        target: 'http://10.23.64.8',
+        target: conf[env].backend.target,
         headers: {
-            host: 'test.api.console.nanguazufang.cn',
+            host: conf[env].backend.host,
         },
-    }, (e) => {});
+    }, (e) => {console.log(e);});
 });
 
 server.use(compress());
