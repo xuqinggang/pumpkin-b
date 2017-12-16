@@ -54,7 +54,19 @@ class HouseManageList extends BaseComponent {
                     }, () => {
                         // 延迟执行，等待动画完成
                         setTimeout(() => {
-                            this.props.dispatch(deleteHouse(houseId));
+                            // 删除最后一个的时候需要请求数据并刷新列表
+                            if (this.props.houseList.length === 1
+                                && this.props.houseList.map(
+                                    item => (item.id)).indexOf(houseId) !== -1) {
+                                this.props.dispatch(fetchHouseManageList({
+                                    ...this.props.filter,
+                                    curPage: this.props.filter.curPage > 1
+                                        ? (this.props.filter.curPage - 1)
+                                        : 1,
+                                }));
+                            } else {
+                                this.props.dispatch(deleteHouse(houseId));
+                            }
                         }, 500);
                     });
                 }
