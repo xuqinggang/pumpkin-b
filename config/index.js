@@ -17,7 +17,7 @@ module.exports = {
     },
     prod: {
         pathPrefix: '/',
-        publicPath: '//static-1252921496.file.myqcloud.com/pumpkin-b',
+        publicPath: '//static-1252921496.file.myqcloud.com/pumpkin-b/',
         backend: {
             target: 'http://nangua-console.kuaizhan.sohuno.com',
             host: 'http://nangua-console.kuaizhan.sohuno.com',
