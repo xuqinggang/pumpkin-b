@@ -22,6 +22,7 @@ class HouseAddress extends BaseComponent {
                 },
             },
         };
+        this.maxInputLimit = 10;
         this.autoBind('handleChange', 'handleBlur');
     }
     componentWillReceiveProps(nextProps) {
@@ -95,7 +96,7 @@ class HouseAddress extends BaseComponent {
                                 onChange={this.handleChange}
                                 onBlur={this.handleBlur}
                                 error={error.sub.buildNo.error}
-
+                                maxLengthLimit={this.maxInputLimit}
                             />
                             <NoteWord className={`${clsPrefix}--word`}>栋</NoteWord>
                         </FormItem>
@@ -108,6 +109,7 @@ class HouseAddress extends BaseComponent {
                                 value={unitNo}
                                 onBlur={this.handleBlur}
                                 onChange={this.handleChange}
+                                maxLengthLimit={this.maxInputLimit}
                             />
                             <NoteWord className={`${clsPrefix}--word`}>单元</NoteWord>
                         </FormItem>
@@ -121,6 +123,7 @@ class HouseAddress extends BaseComponent {
                                 onChange={this.handleChange}
                                 onBlur={this.handleBlur}
                                 error={error.sub.houseNo.error}
+                                maxLengthLimit={this.maxInputLimit}
                             />
                             <NoteWord className={`${clsPrefix}--word`}>号</NoteWord>
                         </FormItem>

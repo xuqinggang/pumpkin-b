@@ -11,7 +11,7 @@ class Input extends BaseComponent {
             value: props.value,
         };
 
-        this.maxTextLength = 100;
+        this.maxTextLength = props.maxLengthLimit;
         this.autoBind('handleChange', 'handleKeyPress', 'handleBlur', 'toFocus', 'handleClick');
     }
 
@@ -101,6 +101,7 @@ Input.defaultProps = {
     onKeyPress: null,
     onClick: null,
     className: '',
+    maxLengthLimit: 100,
 };
 
 Input.propTypes = {
@@ -117,6 +118,7 @@ Input.propTypes = {
     onKeyPress: PropTypes.func,
     onClick: PropTypes.func,
     className: PropTypes.string,
+    maxLengthLimit: PropTypes.number,
 };
 
 export default Input;
