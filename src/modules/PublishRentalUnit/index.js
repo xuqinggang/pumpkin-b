@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { valueType } from 'base/types';
 import classNames from 'classnames';
 import Content from 'components/Content';
 import PropTypes from 'prop-types';
@@ -174,7 +175,7 @@ class PublishRentalUnit extends BaseComponent {
 }
 
 PublishRentalUnit.propTypes = {
-    houseId: PropTypes.number.isRequired,
+    houseId: valueType.isRequired,
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string.isRequired,
 };

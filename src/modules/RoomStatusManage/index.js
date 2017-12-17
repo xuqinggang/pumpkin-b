@@ -7,8 +7,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import { showMessage } from 'modules/Message/actions';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import { splitArrayWithIndex } from 'utils/index';
-import { rentUnitType } from 'base/types';
-import config from 'base/config';
+import { valueType, rentUnitType } from 'base/types';
 import {
     showStatusChangeDialog,
     updateRentalUnitStatus,
@@ -61,9 +60,26 @@ class RoomStatusManage extends BaseComponent {
     handleClick(type) {
         return () => {
             if (type === 'SHARE') {
-                this.props.dispatch(
-                    showShareLinkDialog(config.rentalUnitLink(this.props.renUnit.id),
-                ));
+                axios.get('/v1/rentUnit/shareUrls', {
+                    params: {
+                        rentUnitIds: this.props.renUnit.id,
+                    },
+                })
+                .then((res) => {
+                    if (res.data.code === 200) {
+                        const url = res.data.data.shareUrls[0];
+                        this.props.dispatch(showShareLinkDialog(url));
+                        return 'SUCCESS';
+                    }
+                    return 'FAILED';
+                })
+                .catch(() => ('FAILED'))
+                .then((fetchType) => {
+                    if (fetchType === 'FAILED') {
+                        this.props.dispatch(showMessage('获取分享链接失败'));
+                    }
+                });
+
                 return;
             }
             this.props.dispatch(showStatusChangeDialog(type, ({ value }) => {
@@ -146,5 +162,5 @@ export default ConnectContextToProps(connect(
         houseId: props.houseId,
     }),
 )(RoomStatusManage), {
-    houseId: PropTypes.number,
+    houseId: valueType,
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { valueType } from 'base/types';
 import BaseComponent from 'components/BaseComponent/index';
 import Form, { FormItem } from 'components/Form/index';
 import RoomArea from './coms/RoomArea/index';
@@ -83,19 +84,19 @@ class SingleRoomInfo extends BaseComponent {
 }
 
 SingleRoomInfo.propTypes = {
-    roomId: PropTypes.number.isRequired,
+    roomId: valueType.isRequired,
     onDel: PropTypes.func,
     showHeader: PropTypes.bool,
 };
 
 SingleRoomInfo.defaultProps = {
-    roomId: PropTypes.number,
+    roomId: valueType,
     onDel: () => {},
     showHeader: true,
 };
 
 SingleRoomInfo.childContextTypes = {
-    roomId: PropTypes.number,
+    roomId: valueType,
 };
 
 export default SingleRoomInfo;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { valueType } from 'base/types';
 import BaseComponent from 'components/BaseComponent/index';
 import { FormItem } from 'components/Form/index';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
@@ -104,5 +104,5 @@ export default ConnectContextToProps(connect(
         };
     },
 )(RoomTag), {
-    roomId: PropTypes.number,
+    roomId: valueType,
 });
