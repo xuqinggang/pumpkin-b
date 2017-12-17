@@ -74,9 +74,9 @@ const be2feAdapter = (data) => {
                 totalFloor: num2Str(data.totalFloor),
             },
             houseAddress: {
-                buildNo: num2Str(data.buildingNum),
-                unitNo: num2Str(data.unitNum),
-                houseNo: num2Str(data.houseNum),
+                buildNo: data.buildingNum,
+                unitNo: data.unitNum,
+                houseNo: data.houseNum,
             },
             keeperInfo: {
                 name: data.supervisorName,
@@ -185,9 +185,9 @@ const fe2beAdapter = (data) => {
     return {
         house: {
             blockId: data.baseInfo.village.value,
-            buildingNum: str2Num(buildNo),
-            unitNum: str2Num(unitNo),
-            houseNum: str2Num(houseNo),
+            buildingNum: buildNo,
+            unitNum: unitNo,
+            houseNum: houseNo,
             floor: str2Num(curFloor),
             totalFloor: str2Num(totalFloor),
             bedroomCount: room,
