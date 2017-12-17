@@ -4,10 +4,12 @@ ADD ./ /pumpkin-b/
 
 WORKDIR /pumpkin-b/
 
+ENV env=test
+
 RUN ls -al && npm install pumpkin-font-b --registry=http://10.10.126.140:4873 && \
     npm install && \
-    npm run build
+    env=$env npm run build
 
 EXPOSE 80
 
-ENTRYPOINT node server/index.js --port=80 --env='test'
+ENTRYPOINT node server/index.js --port=80 --env=$env
