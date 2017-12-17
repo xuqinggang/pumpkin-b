@@ -45,6 +45,7 @@ class HouseManageFilter extends BaseComponent {
             ...this.props.filter,
             isSortByTime: checked,
             curPage: 1, // 重置页码
+            totalPage: 1,
         }));
     }
     handleFilterBy({ name, select }) {
@@ -52,6 +53,7 @@ class HouseManageFilter extends BaseComponent {
             ...this.props.filter,
             [name]: select.value,
             curPage: 1, // 重置页码
+            totalPage: 1,
         }));
     }
     componentDidMount() {

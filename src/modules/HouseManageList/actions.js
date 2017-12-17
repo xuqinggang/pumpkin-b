@@ -68,6 +68,7 @@ export const fetchHouseManageList = (
     roomStatus,
     isSortByTime,
     curPage,
+    totalPage,
 }) => (dispatch) => {
     const prePage = 20;
     const params = {
@@ -84,6 +85,9 @@ export const fetchHouseManageList = (
     dispatch(filterListBy('rentalType', rentalType));
     dispatch(filterListBy('roomStatus', roomStatus));
     dispatch(updateHouseManageList([]));
+    if (totalPage) {
+        dispatch(changePage(curPage, totalPage));
+    }
 
     dispatch(openFetchListLoading());
 

@@ -95,6 +95,7 @@ class HouseManageList extends BaseComponent {
             roomStatus: 'ALL',
             isSortByTime: true,
             curPage: 1,
+            totalPage: 1,
         }));
     }
     render() {
