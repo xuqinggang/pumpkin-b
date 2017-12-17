@@ -62,7 +62,7 @@ class HouseStatusManage extends BaseComponent {
                     </div>
                     <div className={`${clsPrefix}--address`}>
                         <div>
-                            {houseAddress.buildNo}栋{houseAddress.unitNo === null ? '' : `${houseAddress.unitNo}单元`}
+                            {houseAddress.buildNo}栋{!houseAddress.unitNo ? '' : `${houseAddress.unitNo}单元`}
                         </div>
                         <div>{houseAddress.houseNo}号</div>
                     </div>
