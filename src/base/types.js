@@ -20,22 +20,22 @@ export const errorType = PropTypes.shape({
 });
 
 export const rentUnitType = PropTypes.shape({
-    id: PropTypes.number,
+    id: valueType,
     status: PropTypes.oneOf(['UNFINISHED', 'FINISHED', 'PUBLISHED', 'OCCUPIED', 'OFFLINE']),
 });
 
 export const houseType = PropTypes.shape({
-    id: PropTypes.number,
+    id: valueType,
     block: PropTypes.shape({
-        id: PropTypes.number,
+        id: valueType,
         name: PropTypes.string,
     }),
     rentalType: PropTypes.oneOf(['WHOLE', 'SHARED']),
     rentUnits: PropTypes.arrayOf(rentUnitType),
     houseAddress: PropTypes.shape({
-        buildNo: PropTypes.number,
-        unitNo: PropTypes.number,
-        houseNo: PropTypes.number,
+        buildNo: valueType,
+        unitNo: valueType,
+        houseNo: valueType,
     }),
     updateTime: PropTypes.number,
 });

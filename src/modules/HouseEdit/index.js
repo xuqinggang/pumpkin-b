@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { valueType } from 'base/types';
 import initPage from 'base/initPage';
 import { withRouter } from 'react-router-dom';
 import Content from 'components/Content';
@@ -181,7 +182,7 @@ HouseUpload.defaultProps = {
     onNext: () => {},
 };
 HouseUpload.propTypes = {
-    houseId: PropTypes.number,
+    houseId: valueType,
     onNext: PropTypes.func,
 };
 

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
 import Arrow from 'components/Arrow/index';
 import RoomStatusManage from 'modules/RoomStatusManage/index';
-import { houseType } from 'base/types';
+import { valueType, houseType } from 'base/types';
 import { expandSingleNum } from 'utils/index';
 import './style.less';
 
@@ -115,6 +115,6 @@ HouseStatusManage.defaultProps = {
     onDelete: () => {},
 };
 HouseStatusManage.childContextTypes = {
-    houseId: PropTypes.number,
+    houseId: valueType,
 };
 export default HouseStatusManage;

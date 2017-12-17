@@ -7,7 +7,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import { showMessage } from 'modules/Message/actions';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import { splitArrayWithIndex } from 'utils/index';
-import { rentUnitType } from 'base/types';
+import { valueType, rentUnitType } from 'base/types';
 import {
     showStatusChangeDialog,
     updateRentalUnitStatus,
@@ -162,5 +162,5 @@ export default ConnectContextToProps(connect(
         houseId: props.houseId,
     }),
 )(RoomStatusManage), {
-    houseId: PropTypes.number,
+    houseId: valueType,
 });

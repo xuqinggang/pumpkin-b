@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { valueType } from 'base/types';
 import URLSearchParams from 'url-search-params';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -90,7 +91,7 @@ class ShareRentalUnit extends BaseComponent {
 }
 
 ShareRentalUnit.propTypes = {
-    houseId: PropTypes.number.isRequired,
+    houseId: valueType.isRequired,
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string.isRequired,
 };
