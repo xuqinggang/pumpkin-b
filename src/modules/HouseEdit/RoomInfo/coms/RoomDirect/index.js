@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { valueType } from 'base/types';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
@@ -45,5 +45,5 @@ export default ConnectContextToProps(connect(
         };
     },
 )(RoomDirect), {
-    roomId: PropTypes.number,
+    roomId: valueType,
 });

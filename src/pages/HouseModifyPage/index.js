@@ -14,7 +14,7 @@ class HouseModifyPage extends BaseComponent {
     constructor(props) {
         super(props);
         const search = decodeQuerySting(this.props.history.location.search);
-        this.houseId = Number(search.houseId);
+        this.houseId = search.houseId;
         this.state = {
             curPageType: 'EDIT',
             curTitle: '',

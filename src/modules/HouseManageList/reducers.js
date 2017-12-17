@@ -55,14 +55,12 @@ const filter = (state = initFilterState, action) => {
     case 'houseManage-sortListByTime': {
         return {
             ...state,
-            curPage: 1, // 重置页码
             isSortByTime: action.value,
         };
     }
     case 'houseManage-filterListBy': {
         return {
             ...state,
-            curPage: 1, // 重置页码
             [action.filterType]: action.value,
         };
     }

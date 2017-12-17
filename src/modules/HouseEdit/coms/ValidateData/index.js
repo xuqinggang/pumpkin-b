@@ -47,31 +47,10 @@ const validateBaseInfo = {
         if (data.buildNo === '') {
             error.sub.buildNo.error = true;
             error.sub.buildNo.message = '该项不能为空';
-        } else if (!isNaturalNum(data.buildNo)) {
-            error.sub.buildNo.error = true;
-            error.sub.buildNo.message = '请输入自然整数';
-        } else if (Number(data.buildNo) < 1 || Number(data.buildNo) > 99) {
-            error.sub.buildNo.error = true;
-            error.sub.buildNo.message = '请输入1~99的自然整数';
-        }
-        if (data.unitNo === '') {
-            error.sub.unitNo.error = false;
-        } else if (!isNaturalNum(data.unitNo)) {
-            error.sub.unitNo.error = true;
-            error.sub.unitNo.message = '请输入自然整数';
-        } else if (Number(data.unitNo) < 1 || Number(data.unitNo) > 99) {
-            error.sub.unitNo.error = true;
-            error.sub.unitNo.message = '请输入1~99的自然整数';
         }
         if (data.houseNo === '') {
             error.sub.houseNo.error = true;
             error.sub.houseNo.message = '该项不能为空';
-        } else if (!isNaturalNum(data.houseNo)) {
-            error.sub.houseNo.error = true;
-            error.sub.houseNo.message = '请输入自然整数';
-        } else if (Number(data.houseNo) < 1 || Number(data.houseNo) > 9999) {
-            error.sub.houseNo.error = true;
-            error.sub.houseNo.message = '请输入1~9999的自然数';
         }
 
         // 不校验单元Number
