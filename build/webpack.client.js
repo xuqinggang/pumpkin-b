@@ -11,7 +11,7 @@ env.NODE_ENV = env.NODE_ENV || 'dev';
 
 const context = {
     env,
-    pathPrefix: baseConfig.prod.pathPrefix,
+    pathPrefix: baseConfig[env.NODE_ENV].pathPrefix,
     rootDir: resolve('./'),
 }
 
@@ -29,9 +29,7 @@ module.exports = {
     },
 
     output: {
-        publicPath: env.NODE_ENV === 'prod'
-            ? baseConfig.prod.publicPath
-            : baseConfig.dev.publicPath,
+        publicPath: baseConfig[env.NODE_ENV].publicPath,
         path: resolve(baseConfig.client.distPath),
         filename: '[name].[chunkhash:8].js',
     },
