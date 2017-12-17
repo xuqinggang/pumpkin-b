@@ -122,7 +122,10 @@ export const fetchHouseManageList = (
         dispatch(filterListBy('village', village));
         dispatch(filterListBy('rentalType', rentalType));
         dispatch(filterListBy('roomStatus', roomStatus));
-        dispatch(changePage(curPage, Math.ceil(total / prePage)));
+        dispatch(changePage(
+            curPage,
+            Math.ceil(total / prePage) > 0 ? Math.ceil(total / prePage) : 1),
+        );
         dispatch(updateHouseManageList(houseCorrList));
     })
     .then(() => {

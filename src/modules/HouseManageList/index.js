@@ -12,7 +12,8 @@ import HouseManageFilter from 'modules/HouseManageFilter/index';
 import ShareLinkDialog from 'modules/ShareLinkDialog/index';
 import RoomStatusDialog from 'modules/RoomStatusDialog/index';
 import HouseManageListPager from 'modules/HouseManageListPager/index';
-import EmptyHouseNote from 'modules/EmptyHouseNote/index';
+import NoneHouseNote from 'modules/NoneHouseNote/index';
+import EmptyHouseList from 'modules/EmptyHouseList/index';
 import LoadingHouseNote from 'modules/LoadingHouseNote/index';
 import { timeSignBy, timeFormat } from 'utils/index';
 import { hideStatusChangeDialog, deleteHouse, fetchHouseManageList } from './actions';
@@ -144,7 +145,8 @@ class HouseManageList extends BaseComponent {
                     })
                 }
                 <LoadingHouseNote />
-                <EmptyHouseNote />
+                <EmptyHouseList />
+                <NoneHouseNote />
                 <HouseManageListPager />
                 <RoomStatusDialog
                     type={this.props.dialogType}
