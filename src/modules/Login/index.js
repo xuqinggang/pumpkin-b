@@ -55,7 +55,7 @@ class Login extends BaseComponent {
             return;
         }
         axios.post('/v1/user/login', {
-            userName: account,
+            userName: account.trim(),
             password,
         })
         .then((res) => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { valueType } from 'base/types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
@@ -245,5 +246,5 @@ export default ConnectContextToProps(connect(
         };
     },
 )(PriceInput), {
-    roomId: PropTypes.number,
+    roomId: valueType,
 });

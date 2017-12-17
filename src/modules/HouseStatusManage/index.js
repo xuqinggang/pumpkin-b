@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import BaseComponent from 'components/BaseComponent/index';
 import Arrow from 'components/Arrow/index';
 import RoomStatusManage from 'modules/RoomStatusManage/index';
-import { houseType } from 'base/types';
+import { valueType, houseType } from 'base/types';
 import { expandSingleNum } from 'utils/index';
 import './style.less';
 
@@ -62,7 +62,7 @@ class HouseStatusManage extends BaseComponent {
                     </div>
                     <div className={`${clsPrefix}--address`}>
                         <div>
-                            {houseAddress.buildNo}栋{houseAddress.unitNo === null ? '' : `${houseAddress.unitNo}单元`}
+                            {houseAddress.buildNo}栋{!houseAddress.unitNo ? '' : `${houseAddress.unitNo}单元`}
                         </div>
                         <div>{houseAddress.houseNo}号</div>
                     </div>
@@ -115,6 +115,6 @@ HouseStatusManage.defaultProps = {
     onDelete: () => {},
 };
 HouseStatusManage.childContextTypes = {
-    houseId: PropTypes.number,
+    houseId: valueType,
 };
 export default HouseStatusManage;

@@ -10,11 +10,11 @@ const StyleLintFormatter = require('stylelint-formatter-pretty');
 const baseRules = require('./webpackConfig/baseRules.js');
 const env = process.env;
 
-env.NODE_ENV = env.NODE_ENV || 'dev';
+const envConfig = baseConfig[env.NODE_ENV] || baseConfig.dev;
 
 const context = {
     env,
-    pathPrefix: baseConfig.prod.pathPrefix,
+    pathPrefix: envConfig.pathPrefix,
     rootDir: resolve('./'),
 }
 
@@ -24,9 +24,7 @@ module.exports = {
     },
 
     output: {
-        publicPath: env.NODE_ENV === 'prod'
-            ? baseConfig.prod.publicPath
-            : baseConfig.dev.publicPath,
+        publicPath: envConfig.publicPath,
         path: resolve(baseConfig.server.distPath),
         filename: 'server.js',
         libraryTarget: 'commonjs2',
