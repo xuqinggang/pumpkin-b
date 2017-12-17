@@ -79,7 +79,12 @@ export const fetchHouseManageList = (
         limit: prePage,
     };
 
+    dispatch(sortListByTime(isSortByTime));
+    dispatch(filterListBy('village', village));
+    dispatch(filterListBy('rentalType', rentalType));
+    dispatch(filterListBy('roomStatus', roomStatus));
     dispatch(updateHouseManageList([]));
+
     dispatch(openFetchListLoading());
 
     // blockId int: 选传，社区ID
@@ -118,10 +123,6 @@ export const fetchHouseManageList = (
             })),
             updateTime: item.updateTime,
         }));
-        dispatch(sortListByTime(isSortByTime));
-        dispatch(filterListBy('village', village));
-        dispatch(filterListBy('rentalType', rentalType));
-        dispatch(filterListBy('roomStatus', roomStatus));
         dispatch(changePage(
             curPage,
             Math.ceil(total / prePage) > 0 ? Math.ceil(total / prePage) : 1),
