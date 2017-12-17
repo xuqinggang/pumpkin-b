@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { valueType } from 'base/types';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import './style.less';
@@ -48,7 +49,7 @@ RoomHeader.defaultProps = {
 RoomHeader.propTypes = {
     children: PropTypes.node,
     onDel: PropTypes.func,
-    roomId: PropTypes.number.isRequired,
+    roomId: valueType.isRequired,
 };
 
 export default connect(

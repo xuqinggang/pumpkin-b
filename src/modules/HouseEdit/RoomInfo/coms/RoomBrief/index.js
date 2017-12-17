@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { valueType } from 'base/types';
 import BaseComponent from 'components/BaseComponent/index';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
 import Textarea from 'components/Textarea/index';
@@ -105,5 +106,5 @@ export default ConnectContextToProps(connect(
         };
     },
 )(RoomBrief), {
-    roomId: PropTypes.number,
+    roomId: valueType,
 });

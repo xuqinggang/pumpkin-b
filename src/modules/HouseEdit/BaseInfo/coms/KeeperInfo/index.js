@@ -7,6 +7,7 @@ import KeeperImage from '../KeeperImage/index';
 import { setKeeperInfo } from '../../actions';
 import { hideValidateError } from '../../../actions';
 import { validateBaseInfo, itemError } from '../../../coms/ValidateData';
+import './style.less';
 
 class KeeperInfo extends BaseComponent {
     constructor(props) {
@@ -90,6 +91,7 @@ class KeeperInfo extends BaseComponent {
                         label="姓名"
                         labelType="minor"
                         error={error.sub.name}
+                        className={`${clsPrefix}--item`}
                     >
                         <Input
                             name="name"
@@ -103,6 +105,7 @@ class KeeperInfo extends BaseComponent {
                         label="电话"
                         labelType="minor"
                         error={error.sub.phone}
+                        className={`${clsPrefix}--item`}
                     >
                         <Input
                             name="phone"

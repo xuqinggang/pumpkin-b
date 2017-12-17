@@ -6,7 +6,7 @@ import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
 import './style.less';
 
-class EmptyHouseNote extends BaseComponent {
+class NoneHouseNote extends BaseComponent {
     constructor(props) {
         super(props);
         this.autoBind('handleClick');
@@ -29,11 +29,11 @@ class EmptyHouseNote extends BaseComponent {
     }
 }
 
-EmptyHouseNote.propTypes = {
+NoneHouseNote.propTypes = {
     hide: PropTypes.bool,
 };
 
-EmptyHouseNote.defaultProps = {
+NoneHouseNote.defaultProps = {
     hide: true,
 };
 
@@ -46,7 +46,7 @@ export default connect(
         if (filter.rentalType === 'ALL' &&
             filter.village === 'ALL' &&
             filter.roomStatus === 'ALL' &&
-            filter.curPage === 1 &&
+            filter.totalPage === 1 &&
             !isLoading &&
             houseList.length === 0) {
             hide = false;
@@ -55,4 +55,4 @@ export default connect(
             hide,
         };
     },
-)(withRouter(EmptyHouseNote));
+)(withRouter(NoneHouseNote));

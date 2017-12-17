@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Input from 'components/Input/index';
 import Form, { FormItem } from 'components/Form/index';
-import { adjustNumStr } from 'utils';
 import NoteWord from '../../../coms/NoteWord/index';
 import { setHouseAddress } from '../../actions';
 import { validateBaseInfo, itemError } from '../../../coms/ValidateData';
@@ -73,9 +72,6 @@ class HouseAddress extends BaseComponent {
         // 非法string 置空
         if (error.sub[name].error) {
             this.props.dispatch(setHouseAddress({ name, value: '' }));
-        } else {
-            // 调整数字
-            this.props.dispatch(setHouseAddress({ name, value: adjustNumStr(value) }));
         }
     }
     render() {

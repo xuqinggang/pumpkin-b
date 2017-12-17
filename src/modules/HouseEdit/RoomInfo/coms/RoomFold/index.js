@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { valueType } from 'base/types';
 import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
@@ -101,7 +102,7 @@ class RoomFold extends BaseComponent {
 }
 
 RoomFold.propTypes = {
-    roomId: PropTypes.number.isRequired,
+    roomId: valueType.isRequired,
     onEdit: PropTypes.func,
     onDel: PropTypes.func,
 };
