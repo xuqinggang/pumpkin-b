@@ -38,6 +38,11 @@ class HouseStatusManage extends BaseComponent {
             rentUnits,
             rentalType,
         } = this.props.house;
+        const addressMain =
+            `${houseAddress.buildNo}栋${!houseAddress.unitNo ? '' : `${houseAddress.unitNo}单元`}`;
+        const addressMinor =
+            `${houseAddress.houseNo}号`;
+
         return (
             <div className={cls}>
                 <i className={`${clsPrefix}--indicator`} />
@@ -61,10 +66,18 @@ class HouseStatusManage extends BaseComponent {
                         </div>
                     </div>
                     <div className={`${clsPrefix}--address`}>
-                        <div>
-                            {houseAddress.buildNo}栋{!houseAddress.unitNo ? '' : `${houseAddress.unitNo}单元`}
+                        <div
+                            className={`${clsPrefix}--address-main`}
+                            title={addressMain}
+                        >
+                            {addressMain}
                         </div>
-                        <div>{houseAddress.houseNo}号</div>
+                        <div
+                            className={`${clsPrefix}--address-minor`}
+                            title={addressMinor}
+                        >
+                            {addressMinor}
+                        </div>
                     </div>
                 </div>
                 <div
