@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 import axios from 'axios';
-import roomStatusMap, { roomStatusList } from 'base/roomStatusMap';
+import roomStatusMap from 'base/roomStatusMap';
 import BaseComponent from 'components/BaseComponent/index';
 import Checkbox from 'components/Checkbox/index';
 import Select from 'components/Select/index';
 import { fetchHouseManageList } from '../HouseManageList/actions';
 import './style.less';
+
+const roomStatusList = ['FINISHED', 'PUBLISHED', 'OCCUPIED', 'OFFLINE'];
 
 class HouseManageFilter extends BaseComponent {
     constructor(props) {

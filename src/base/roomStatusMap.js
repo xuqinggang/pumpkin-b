@@ -41,5 +41,5 @@ const roomStatusMap = {
     },
 };
 
-export const roomStatusList = ['FINISHED', 'PUBLISHED', 'OCCUPIED', 'OFFLINE'];
+// export const roomStatusList = ['FINISHED', 'PUBLISHED', 'OCCUPIED', 'OFFLINE'];
 export default roomStatusMap;
