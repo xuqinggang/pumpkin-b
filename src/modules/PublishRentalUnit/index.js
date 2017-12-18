@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import roomStatusMap from 'base/roomStatusMap';
+import { showMessage } from 'modules/Message/actions';
 import { valueType } from 'base/types';
 import classNames from 'classnames';
 import Content from 'components/Content';
@@ -47,11 +50,17 @@ class PublishRentalUnit extends BaseComponent {
         };
     }
     handlePublish() {
+        const readyPublishUnits = this.state.unitStatus.filter(value => (value.checked));
+        if (readyPublishUnits.length === 0) {
+            this.props.dispatch(showMessage('请选择要发布的房间'));
+            return;
+        }
+
         this.setState({
             isPublishLoading: true,
         });
         axios.put('/v1/rentUnits/houseStatus',
-            this.state.unitStatus.filter(value => (value.checked)).map(item => ({
+            readyPublishUnits.map(item => ({
                 id: item.id,
                 status: 'PUBLISHED',
             })),
@@ -140,7 +149,10 @@ class PublishRentalUnit extends BaseComponent {
                                 checked={item.checked}
                                 onChange={this.handleCheck(item)}
                                 disabled={item.status === 'PUBLISHED'}
-                                title={item.status === 'PUBLISHED' ? '已发布' : ''}
+                                title={
+                                    roomStatusMap[item.status].text
+                                    || roomStatusMap.UNKNOWN.text
+                                }
                             >卧室{expandSingleNum(index + 1)}</Checkbox>
                         ))
                     }
@@ -180,4 +192,4 @@ PublishRentalUnit.propTypes = {
     subTitle: PropTypes.string.isRequired,
 };
 
-export default withRouter(PublishRentalUnit);
+export default connect()(withRouter(PublishRentalUnit));

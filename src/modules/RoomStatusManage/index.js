@@ -6,7 +6,7 @@ import { ConvtCatchNetErrorMessage } from 'base/errorNote';
 import BaseComponent from 'components/BaseComponent/index';
 import { showMessage } from 'modules/Message/actions';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
-import { splitArrayWithIndex } from 'utils/index';
+import roomStatusMap from 'base/roomStatusMap';
 import { valueType, rentUnitType } from 'base/types';
 import {
     showStatusChangeDialog,
@@ -18,42 +18,7 @@ import './style.less';
 class RoomStatusManage extends BaseComponent {
     constructor(props) {
         super(props);
-        this.operates = [
-            {
-                type: 'PUBLISHED',
-                text: '发布',
-            }, {
-                type: 'OCCUPIED',
-                text: '入住',
-            }, {
-                type: 'OFFLINE',
-                text: '下架',
-            }, {
-                // 目前需求不做
-                type: 'DELETE',
-                text: '删除',
-            }, {
-                type: 'SHARE',
-                text: '分享',
-            }];
-        this.statusMapOperates = {
-            FINISHED: {
-                text: '待发布',
-                operates: splitArrayWithIndex(this.operates, 0),
-            },
-            PUBLISHED: {
-                text: '已发布',
-                operates: splitArrayWithIndex(this.operates, 1, 2, 4),
-            },
-            OCCUPIED: {
-                text: '已入住',
-                operates: splitArrayWithIndex(this.operates, 0),
-            },
-            OFFLINE: {
-                text: '已下架',
-                operates: splitArrayWithIndex(this.operates, 0),
-            },
-        };
+        this.roomStatusMap = roomStatusMap;
 
         this.autoBind('handleClick');
     }
@@ -110,7 +75,7 @@ class RoomStatusManage extends BaseComponent {
         const cls = classNames(clsPreix, {
             [`${clsPreix}__${this.props.renUnit.status.toLowerCase()}`]: true,
         });
-        const curOperates = this.statusMapOperates[this.props.renUnit.status];
+        const curStatus = this.roomStatusMap[this.props.renUnit.status];
         return (
             <div className={cls}>
                 <div
@@ -122,11 +87,11 @@ class RoomStatusManage extends BaseComponent {
                 </div>
                 <div className={`${clsPreix}--status`}>
                     <i className={`${clsPreix}--indicator`} />
-                    <span>{curOperates.text}</span>
+                    <span>{curStatus.text}</span>
                 </div>
                 <div className={`${clsPreix}--operate`}>
                     {
-                        curOperates.operates.map(item => (
+                        curStatus.operates.map(item => (
                             <button
                                 key={item.text}
                                 className={`${clsPreix}--btn`}

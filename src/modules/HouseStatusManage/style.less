@@ -71,11 +71,18 @@
         &--delete {
             color: #b2b4b5;
         }
+    }
 
-        &--address {
-            font-size: 14px;
-            color: #5c5c5c;
-            line-height: 20px;
+    &--address {
+        font-size: 14px;
+        color: #5c5c5c;
+        line-height: 20px;
+
+        &-main,
+        &-minor {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
 

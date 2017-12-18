@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import axios from 'axios';
+import roomStatusMap, { roomStatusList } from 'base/roomStatusMap';
 import BaseComponent from 'components/BaseComponent/index';
 import Checkbox from 'components/Checkbox/index';
 import Select from 'components/Select/index';
@@ -17,6 +18,14 @@ class HouseManageFilter extends BaseComponent {
             text: '全部小区',
             blank: true,
         };
+        this.roomStatusOptions = [{
+            value: 'ALL',
+            text: '所有状态',
+            blank: true,
+        }].concat(roomStatusList.map(status => ({
+            value: status,
+            text: roomStatusMap[status].text,
+        })));
         this.autoBind(
             'fetchVillageList',
             'handleChangeSortByTime',
@@ -95,25 +104,7 @@ class HouseManageFilter extends BaseComponent {
                         defaultText="房间状态"
                         value={this.props.roomStatus}
                         onChange={this.handleFilterBy}
-                        options={[
-                            {
-                                value: 'ALL',
-                                text: '所有状态',
-                                blank: true,
-                            }, {
-                                value: 'PUBLISHED',
-                                text: '已发布',
-                            }, {
-                                value: 'OCCUPIED',
-                                text: '已入住',
-                            }, {
-                                value: 'OFFLINE',
-                                text: '已下架',
-                            }, {
-                                value: 'FINISHED',
-                                text: '待发布',
-                            },
-                        ]}
+                        options={this.roomStatusOptions}
                     />
                 </div>
                 <div className={`${clsPrefix}--left`}>
