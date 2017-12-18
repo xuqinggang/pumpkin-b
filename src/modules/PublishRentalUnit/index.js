@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import roomStatusMap from 'base/roomStatusMap';
 import { showMessage } from 'modules/Message/actions';
 import { valueType } from 'base/types';
 import classNames from 'classnames';
@@ -148,7 +149,10 @@ class PublishRentalUnit extends BaseComponent {
                                 checked={item.checked}
                                 onChange={this.handleCheck(item)}
                                 disabled={item.status === 'PUBLISHED'}
-                                title={item.status === 'PUBLISHED' ? '已发布' : ''}
+                                title={
+                                    roomStatusMap[item.status].text
+                                    || roomStatusMap.UNKNOWN.text
+                                }
                             >卧室{expandSingleNum(index + 1)}</Checkbox>
                         ))
                     }
