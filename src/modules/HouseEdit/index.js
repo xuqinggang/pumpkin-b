@@ -57,11 +57,6 @@ class HouseUpload extends BaseComponent {
             'handlePageUnmount',
         );
     }
-    componentWillReceiveProps(nextProps) {
-        if (this.props.houseId !== nextProps.houseId) {
-            this.props.dispatch(fetchHouseEditData(nextProps.houseId));
-        }
-    }
     handleNextStep() {
         const curPage = this.state.curPage;
         this.setState({
@@ -125,7 +120,7 @@ class HouseUpload extends BaseComponent {
         }
         // 编辑请求房源数据
         if (this.props.houseId) {
-            this.props.dispatch(fetchHouseEditData(this.props.houseId));
+            this.props.dispatch(fetchHouseEditData(this.props.houseId, this.props.history));
         }
     }
 

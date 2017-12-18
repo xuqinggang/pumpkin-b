@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import classNames from 'classnames';
 import { valueType } from 'base/types';
 import URLSearchParams from 'url-search-params';
 import { withRouter } from 'react-router-dom';
@@ -61,13 +62,16 @@ class ShareRentalUnit extends BaseComponent {
 
     render() {
         const clsPrefix = 'm-share-rental-unit';
+        const unitsCls = classNames(`${clsPrefix}--units`, {
+            [`${clsPrefix}--units__center`]: this.state.shareUnits.length < 4,
+        });
         return (
             <Content>
                 <div className={`${clsPrefix}--titles`}>
                     <h2 className={`${clsPrefix}--title`}>房源{this.props.title}</h2>
                     <span className={`${clsPrefix}--subTitle`}>你可以去{this.props.subTitle}啦~ </span>
                 </div>
-                <div className={`${clsPrefix}--units`}>
+                <div className={unitsCls}>
                     {
                         this.state.shareUnits.map(item => (
                             <RentalUnitQRCode

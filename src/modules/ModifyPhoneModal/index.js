@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import BaseComponent from 'components/BaseComponent';
 import Dialog from 'components/Dialog';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import { isPhoneNo } from 'utils';
+import { passportStatus } from 'modules/Passport/actions';
+import { showMessage } from 'modules/Message/actions';
 import './style.less';
 
 const VCODE_INTERVAL = 60;
@@ -30,6 +33,8 @@ class ModifyPhoneModal extends BaseComponent {
             canSend: true,
             errorPhone: '',
             errorVcode: '',
+            vcodeLoad: false,
+            sendLoad: false,
             countDownSecond: VCODE_INTERVAL,
         };
         this.timer = null;
@@ -37,6 +42,10 @@ class ModifyPhoneModal extends BaseComponent {
 
     handleConfirmBind() {
         const { phoneNumber, vcode } = this.state;
+
+        this.setState({
+            sendLoad: true,
+        });
         if (isPhoneNo(phoneNumber) && vcode) {
             axios.put('/v1/user/phone', {
                 phoneNumber,
@@ -44,12 +53,28 @@ class ModifyPhoneModal extends BaseComponent {
             })
             .then((res) => {
                 if (res.data.code === 200) {
+                    this.props.dispatch(passportStatus());
+                    this.props.dispatch(showMessage('绑定手机号成功'));
                     this.props.onConfirmBind();
-                } else {
+                } else if ([14002, 14003].indexOf(res.data.code) !== -1) {
                     this.setState({
                         errorVcode: res.data.msg,
                     });
+                } else if ([14007, 14009].indexOf(res.data.code) !== -1) {
+                    this.setState({
+                        errorPhone: res.data.msg,
+                    });
+                } else {
+                    this.props.dispatch(showMessage('未知错误'));
                 }
+            })
+            .catch((e) => {
+                this.props.dispatch(showMessage(e.message));
+            })
+            .then(() => {
+                this.setState({
+                    sendLoad: false,
+                });
             });
         }
     }
@@ -67,10 +92,26 @@ class ModifyPhoneModal extends BaseComponent {
         if (this.handleVilidatePhone(this.state.phoneNumber)) return;
 
         // ajax 发送验证码
+        this.setState({
+            vcodeLoad: true,
+        });
         axios.post('/v1/user/phone/verificationCode', {
             phoneNumber: this.state.phoneNumber,
+        })
+        .then((res) => {
+            if (res.data.code !== 200) {
+                this.setState({
+                    errorPhone: res.data.msg,
+                });
+            }
+            this.countDown();
+        })
+        .catch(() => {})
+        .then(() => {
+            this.setState({
+                vcodeLoad: false,
+            });
         });
-        this.countDown();
     }
 
     handlePhoneChange({ value }) {
@@ -176,6 +217,7 @@ class ModifyPhoneModal extends BaseComponent {
                         width: 116,
                         float: 'right',
                     }}
+                    disabled={this.state.sendLoad}
                 >绑定</Button>
                 : <Button
                     key="confirm"
@@ -213,7 +255,7 @@ class ModifyPhoneModal extends BaseComponent {
                         }
                         <Button
                             type="confirm"
-                            disabled={!this.state.canSend}
+                            disabled={!this.state.canSend || this.state.vcodeLoad}
                             onClick={this.handleSendVcode}
                             style={{
                                 width: 102,
@@ -260,4 +302,4 @@ ModifyPhoneModal.propTypes = {
 };
 
 
-export default ModifyPhoneModal;
+export default connect()(ModifyPhoneModal);

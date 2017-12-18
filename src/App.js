@@ -7,6 +7,7 @@ import { renderRoutes } from 'react-router-config';
 import './less/global.less';
 
 axios.defaults.baseURL = '/api/';
+axios.defaults.timeout = 5000;
 
 class App extends BaseComponent {
     render() {

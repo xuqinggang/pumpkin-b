@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BaseComponent from 'components/BaseComponent/index';
 import Button from 'components/Button/index';
-import errorNote from 'base/errorNote';
+import { ConvtCatchNetErrorMessage } from 'base/errorNote';
 import { expandSingleNum } from 'utils/index';
 import { showMessage } from 'modules/Message/actions';
 import { nextStep, showValidateError } from '../../actions';
@@ -49,36 +49,24 @@ class StepButton extends BaseComponent {
         axios[submitConfig[type].method](submitConfig[type].url, fe2beAdapter(data))
         .then((res) => {
             if (res.data.code === 200) {
-                return new Promise((resolve) => {
-                    resolve({
-                        submitStatus: 'SUCCESS',
-                        data: { type, houseId: res.data.data.houseId },
-                    });
-                });
+                return {
+                    submitStatus: 'SUCCESS',
+                    data: { type, houseId: res.data.data.houseId },
+                };
             }
             this.props.dispatch(showMessage(res.data.msg));
-            return new Promise((resolve) => {
-                resolve({
-                    submitStatus: 'FAILED',
-                    data: { type },
-                });
-            });
+            return {
+                submitStatus: 'FAILED',
+                data: { type },
+            };
         })
         .catch((e) => {
-            const response = e.response;
-            let msg = errorNote.OTHER_ERR;
-            if (!response) {
-                msg = errorNote.NETWORK_ERR;
-            } else if (errorNote[response.status]) {
-                msg = errorNote[response.status];
-            }
+            const msg = ConvtCatchNetErrorMessage(e);
             this.props.dispatch(showMessage(msg));
-            return new Promise((resolve) => {
-                resolve({
-                    submitStatus: 'FAILED',
-                    data: { type },
-                });
-            });
+            return {
+                submitStatus: 'FAILED',
+                data: { type },
+            };
         })
         .then(res => (
             new Promise((resolve) => {

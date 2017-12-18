@@ -4,9 +4,6 @@ import BaseComponent from 'components/BaseComponent/index';
 import PageTitle from 'modules/PageTitle/index';
 
 class EmptyLayout extends BaseComponent {
-    componentDidMount() {
-        window.scroll(0, 0);
-    }
     render() {
         return (
             <div>
