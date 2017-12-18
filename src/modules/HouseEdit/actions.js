@@ -1,4 +1,6 @@
 import axios from 'axios';
+import errorNote, { ConvtCatchNetErrorMessage } from 'base/errorNote';
+import { showAlert } from 'modules/Alert/actions';
 import initData from './coms/initData/index';
 import { be2feAdapter } from './dataAdapter';
 
@@ -35,19 +37,44 @@ export const resetState = () => (dispatch) => {
     dispatch(initState(state));
 };
 
-export const fetchHouseEditData = houseId => (dispatch) => {
+export const fetchHouseEditData = (houseId, history) => (dispatch) => {
     if (!houseId) {
         dispatch(resetState());
     } else {
         axios.get(`/v1/houses/${houseId}`)
             .then((res) => {
-                const state = {
-                    validateError: initData('validateError'),
-                    roomTags: initData('roomTags'),
-                    ...be2feAdapter(res.data.data),
-                    houseId,
+                if (res.data.code === 200) {
+                    const state = {
+                        validateError: initData('validateError'),
+                        roomTags: initData('roomTags'),
+                        ...be2feAdapter(res.data.data),
+                        houseId,
+                    };
+                    return {
+                        type: 'SUCCESS',
+                        data: state,
+                    };
+                }
+                return {
+                    type: 'FAILED',
+                    message: res.data.msg || errorNote.OTHER_SUCCESS_ERR,
                 };
-                dispatch(initState(state));
+            })
+            .catch((e) => {
+                const msg = ConvtCatchNetErrorMessage(e);
+                return {
+                    type: 'FAILED',
+                    message: msg,
+                };
+            })
+            .then((data) => {
+                if (data.type === 'FAILED') {
+                    dispatch(showAlert(data.message, () => {
+                        history.push('/house-manage');
+                    }));
+                } else if (data.type === 'SUCCESS') {
+                    dispatch(initState(data.data));
+                }
             });
     }
 };
