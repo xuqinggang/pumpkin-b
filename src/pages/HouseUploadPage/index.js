@@ -1,5 +1,6 @@
 import React from 'react';
 import MainLayout from 'layouts/MainLayout';
+import initPage from 'base/initPage';
 import BaseComponent from 'components/BaseComponent/index';
 import PageHeader from 'components/PageHeader/index';
 import HouseEdit from 'modules/HouseEdit/index';
@@ -70,4 +71,4 @@ class HouseUploadPage extends BaseComponent {
     }
 }
 
-export default checkAuthenticated(HouseUploadPage);
+export default checkAuthenticated(initPage(HouseUploadPage));

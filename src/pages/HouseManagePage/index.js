@@ -1,5 +1,6 @@
 import React from 'react';
 import MainLayout from 'layouts/MainLayout';
+import initPage from 'base/initPage';
 import BaseComponent from 'components/BaseComponent/index';
 import HouseManageList from 'modules/HouseManageList/index';
 import checkAuthenticated from 'base/checkAuthenticated';
@@ -19,4 +20,4 @@ class HouseManagePage extends BaseComponent {
     }
 }
 
-export default checkAuthenticated(HouseManagePage);
+export default checkAuthenticated(initPage(HouseManagePage));

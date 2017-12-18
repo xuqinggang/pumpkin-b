@@ -8,9 +8,6 @@ import Message from 'modules/Message/index';
 import './style.less';
 
 class MainLayout extends BaseComponent {
-    componentDidMount() {
-        window.scroll(0, 0);
-    }
     render() {
         return (
             <div className="l-main">

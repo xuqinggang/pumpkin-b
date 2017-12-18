@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import MainLayout from 'layouts/MainLayout';
+import initPage from 'base/initPage';
 import BaseComponent from 'components/BaseComponent/index';
 import HouseModifyHeader from 'modules/HouseModifyHeader/index';
 import HouseEdit from 'modules/HouseEdit/index';
@@ -72,4 +73,4 @@ class HouseModifyPage extends BaseComponent {
     }
 }
 
-export default checkAuthenticated(withRouter(HouseModifyPage));
+export default checkAuthenticated(withRouter(initPage(HouseModifyPage)));

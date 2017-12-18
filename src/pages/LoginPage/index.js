@@ -2,6 +2,7 @@ import Login from 'modules/Login';
 import EmptyLayout from 'layouts/EmptyLayout';
 import BaseComponent from 'components/BaseComponent';
 import checkAuthenticated from 'base/checkAuthenticated';
+import initPage from 'base/initPage';
 import './style.less';
 
 class LoginPage extends BaseComponent {
@@ -19,4 +20,4 @@ class LoginPage extends BaseComponent {
     }
 }
 
-export default checkAuthenticated(LoginPage);
+export default checkAuthenticated(initPage(LoginPage));
