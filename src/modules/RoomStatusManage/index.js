@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import errorNote from 'base/errorNote';
+import { ConvtCatchNetErrorMessage } from 'base/errorNote';
 import BaseComponent from 'components/BaseComponent/index';
 import { showMessage } from 'modules/Message/actions';
 import ConnectContextToProps from 'components/ConnectContextToProps/index';
@@ -99,13 +99,7 @@ class RoomStatusManage extends BaseComponent {
                     }
                 })
                 .catch((e) => {
-                    const response = e.response;
-                    let msg = errorNote.OTHER_ERR;
-                    if (!response) {
-                        msg = errorNote.NETWORK_ERR;
-                    } else if (errorNote[response.status]) {
-                        msg = errorNote[response.status];
-                    }
+                    const msg = ConvtCatchNetErrorMessage(e);
                     this.props.dispatch(showMessage(msg));
                 });
             }));
