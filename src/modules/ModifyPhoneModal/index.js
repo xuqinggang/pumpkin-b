@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import errorNote from 'base/errorNote';
 import BaseComponent from 'components/BaseComponent';
 import Dialog from 'components/Dialog';
 import Input from 'components/Input';
@@ -60,12 +61,12 @@ class ModifyPhoneModal extends BaseComponent {
                     this.setState({
                         errorVcode: res.data.msg,
                     });
-                } else if ([14007, 14009].indexOf(res.data.code) !== -1) {
+                } else if ([1104, 14007, 14009].indexOf(res.data.code) !== -1) {
                     this.setState({
                         errorPhone: res.data.msg,
                     });
                 } else {
-                    this.props.dispatch(showMessage('未知错误'));
+                    this.props.dispatch(showMessage(res.data.msg || errorNote.OTHER_SUCCESS_ERR));
                 }
             })
             .catch((e) => {
