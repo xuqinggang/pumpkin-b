@@ -69,10 +69,10 @@ class ProfileInfo extends BaseComponent {
     }
 
     render() {
-        const { nick, phone } = this.props;
+        const { nick, phone, apartmentName } = this.props;
         return (
             <div className="m-profile-info">
-                <Title>蛋壳公寓</Title>
+                <Title>{apartmentName}</Title>
                 <Row>
                     <Col span={6}>您的账号: {nick}</Col>
                     <Col span={3}>
@@ -139,6 +139,7 @@ export default connect(
             return {
                 nick: userInfo.username,
                 phone: String(userInfo.phone),
+                apartmentName: userInfo.apartment.name,
             };
         }
         return {};
